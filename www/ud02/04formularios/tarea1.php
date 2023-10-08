@@ -5,7 +5,15 @@
     </head>
     <body>
         <div>
-            <!-- Aquí va el formulario-->
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br><br>
+
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required><br><br>
+
+                <input type="submit" value="Enviar">
+            </form>
         </div>
 
             <div>
@@ -24,6 +32,33 @@
                     */
                     
                     //Aquí el código php que muestra la información solicitada.
+
+                    $nombre = "";
+                    $apellidos = "";
+
+                    function test_input($data) {
+                        $data = trim($data);
+                        $data = stripslashes($data);
+                        $data = htmlspecialchars($data);
+                        return $data;
+                    }
+
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $nombre = test_input($_POST["nombre"]);
+                        $apellidos = test_input($_POST["apellido"]);
+                    }
+
+                    echo $nombre."<br />";
+                    echo $apellidos."<br />";
+                    echo $nombre." ".$apellidos."<br />";
+                    echo "Su nombre tiene ".strlen($nombre)." caracteres<br />";
+                    echo "Los 3 primeros caracteres de tu nombre son: ".substr($nombre, 0, 3)."<br />";
+                    echo "La letra A fue encontrada en sus apellidos en la posición: ".(strpos(strtolower($nombre), "a") + 1)."<br />";
+                    echo "Tu nombre en mayusculas es: ".strtoupper($nombre)."<br />";
+                    echo "Sus apellidos en minusculas son: ".strtolower($apellidos)."<br />";
+                    echo "Su nombre y apellidos en mayusculas son: ".strtoupper($nombre)." ".strtoupper($apellidos)."<br />";
+                    echo "Tu nombre escrito al reves es: ".strrev($nombre);
+
                 ?>
         </div>
     </body>
