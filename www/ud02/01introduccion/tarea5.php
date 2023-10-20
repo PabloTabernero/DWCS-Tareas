@@ -3,7 +3,7 @@
 Para pasar de Fahrenheit a Celsius se resta 32 a la temperatura, 
 se multiplica por 5 y se divide entre 9.*/
 
-    echo "<p>Conversor de Fahrenheit a Celsius</p>";
+    echo "<h4>Conversor de Fahrenheit a Celsius</h4>";
     $fahrenheit = 80;
     $celsius = ($fahrenheit - 32) * 5 / 9;
     echo "Temperatura Fahrenheit = $fahrenheit<br />";
@@ -18,7 +18,7 @@ la división y el módulo de ambas variables. */
     - Sin utilizar variables intermedias. */
 
     //Versión con nuevas variables:
-    echo "<p>Operaciones aritmeticas con nuevas variables</p>";
+    echo "<h4>Operaciones aritmeticas con nuevas variables</h4>";
     $x = 20;
     $y = 10;
     $suma = $x + $y;
@@ -33,7 +33,7 @@ la división y el módulo de ambas variables. */
     echo $x." % ".$y. " = ".$modulo."<br />";
 
     //Versión sin utilizar variables intermedias:
-    echo "<p>Operaciones aritmeticas sin variables intermedias</p>";
+    echo "<h4>Operaciones aritmeticas sin variables intermedias</h4>";
     $x = 20;
     $y = 10;
     echo $x." + ".$y. " = ".($x + $y)."<br />";
@@ -46,7 +46,7 @@ la división y el módulo de ambas variables. */
 /*3. (Optativo) Escribe un programa que imprima por pantalla los cuadrados de los 
 30 primeros números naturales.*/ 
 
-    echo "<p>Imprimir el cuadrado de los 30 primeros números</p>";
+    echo "<h4>Imprimir el cuadrado de los 30 primeros números</h4>";
     for ($i=1; $i < 31; $i++) { 
         echo "cuadrado de $i = ".($i * $i)."<br />";
     }
@@ -55,7 +55,7 @@ la división y el módulo de ambas variables. */
  (```área=base*altura``` y (```perímetro=2*base+2*altura```). Debéis declarar 
  las variables base=20 y altura=10. */
     
-    echo "<p>Calcular area y perimetro de un rectangulo</p>";
+    echo "<h4>Calcular area y perimetro de un rectangulo</h4>";
     $base =  20;
     $altura = 10;
     $area = $base * $altura;
