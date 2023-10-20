@@ -8,6 +8,7 @@ Imprima la matriz creada anteriormente.
 for ($i=0; $i < 30; $i++) { 
     $aleatorios[$i] = rand (0, 20);
 }
+echo "<h4>Imprimir matriz aleatoria</h4>";
 echo "<pre>";
 print_r($aleatorios);
 echo "</pre>";
@@ -25,11 +26,12 @@ $protagonistas = ["Batman", "Superman", "Krusty", "Bob", "Mel", "Barney"];
 
 unset($protagonistas[count($protagonistas) - 1]);
 
-echo "La posición de \"superman\" es: ".array_search("Superman", $protagonistas);
+echo "<h4>La posición de \"superman\" es: ".array_search("Superman", $protagonistas)."</h4>";
 
 array_push($protagonistas, "Carl", "Lenny", "Burns", "Lisa");
 
 sort($protagonistas);
+echo "<h4>Matriz ordenada</h4>";
 echo "<pre>";
 print_r($protagonistas);
 echo "</pre>";
