@@ -53,7 +53,7 @@
                     echo $nombre." ".$apellidos."<br />";
                     echo "Su nombre tiene ".strlen($nombre)." caracteres<br />";
                     echo "Los 3 primeros caracteres de tu nombre son: ".substr($nombre, 0, 3)."<br />";
-                    echo "La letra A fue encontrada en sus apellidos en la posición: ".(strpos(strtolower($nombre), "a") + 1)."<br />";
+                    echo "La letra A fue encontrada en sus apellidos en la posición: ".(strpos(strtolower($nombre), "a"))."<br />";
                     echo "Tu nombre en mayusculas es: ".strtoupper($nombre)."<br />";
                     echo "Sus apellidos en minusculas son: ".strtolower($apellidos)."<br />";
                     echo "Su nombre y apellidos en mayusculas son: ".strtoupper($nombre)." ".strtoupper($apellidos)."<br />";
