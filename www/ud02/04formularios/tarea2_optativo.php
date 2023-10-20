@@ -20,52 +20,54 @@
                 <input type="submit" name="submit" value="Solicitar">
             </form>
         </div>
-<?php 
-/*
-Crea un formulario para solicitar una de las siguientes bebidas:
 
-    Bebida|PVP
-    :-|:-:
-    Coca Cola|1 €
-    Pepsi Cola|0,80 €
-    Fanta Naranja|0,90 €
-    Trina Manzana|1,10 €
+        <?php 
+            /*
+            Crea un formulario para solicitar una de las siguientes bebidas:
+
+            Bebida|PVP
+            :-|:-:
+            Coca Cola|1 €
+            Pepsi Cola|0,80 €
+            Fanta Naranja|0,90 €
+            Trina Manzana|1,10 €
     
-    A mayores, necesitamos un campo adicional con la cantidad de bebidas a comprar y un botón de <kbd>Solicitar</kbd>.
+            A mayores, necesitamos un campo adicional con la cantidad de bebidas a comprar y un botón de <kbd>Solicitar</kbd>.
     
-    La aplicación mostrará algo como:
+            La aplicación mostrará algo como:
 
-    Pediste 3 botellas de Coca Cola. Precio total a pagar: 3 Euros.
-    Puedes utilizar sentencias `switch` o `if`.
-    */
+            Pediste 3 botellas de Coca Cola. Precio total a pagar: 3 Euros.
+            Puedes utilizar sentencias `switch` o `if`.
+            */
 
-    //Aquí va el código PHP que muestra la información solicitada.
+            //Aquí va el código PHP que muestra la información solicitada.
 
-    $precios = array(
-        "Coca Cola" => 1,
-        "Pepsi Cola" => 0.80,
-        "Fanta Naranja" => 0.90,
-        "Trina Manzana" => 1.10
-    );
+            $precios = array(
+                "Coca Cola" => 1,
+                "Pepsi Cola" => 0.80,
+                "Fanta Naranja" => 0.90,
+                "Trina Manzana" => 1.10
+            );
 
-    $bebida = "";
-    $cantidad = "";
+            $bebida = "";
+            $cantidad = "";
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $bebida = test_input($_POST["bebida"]);
-        $cantidad = test_input($_POST["cantidad"]);
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $bebida = test_input($_POST["bebida"]);
+                $cantidad = test_input($_POST["cantidad"]);
 
-    }
+            }
       
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
+            function test_input($data) {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+            }
 
-    echo "Pediste $cantidad botella de $bebida. Precio total a pagar: ".($cantidad * $precios[$bebida])." Euros.";
-
-?>
-</body>
+            if ($bebida != "") {
+                echo "Pediste $cantidad botella de $bebida. Precio total a pagar: ".($cantidad * $precios[$bebida])." Euros.";
+            }
+        ?>
+    </body>
 </html>
