@@ -49,11 +49,12 @@
 localización por defecto. Debes comprobar como axustar as coordenadas (latitude e lonxitude)
  predeterminadas do teu servidor.
 */
+    //Entiendo que lo que se pide es modificar las coordenadas por defecto por la de mi zona.
     function imprimir_amanecer_anochecer() {
         date_default_timezone_set('Europe/Madrid'); 
-        $latitud = 42.431;
-        $longitud = -8.64435;
-        $info = date_sun_info(time(),$latitud, $longitud);
+        ini_set("date.default_latitude", 42.431);
+        ini_set("date.default_longitude", -8.64435);
+        $info = date_sun_info(time(),ini_get('date.default_latitude'), ini_get('date.default_longitude'));
         echo "La hora del amanecer en Pontevedra es: ".date('H:i',$info["sunrise"])."<br />";
         echo "La hora del anochecer en Pontevedra es: ".date('H:i',$info["sunset"])."<br />";
     }
