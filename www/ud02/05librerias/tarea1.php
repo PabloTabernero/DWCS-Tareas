@@ -1,5 +1,4 @@
 <?php 
-
 /**Realiza los seguintes pasos:
 
 1. Crea un fichero PHP a modo de librería con todas las funciones creadas, llámale utilidades.php.
@@ -17,8 +16,6 @@ Fichero         | Contiene el `div` con `id`
 
 Modifica el `index.php` para que cargue los recursos indicados en el paso anterior
 */
-include("logo.php");
-
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +29,13 @@ include("logo.php");
 
 			<div id="header" class="container">
 
-				<?php imprimirLogo(); ?>
+				<div id="logo">
+					<h1>
+						<a href="#">PHP</a>
+					</h1>
+					<p>template design by <a href="http://www.freecsstemplates.org">FCT</a>
+					</p>
+				</div>';
 
 				<div id="menu">
 					<ul>
