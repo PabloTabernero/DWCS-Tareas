@@ -15,6 +15,15 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
     <p>Lista de usuarios con enlaces para borrar y editar</p>
+    <?php
+        //Obter conexión
+        //Seleccionar bd
+        //Consulta obtención dos usuarios (array)
+        //Crear lista de usuarios
+        //  - cada usuario mostra dous enlaces (editar e borrar)
+        //  - editar.php?id=4
+        //  - borrar.php?id=7
+    ?>
     <footer>
         <p>
             <a href='index.php'>Página de inicio</a>

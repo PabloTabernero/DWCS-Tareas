@@ -10,6 +10,14 @@
 </head>
 
 <body>
+    <?php
+        include("lib/base_datos.php");
+        $conexion = get_conexion();
+        //crear_bd_tienda($conexion);
+        //seleccionar_bd_tienda($conexion);
+        //crear_tabla_usuario($conexion);
+
+    ?>
     <h1>Tienda IES San Clemente</h1>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">

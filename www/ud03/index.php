@@ -68,6 +68,19 @@ $stmt->execute();
 echo "Nuevos registros creados correctamente.";
 
 $stmt->close();
+
+
+//7. Consulta de una tabla
+$sql = "SELECT id, nombre, apellido FROM clientes";
+$resultados = $conexion->query($sql);
+if($resultados->num_rows > 0){
+    while($row = $resultados->fetch_assoc()){
+    echo $row["id"]." - ".$row["nombre"]." ".$row["apellido"]."<br />";
+    }
+}else{
+    echo "No hay resultados.";
+}
+
 //6. Cierre de la conexión.
 $conexion->close();
 
@@ -76,7 +89,7 @@ $conexion->close();
 /********************** */
 /** MYSQL Procedimental */
 /********************** */
-/*
+
 //1. Crear la conexión
 $con = mysqli_connect('db', 'root', 'test', 'myDBProcedimental'); //Ya me conecto a la BD creada en el punto 3.
 
@@ -123,6 +136,30 @@ if(mysqli_multi_query($con, $sql)) {
     echo "No se pudo crear el registro. ".mysqli_error($con);
 }
 
+//6. Consulta de una tabla.
+$sql = "SELECT id, nombre, apellido FROM clientes";
+$resultados = mysqli_query($con, $sql);
+
+if(mysqli_num_rows($resultados) > 0) {
+    while($row = mysqli_fetch_assoc($resultados)) {
+        echo $row["id"]." - ".$row["nombre"]." ".$row["apellido"]."<br />";
+    }
+}else{
+    echo "No hay resultados.";
+}
+
+if(mysqli_num_rows($resultados) > 0) {
+    echo "<table><tr><th>ID</th><th>Nombre</th></tr>";
+    while ($row = mysqli_fetch_assoc($resultados)) {
+        echo "<tr><td>".$row["id"]."</td><td>".$row["nombre"]."</td></tr>";
+    }
+    echo "<table>";
+}else{
+    echo "No hay resultados.";
+}
+
+
+
 //6. Cierre de la conexión.
 mysqli_close($con);
 
@@ -131,7 +168,7 @@ mysqli_close($con);
 /****** */
 /** PDO */
 /****** */
-
+/*
 $servername = "db";
 $username = "root";
 $password = "test";
@@ -171,7 +208,7 @@ try{
 
     $ultimo_id = $conPDO->lastInsertId();
     echo "Se ha creado un nuevo registro con ID: $ultimo_id";
-*/
+
     //5. Consulta Preparada
     //5.1 Preparar consulta
     $stmt = $conPDO->prepare("INSERT INTO clientes (nombre, apellido, email) VALUES (:nombre, :apellido, :email)");
@@ -192,6 +229,14 @@ try{
 
     echo "Nuevos registros creados correctamente.";
 
+    $stmt = $conPDO->prepare("SELECT id, nombre, apellido FROM clientes");
+    $stmt->execute();    
+
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    foreach($stmt->fetchAll() as $row) {
+        echo $row["id"]." - ".$row["nombre"]." ".$row["apellido"]."<br />";
+    }
+
 
 }catch(PDOException $e){
 
@@ -201,5 +246,5 @@ try{
 
 //4. Cierre de la conexión.
 $conPDO = null;
-
+*/
 ?>

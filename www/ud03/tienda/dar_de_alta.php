@@ -11,11 +11,18 @@
 
 <body>
     <h1>Alta de usuario </h1>
+    <?php
+        //Comprobar se veñen datos polo $_POST
+        //Conexión
+        //Seleccionar bd
+        //Executar o INSERT
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
     <p>Formulario de alta</p>
+    <!-- o "action" chama a dar_de_alta.php de xeito reflexivo-->
     
     <footer>
         <p>
