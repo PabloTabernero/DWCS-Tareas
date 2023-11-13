@@ -43,21 +43,48 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
-
         <p>Formulario de alta</p>
-
+<!--
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" required/><br /><br />
+            <input type="text" name="nombre" id="nombre" required/>
             <label for="apellidos">Apellidos:</label>
-            <input type="text" name="apellidos" id="apellidos" required/><br /><br />
+            <input type="text" name="apellidos" id="apellidos" required/>
             <label for="edad">Edad:</label>
-            <input type="number" name="edad" id="edad" min="0" max="200" required/><br /><br />
+            <input type="number" name="edad" id="edad" min="0" max="200" required/>
             <label for="provincia">Provincia:</label>
-            <input type="text" name="provincia" id="provincia" required/><br /><br />
-            <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" /><br /><br />
+            <input type="text" name="provincia" id="provincia" required/>
+            <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" />
         </form>
-  
+    -->
+    <form method="post" class="m-4" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="nombre">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="apellidos" class="form-label">Apellidos:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="apellidos" id="apellidos">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="edad" class="form-label">Edad:</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" name="edad" id="edad" min="0" max="200">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="provincia" class="form-label">Provincia:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="provincia" id="provincia">
+            </div>
+        </div>
+        <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario">
+    </form>
+
     <footer>
         <p>
             <a href='index.php'>Página de inicio</a>
