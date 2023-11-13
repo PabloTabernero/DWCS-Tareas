@@ -23,7 +23,8 @@
         //Se comprueba si existe la tabla de usuarios, y se crea si no existe.
         if (!comprobar_tabla_usuarios($conexion)){
             crear_tabla_usuarios($conexion);
-        };  
+        };
+        $conexion->close();
     ?>
 
     <h1>Tienda IES San Clemente</h1>

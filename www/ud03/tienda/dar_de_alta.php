@@ -12,18 +12,52 @@
 <body>
     <h1>Alta de usuario </h1>
     <?php
-        //Comprobar se veñen datos polo $_POST
-        //Conexión
-        //Seleccionar bd
-        //Executar o INSERT
+        include ("lib/utilidades.php");
+        include ("lib/base_datos.php");
+        
+        $nombre = $apellidos = $edad = $provincia = "";
+        //Comprobarmos si vienen datos por el POST.
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            //Validamos los datos.
+            $nombre = test_input($_POST["nombre"]);
+            $apellidos = test_input($_POST["apellidos"]);
+            $edad = test_input($_POST["edad"]);
+            $provincia = test_input($_POST["provincia"]);
+        
+            $conexion = get_conexion();
+            seleccionar_bd_tienda($conexion);
+        
+            $stmt =$conexion->prepare("INSERT INTO usuarios (nombre, apellidos, edad, provincia) VALUES (?,?,?,?)");
+            $stmt->bind_param("ssis", $nombre, $apellidos, $edad, $provincia);
+            if ($stmt->execute()) {
+                echo "Se ha creado un nuevo registro en la tabla usuarios.";
+            } else {
+                echo "No se pudo crear el registro. Error: " . $stmt->error;
+            }
+
+            $stmt->close();
+            $conexion->close();     
+        }
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
-    <p>Formulario de alta</p>
-    <!-- o "action" chama a dar_de_alta.php de xeito reflexivo-->
-    
+
+        <p>Formulario de alta</p>
+
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required/><br /><br />
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" name="apellidos" id="apellidos" required/><br /><br />
+            <label for="edad">Edad:</label>
+            <input type="number" name="edad" id="edad" min="0" max="200" required/><br /><br />
+            <label for="provincia">Provincia:</label>
+            <input type="text" name="provincia" id="provincia" required/><br /><br />
+            <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" /><br /><br />
+        </form>
+  
     <footer>
         <p>
             <a href='index.php'>Página de inicio</a>
