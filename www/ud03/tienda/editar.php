@@ -17,24 +17,49 @@
         //Seleccionar bd
         include("lib/base_datos.php");
         include("lib/utilidades.php");
-        $conexion = get_conexion();
-        seleccionar_bd_tienda($conexion);
-    
-        $id = test_input($_GET["id"]);
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        
+            $id = test_input($_GET["id"]);
 
-        $sql = "SELECT id, nombre, apellidos, edad, provincia FROM usuarios WHERE id=$id";
-        $resultados = $conexion->query($sql);
-        $row = $resultados->fetch_assoc();
-        $id = $row["id"];
-        $nombre = $row["nombre"];
-        $apellidos = $row["apellidos"];
-        $edad = $row["edad"];
-        $provincia = $row["provincia"];
+            $conexion = get_conexion();
+            seleccionar_bd_tienda($conexion);
+            
+            $sql = "SELECT id, nombre, apellidos, edad, provincia FROM usuarios WHERE id=$id";
+            
+            $resultados = $conexion->query($sql);
+            
+            $row = $resultados->fetch_assoc();
+            
+            $id = $row["id"];
+            $nombre = $row["nombre"];
+            $apellidos = $row["apellidos"];
+            $edad = $row["edad"];
+            $provincia = $row["provincia"];
+
+            $conexion->close();
+
+        }elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
+         
+            $id = test_input($_POST["id"]);
+            $nombre = test_input($_POST["nombre"]);
+            $apellidos = test_input($_POST["apellidos"]);
+            $edad = test_input($_POST["edad"]);
+            $provincia = test_input($_POST["provincia"]);
+        
+            $conexion = get_conexion();
+            seleccionar_bd_tienda($conexion);
+        
+            $sql = "UPDATE usuarios SET nombre=\"$nombre\", apellidos=\"$apellidos\", edad=\"$edad\", provincia=\"$provincia\" WHERE id=$id";
+
+            if ($conexion->query($sql)) {
+                echo "Actualizado correctamente";
+              } else {
+                echo "Error actualizando : " . $conexion->error;
+              }
+     
+            $conexion->close();  
+        }
  
-        //Consultar datos de ese id
-
-        //Obter os datos de $_POST
-        //Executar UPDATE
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
@@ -43,6 +68,9 @@
     <p>Formulario de edición</p>
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
+            
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" id="nombre" value="<?php echo $nombre ?>" required/>
             <label for="apellidos">Apellidos:</label>
@@ -51,7 +79,7 @@
             <input type="number" name="edad" id="edad" min="0" max="200" value="<?php echo $edad ?>" required/>
             <label for="provincia">Provincia:</label>
             <input type="text" name="provincia" id="provincia" value="<?php echo $provincia ?>" required/>
-            <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" />
+            <input class="btn btn-primary" type="submit" name="submit" value="Actualizar Usuario" />
         </form>
     
     <footer>
