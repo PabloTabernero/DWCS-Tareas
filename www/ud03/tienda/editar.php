@@ -15,6 +15,22 @@
         //Obter id de $_GET
         //Conexión
         //Seleccionar bd
+        include("lib/base_datos.php");
+        include("lib/utilidades.php");
+        $conexion = get_conexion();
+        seleccionar_bd_tienda($conexion);
+    
+        $id = test_input($_GET["id"]);
+
+        $sql = "SELECT id, nombre, apellidos, edad, provincia FROM usuarios WHERE id=$id";
+        $resultados = $conexion->query($sql);
+        $row = $resultados->fetch_assoc();
+        $id = $row["id"];
+        $nombre = $row["nombre"];
+        $apellidos = $row["apellidos"];
+        $edad = $row["edad"];
+        $provincia = $row["provincia"];
+ 
         //Consultar datos de ese id
 
         //Obter os datos de $_POST
@@ -25,7 +41,18 @@
     </script>
 
     <p>Formulario de edición</p>
-    <!-- o "action" chama a editar.php de xeito reflexivo-->
+
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" value="<?php echo $nombre ?>" required/>
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" name="apellidos" id="apellidos" value="<?php echo $apellidos ?>" required/>
+            <label for="edad">Edad:</label>
+            <input type="number" name="edad" id="edad" min="0" max="200" value="<?php echo $edad ?>" required/>
+            <label for="provincia">Provincia:</label>
+            <input type="text" name="provincia" id="provincia" value="<?php echo $provincia ?>" required/>
+            <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" />
+        </form>
     
     <footer>
         <p>

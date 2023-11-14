@@ -33,8 +33,8 @@
             echo "<table class=\"m-4\"><tr><th>ID</th><th>Nombre</th><th>Apellidos</th><th>Edad</th><th>Provincia</th></tr>";
             while($row = $resultados->fetch_assoc()){
                 echo "<tr><td>".$row["id"]."</td><td>".$row["nombre"]."</td><td>".$row["apellidos"]."</td><td>".$row["edad"]."</td><td>".$row["provincia"]."</td>
-                <td><a class=\"btn btn-primary\" href=\"editar.php?id=".$row["id"]." role=\"button\"> Editar</a></td>
-                <td><a class=\"btn btn-primary\" href=\"borrar.php?id=".$row["id"]." role=\"button\"> Borrar</a></td>
+                <td><a class=\"btn btn-primary\" href=\"editar.php?id=".$row["id"]."\" role=\"button\"> Editar</a></td>
+                <td><a class=\"btn btn-primary\" href=\"borrar.php?id=".$row["id"]."\" role=\"button\"> Borrar</a></td>
                 </tr>";
             }
             echo "</table>";
