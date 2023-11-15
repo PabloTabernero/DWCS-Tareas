@@ -70,3 +70,31 @@ function alta_usuario(){
         $conexion->close();     
     }
 }
+
+//Funcion que lista los usuario de la base de datos.
+function listar_usuarios(){
+    $conexion = get_conexion();
+    seleccionar_bd_tienda($conexion);
+    
+    //Consulta obtención dos usuarios (array)
+    $sql = "SELECT id, nombre, apellidos, edad, provincia FROM usuarios";
+    
+    if(!$resultados = $conexion->query($sql)){
+        registrar_log("Fallo al realizar la consulta a la base de datos. Error: ". $conexion->error);
+    }
+    
+    //Si la consulta devuelve alguna linea, se crea un tabla para imprimir los resultados.
+    //Se crean en cada linea los botones editar y borrar utilizando el id de la BD para formar la url.
+    if ($resultados->num_rows > 0) {
+        echo "<table class=\"m-4\"><tr><th>ID</th><th>Nombre</th><th>Apellidos</th><th>Edad</th><th>Provincia</th></tr>";
+        while($row = $resultados->fetch_assoc()){
+            echo "<tr><td>".$row["id"]."</td><td>".$row["nombre"]."</td><td>".$row["apellidos"]."</td><td>".$row["edad"]."</td><td>".$row["provincia"]."</td>
+            <td><a class=\"btn btn-primary\" href=\"editar.php?id=".$row["id"]."\" role=\"button\"> Editar</a></td>
+            <td><a class=\"btn btn-primary\" href=\"borrar.php?id=".$row["id"]."\" role=\"button\"> Borrar</a></td>
+            </tr>";
+        }
+        echo "</table>";
+    }else{
+        echo "No hay resultados para mostrar.";
+    }
+}
