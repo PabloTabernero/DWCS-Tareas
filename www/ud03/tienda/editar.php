@@ -21,6 +21,7 @@
             $id = test_input($_GET["id"]);
             //Se recuperan los datos por id en un array.
             $row = recuperar_datos_usuario($id);
+            
             //Se asignan datos del array a varibles para cubrir en el formulario.
             $id = $row["id"];
             $nombre = $row["nombre"];
@@ -36,6 +37,7 @@
             $apellidos = test_input($_POST["apellidos"]);
             $edad = test_input($_POST["edad"]);
             $provincia = test_input($_POST["provincia"]);
+            
             //Se actualizan datos en la tabla de usuarios.
             actualizar_datos_usuario($id, $nombre, $apellidos, $edad, $provincia);
         }
