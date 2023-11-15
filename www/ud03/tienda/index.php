@@ -12,10 +12,8 @@
 <body>
     <?php
         include("lib/base_datos.php");
-        
         crear_bd_tienda();
         crear_tabla_usuarios();
-
     ?>
 
     <h1>Tienda IES San Clemente</h1>

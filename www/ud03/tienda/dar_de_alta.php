@@ -12,32 +12,10 @@
 <body>
     <h1>Alta de usuario </h1>
     <?php
-        include ("lib/utilidades.php");
         include ("lib/base_datos.php");
-        
-        $nombre = $apellidos = $edad = $provincia = "";
-        //Comprobarmos si vienen datos por el POST.
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //Validamos los datos.
-            $nombre = test_input($_POST["nombre"]);
-            $apellidos = test_input($_POST["apellidos"]);
-            $edad = test_input($_POST["edad"]);
-            $provincia = test_input($_POST["provincia"]);
-        
-            $conexion = get_conexion();
-            seleccionar_bd_tienda($conexion);
-        
-            $stmt =$conexion->prepare("INSERT INTO usuarios (nombre, apellidos, edad, provincia) VALUES (?,?,?,?)");
-            $stmt->bind_param("ssis", $nombre, $apellidos, $edad, $provincia);
-            if ($stmt->execute()) {
-                echo "Se ha creado un nuevo registro en la tabla usuarios.";
-            } else {
-                echo "No se pudo crear el registro. Error: " . $stmt->error;
-            }
 
-            $stmt->close();
-            $conexion->close();     
-        }
+        alta_usuario();
+        
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
@@ -56,8 +34,6 @@
             <input type="text" name="provincia" id="provincia" required/>
             <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" />
         </form>
-
-
 
     <footer>
         <p>

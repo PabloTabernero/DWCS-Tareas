@@ -43,4 +43,30 @@ function crear_tabla_usuarios(){
     $conexion->close();
 }
     
+//Función que da de alta a un usuario en la BD con la información del formulario.
+function alta_usuario(){
+    $nombre = $apellidos = $edad = $provincia = "";
+    //Comprobarmos si vienen datos por el POST.
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        //Validamos los datos.
+        $nombre = test_input($_POST["nombre"]);
+        $apellidos = test_input($_POST["apellidos"]);
+        $edad = test_input($_POST["edad"]);
+        $provincia = test_input($_POST["provincia"]);
     
+        $conexion = get_conexion();
+        seleccionar_bd_tienda($conexion);
+    
+        $stmt =$conexion->prepare("INSERT INTO usuarios (nombre, apellidos, edad, provincia) VALUES (?,?,?,?)");
+        $stmt->bind_param("ssis", $nombre, $apellidos, $edad, $provincia);
+        if ($stmt->execute()) {
+            echo "Se ha creado un nuevo registro en la tabla usuarios.";
+        } else {
+            echo "No se ha podido crear el nuevo registro en la tabla usuarios.";
+            registrar_log("No se pudo crear el registro. Error: " . $stmt->error);
+        }
+
+        $stmt->close();
+        $conexion->close();     
+    }
+}
