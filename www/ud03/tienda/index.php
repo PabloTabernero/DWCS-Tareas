@@ -12,19 +12,10 @@
 <body>
     <?php
         include("lib/base_datos.php");
+        
+        crear_bd_tienda();
+        crear_tabla_usuarios();
 
-        //Se obtiene la conexión a la BD.
-        $conexion = get_conexion();
-        //Se intenta seleccionar la tienda, sino se puede seleccionar se crea.
-        if(!seleccionar_bd_tienda($conexion)){
-            crear_bd_tienda($conexion);
-            seleccionar_bd_tienda($conexion);
-        }
-        //Se comprueba si existe la tabla de usuarios, y se crea si no existe.
-        if (!comprobar_tabla_usuarios($conexion)){
-            crear_tabla_usuarios($conexion);
-        };
-        $conexion->close();
     ?>
 
     <h1>Tienda IES San Clemente</h1>
