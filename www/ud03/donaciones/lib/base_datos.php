@@ -1,5 +1,4 @@
 <?php
-    include ("lib/utilidades.php");
 
     //Funcion que obtiene la conexión a la Base de datos.
     function get_conexion() {
@@ -109,6 +108,26 @@
         $conexion = null;
     }
 
+    //Función para dar de alta a un donante en la base de datos.
+    function dar_alta_donante($datos_formulario) {
+        try{
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
+
+            $stmt = $conexion->prepare("INSERT INTO donantes (nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil)
+                                        VALUES (:nombre, :apellidos, :edad, :grupo_sanguineo, :codigo_postal, :telefono_movil)");
+
+            $stmt->execute($datos_formulario);
+            echo "Se ha creado un nuevo registro en la tabla donantes.";
+
+        } catch(PDOException $e) {
+            echo "No se ha podido crear el nuevo registro en la tabla donantes.";
+            registrar_log("No se pudo crear el registro en la tabla donantes. Error: " . $e->getMessage());
+        
+        }
+        $stmt = null;
+        $conexion = null;
+    }
 
 
 

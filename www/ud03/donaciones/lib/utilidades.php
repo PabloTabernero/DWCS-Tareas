@@ -13,4 +13,19 @@ function registrar_log($mensaje){
     $mensaje_formato = "[$fecha_hora] $mensaje\n";
     error_log($mensaje_formato, 3, $archivo_log);
 }
+
+// Función para recoger datos del formulario POST
+function recoger_datos_post($campos) {
+    $datos_formulario = [];
+
+    foreach ($campos as $campo) {
+        if (isset($_POST[$campo])) {
+            $datos_formulario[$campo] = test_input($_POST[$campo]);
+        }
+    }
+
+    return $datos_formulario;
+}
+
+
 ?>
