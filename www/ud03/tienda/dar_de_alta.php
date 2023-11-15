@@ -13,8 +13,20 @@
     <h1>Alta de usuario </h1>
     <?php
         include ("lib/base_datos.php");
+        include ("lib/utilidades.php");
 
-        alta_usuario();
+        //Comprobarmos si vienen datos por el POST.
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nombre = $apellidos = $edad = $provincia = "";
+            
+            //Validamos los datos.
+            $nombre = test_input($_POST["nombre"]);
+            $apellidos = test_input($_POST["apellidos"]);
+            $edad = test_input($_POST["edad"]);
+            $provincia = test_input($_POST["provincia"]);
+        
+            alta_usuario($nombre, $apellidos, $edad, $provincia);
+        }
         
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

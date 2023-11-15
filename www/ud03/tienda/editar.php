@@ -12,54 +12,33 @@
 <body>
     <h1>Editar usuario </h1>
     <?php
-        //Obter id de $_GET
-        //Conexión
-        //Seleccionar bd
         include("lib/base_datos.php");
         include("lib/utilidades.php");
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        
-            $id = test_input($_GET["id"]);
 
-            $conexion = get_conexion();
-            seleccionar_bd_tienda($conexion);
-            
-            $sql = "SELECT id, nombre, apellidos, edad, provincia FROM usuarios WHERE id=$id";
-            
-            $resultados = $conexion->query($sql);
-            
-            $row = $resultados->fetch_assoc();
-            
+        //Si llegan datos por GET
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            //Se valida el id que llega por GET.
+            $id = test_input($_GET["id"]);
+            //Se recuperan los datos por id en un array.
+            $row = recuperar_datos_usuario($id);
+            //Se asignan datos del array a varibles para cubrir en el formulario.
             $id = $row["id"];
             $nombre = $row["nombre"];
             $apellidos = $row["apellidos"];
             $edad = $row["edad"];
             $provincia = $row["provincia"];
 
-            $conexion->close();
-
+        //Si llegan datos por POST
         }elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
-         
+            //Se validan los datos que llegan por POST.
             $id = test_input($_POST["id"]);
             $nombre = test_input($_POST["nombre"]);
             $apellidos = test_input($_POST["apellidos"]);
             $edad = test_input($_POST["edad"]);
             $provincia = test_input($_POST["provincia"]);
-        
-            $conexion = get_conexion();
-            seleccionar_bd_tienda($conexion);
-        
-            $sql = "UPDATE usuarios SET nombre=\"$nombre\", apellidos=\"$apellidos\", edad=\"$edad\", provincia=\"$provincia\" WHERE id=$id";
-
-            if ($conexion->query($sql)) {
-                echo "Actualizado correctamente";
-              } else {
-                echo "Error actualizando : " . $conexion->error;
-              }
-     
-            $conexion->close();  
+            //Se actualizan datos en la tabla de usuarios.
+            actualizar_datos_usuario($id, $nombre, $apellidos, $edad, $provincia);
         }
- 
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
@@ -68,7 +47,7 @@
     <p>Formulario de edición</p>
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            
+            <!-- Se utiliza un input oculto para pasar el id de usuario en el formulario.-->
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             
             <label for="nombre">Nombre:</label>
