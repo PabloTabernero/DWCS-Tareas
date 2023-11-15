@@ -135,3 +135,21 @@ function actualizar_datos_usuario($id, $nombre, $apellidos, $edad, $provincia) {
     $stmt->close();
     $conexion->close();  
 }
+
+//Funcion que borra a un usuario de la base de datos.
+function borrar_usuario($id) {
+    $conexion = get_conexion();
+    seleccionar_bd_tienda($conexion);
+
+    $stmt = $conexion->prepare("DELETE FROM usuarios WHERE id=?");
+    $stmt->bind_param("i", $id);
+
+    if($stmt->execute()) {
+        echo "Usuario eliminado correctamente.";
+    }else{
+        echo "Error eliminando usuario.";
+        registrar_log("No se puede eliminar registro de la base de datos. Error: " . $conexion->error);
+    }
+
+    $conexion->close();
+}

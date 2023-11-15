@@ -1,0 +1,1 @@
+[2023-11-15 16:30:13] Error de conexión a la base de datos: Access denied for user 'roo'@'172.18.0.3' (using password: YES)

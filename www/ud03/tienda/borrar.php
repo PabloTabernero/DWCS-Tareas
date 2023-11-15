@@ -12,20 +12,14 @@
 <body>
     <?php
         include("lib/base_datos.php");
-    include("lib/utilidades.php");
-    
-        $conexion = get_conexion();
-        seleccionar_bd_tienda($conexion);
-    
+        include("lib/utilidades.php");
+        
+        //Se valida el id que llega por GET.
         $id = test_input($_GET["id"]);
-    
-        $sql = "DELETE FROM usuarios WHERE id=$id";
-        if ($conexion->query($sql)) {
-            echo "Eliminado correctamente";
-        } else {
-            echo "Error eliminando : " . $conexion->error;
-        }
-        $conexion->close();
+
+        //Se borran los datos del usuario.
+        borrar_usuario($id);
+
     ?>
 
     <footer>
