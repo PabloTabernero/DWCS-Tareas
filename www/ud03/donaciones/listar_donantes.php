@@ -7,6 +7,12 @@
     <title>Donación Sangre</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style>
+        td,th {
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,7 +24,11 @@
     <div>
         Listado de donantes
     </div>
-
+        <?php
+            include_once("lib/base_datos.php");
+            include_once("lib/utilidades.php");
+            listar_donantes();
+        ?>
     <footer>
         <p><a href='index.php'>Página de inicio</a></p>
     </footer>

@@ -129,7 +129,30 @@
         $conexion = null;
     }
 
+    //Función para listar los donantes de la base de datos.
+    function listar_donantes() {
+        try{
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
 
+            $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil FROM donantes");
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            if ($stmt->rowCount() > 0) {
+                imprimir_listado_donantes($stmt);
+            }else{
+                echo "No hay resultados para mostrar.";
+            }
+
+        } catch(PDOException $e) {
+            echo "No se pudo realizar la busqueda.";
+            registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
+        
+        }
+        $stmt = null;
+        $conexion = null;
+    }
 
 
 

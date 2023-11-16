@@ -1,4 +1,5 @@
 <?php
+
 function test_input($data) {
             $data = trim($data);
             $data = stripslashes($data);
@@ -25,6 +26,35 @@ function recoger_datos_post($campos) {
     }
 
     return $datos_formulario;
+}
+
+//Función para imprimir en html el listado de donantes.
+function imprimir_listado_donantes($matriz) {
+    echo "<table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Grupo Sanguineo</th>
+                <th>Codigo Postal</th>
+                <th>Teléfono Movil</th>
+            </tr>";
+    foreach($matriz->fetchAll() as $linea) {
+        echo "<tr>
+                <td>".$linea["id"]."</td>
+                <td>".$linea["nombre"]."</td>
+                <td>".$linea["apellidos"]."</td>
+                <td>".$linea["edad"]."</td>
+                <td>".$linea["grupo_sanguineo"]."</td>
+                <td>".$linea["codigo_postal"]."</td>
+                <td>".$linea["telefono_movil"]."</td>
+                <td><a class=\"btn btn-primary\" href=\"donar.php?id=".$linea["id"]."\" role=\"button\"> Registrar Donación</a></td>
+                <td><a class=\"btn btn-primary\" href=\"borrar_donante.php?id=".$linea["id"]."\" role=\"button\"> Eliminar</a></td>
+                <td><a class=\"btn btn-primary\" href=\"listar_donaciones.php?id=".$linea["id"]."\" role=\"button\"> Listar Donaciones</a></td>
+            </tr>";
+    }
+    echo "</table>";
 }
 
 

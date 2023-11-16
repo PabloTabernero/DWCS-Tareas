@@ -24,6 +24,7 @@
     <!--Lista de usuarios con enlaces para borrar y editar-->
     <?php
         include ("lib/base_datos.php");
+        include ("lib/utilidades.php");
         listar_usuarios();
     ?>
     <footer>
