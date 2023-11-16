@@ -154,8 +154,65 @@
         $conexion = null;
     }
 
+    //Funcion que devuelve los datos de un donante en un array asociativo.
+    function recuperar_datos_donante($id) {
+        try{
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
+
+            $stmt = $conexion->prepare("SELECT id, nombre, apellidos FROM donantes WHERE id = :id");
+            $stmt->bindParam(':id', $id_donante);
+            $id_donante = $id;
+
+            if($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                $datos_donante = $stmt->fetch();
+                
+                $stmt = null;
+                $conexion = null;
+
+                return $datos_donante;
+
+            }else{
+                echo "No se han podido recuperar los datos del usuario.";
+                registrar_log("No se han podido recuperar los datos del usuario de la base de datos. Error: ". $stmt->error);
+        
+                $stmt = null;
+                $conexion = null;
+            }
+
+        } catch(PDOException $e) {
+            echo "No se pudo realizar la busqueda.";
+            registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
+        
+        }
+        $stmt = null;
+        $conexion = null;
+    }
 
 
+    function registrar_donacion($id, $fecha_donacion) {
+        try{
+            //Calculamos la fecha de la proxima donación permitida.
+            $fecha_proxima_donacion = date("Y-m-d", strtotime($fecha_donacion." + 4 month"));
 
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
 
+            $stmt = $conexion->prepare("INSERT INTO historico (id_donante, fecha_donacion, fecha_proxima_donacion)
+                    VALUES (:id_donante, :fecha_donacion, :fecha_proxima_donacion)");
+            $stmt->bindParam(':id_donante', $id);
+            $stmt->bindParam(':fecha_donacion', $fecha_donacion);
+            $stmt->bindParam(':fecha_proxima_donacion', $fecha_proxima_donacion);
+
+            $stmt->execute();
+            echo "Donación insertada en el sistema con exito.";
+
+        } catch(PDOException $e) {
+            echo "No se pudo registrar la donación.";
+            registrar_log("No se pudo registrar la donación en la tabla historico. Error: " . $e->getMessage());
+        }
+        $stmt = null;
+        $conexion = null;
+    }
 ?>
