@@ -1,13 +1,13 @@
 <?php
 
+    define('DB_SERVER', 'db');
+    define('DB_USERNAME', 'root');
+    define('DB_PASSWORD', 'test');
+
     //Funcion que obtiene la conexión a la Base de datos.
     function get_conexion() {
-        $servername = "db";
-        $username = "root";
-        $password = "test";
-
         try {
-            $conexion = new PDO("mysql:host=$servername", $username, $password);
+            $conexion = new PDO("mysql:host=" . DB_SERVER, DB_USERNAME, DB_PASSWORD);
             //  Forzar excepciones
             $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -78,7 +78,7 @@
                 id_donante INT NOT NULL,
                 fecha_donacion DATE NOT NULL,
                 fecha_proxima_donacion DATE NOT NULL,
-                FOREIGN KEY (id_donante) REFERENCES donantes(id)
+                FOREIGN KEY (id_donante) REFERENCES donantes(id) ON DELETE CASCADE
             )";
 
             $conexion->exec($sql);
@@ -217,30 +217,54 @@
         $conexion = null;
     }
 
-        //Función para listar los donantes de la base de datos.
-        function listar_donaciones($id_donante) {
-            try{
-                $conexion = get_conexion();
-                seleccionar_bd_donacion($conexion);
+    //Función para listar los donantes de la base de datos.
+    function listar_donaciones($id_donante) {
+        try{
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
     
-                $stmt = $conexion->prepare("SELECT fecha_donacion, fecha_proxima_donacion FROM historico WHERE id_donante= :id_donante ORDER BY fecha_donacion DESC");
-                $stmt->bindParam(':id_donante', $id_donante);
-                $stmt->execute();
+            $stmt = $conexion->prepare("SELECT fecha_donacion, fecha_proxima_donacion FROM historico WHERE id_donante= :id_donante ORDER BY fecha_donacion DESC");
+            $stmt->bindParam(':id_donante', $id_donante);
+            $stmt->execute();
     
-                $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-                if ($stmt->rowCount() > 0) {
-                    imprimir_donaciones($stmt);
-                }else{
-                    echo "No hay resultados para mostrar.";
-                }
-    
-            } catch(PDOException $e) {
-                echo "No se pudo realizar la busqueda.";
-                registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
-            
+            if ($stmt->rowCount() > 0) {
+                imprimir_donaciones($stmt);
+            }else{
+                echo "No hay resultados para mostrar.";
             }
-            $stmt = null;
-            $conexion = null;
+    
+        } catch(PDOException $e) {
+            echo "No se pudo realizar la busqueda.";
+            registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
+            
         }
+        $stmt = null;
+        $conexion = null;
+    }
+
+
+    function borrar_donante($id) {
+        try{
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
+
+            $stmt = $conexion->prepare("DELETE FROM donantes WHERE id= :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            echo "Registro borrado de la tablas donantes.";
+
+
+        } catch(PDOException $e) {
+            echo "No se pudo borrar al donante.";
+            registrar_log("No se pudo realizar el borrado en la tabla donantes. Error: " . $e->getMessage());
+            
+        }
+        $stmt = null;
+        $conexion = null;
+    }
+
+    
 ?>
