@@ -2,3 +2,4 @@
 [2023-11-16 21:30:02] No se pudo registrar la donación en la tabla historico. Error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALUES ('1', '2023-11-16', '2024-03-16')' at line 2
 [2023-11-16 21:32:37] No se pudo registrar la donación en la tabla historico. Error: SQLSTATE[HY000]: General error: 1364 Field 'id_donante' doesn't have a default value
 [2023-11-16 21:34:34] No se pudo registrar la donación en la tabla historico. Error: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined
+[2023-11-16 22:10:25] No se pudo crear el registro en la tabla donantes. Error: SQLSTATE[HY000]: General error: 3819 Check constraint 'donantes_chk_1' is violated.

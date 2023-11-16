@@ -40,6 +40,7 @@ function imprimir_listado_donantes($matriz) {
                 <th>Codigo Postal</th>
                 <th>Teléfono Movil</th>
             </tr>";
+    
     foreach($matriz->fetchAll() as $linea) {
         echo "<tr>
                 <td>".$linea["id"]."</td>
@@ -54,7 +55,26 @@ function imprimir_listado_donantes($matriz) {
                 <td><a class=\"btn btn-primary\" href=\"listar_donaciones.php?id=".$linea["id"]."\" role=\"button\"> Listar Donaciones</a></td>
             </tr>";
     }
+
     echo "</table>";
+}
+
+function imprimir_donaciones($matriz) {
+    echo "<table>
+            <tr>
+                <th>Fecha Donación</th>
+                <th>Fecha Próxima Donación</th>
+            </tr>";
+
+    foreach($matriz->fetchAll() as $linea) {
+        echo "<tr>
+                <td>".$linea["fecha_donacion"]."</td>
+                <td>".$linea["fecha_proxima_donacion"]."</td>
+              </tr>";
+    }
+
+    echo "</table>";
+
 }
 
 

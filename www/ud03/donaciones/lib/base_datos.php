@@ -160,7 +160,8 @@
             $conexion = get_conexion();
             seleccionar_bd_donacion($conexion);
 
-            $stmt = $conexion->prepare("SELECT id, nombre, apellidos FROM donantes WHERE id = :id");
+            $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil 
+                                        FROM donantes WHERE id = :id");
             $stmt->bindParam(':id', $id_donante);
             $id_donante = $id;
 
@@ -215,4 +216,31 @@
         $stmt = null;
         $conexion = null;
     }
+
+        //Función para listar los donantes de la base de datos.
+        function listar_donaciones($id_donante) {
+            try{
+                $conexion = get_conexion();
+                seleccionar_bd_donacion($conexion);
+    
+                $stmt = $conexion->prepare("SELECT fecha_donacion, fecha_proxima_donacion FROM historico WHERE id_donante= :id_donante ORDER BY fecha_donacion DESC");
+                $stmt->bindParam(':id_donante', $id_donante);
+                $stmt->execute();
+    
+                $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                if ($stmt->rowCount() > 0) {
+                    imprimir_donaciones($stmt);
+                }else{
+                    echo "No hay resultados para mostrar.";
+                }
+    
+            } catch(PDOException $e) {
+                echo "No se pudo realizar la busqueda.";
+                registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
+            
+            }
+            $stmt = null;
+            $conexion = null;
+        }
 ?>
