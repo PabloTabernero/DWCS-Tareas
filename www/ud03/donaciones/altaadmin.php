@@ -16,19 +16,21 @@
     <br>
     <h1>Alta de administrador</h1>
     <div>
-        <p>Formulario para dar de alta un administrador</p>
 
-        <form method="post" action="altaadmin.php">
+        <?php
+            include_once("lib/base_datos.php");
+            include_once("lib/utilidades.php");
 
-            <label for="nombre_usuario">Nombre de Usuario:</label>
-            <input type="text" name="nombre_usuario" id="nombre_usuario" required /> 
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required />
-  
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-            <input class="btn btn-primary" type="submit" name="submit" value="Alta Administrador" />
+                $nombre_admin = test_input($_POST["nombre_usuario"]);
+                $pass = test_input($_POST["password"]);
 
-        </form>
+                alta_administrador($nombre_admin, $pass);
+            
+                }
+        ?>
+
     </div>
 
     <footer>

@@ -266,7 +266,8 @@
         $conexion = null;
     }
 
-
+    //Funcion que busca todos los donantes de la tabla donantes que pertenecen al codigo postal y 
+    //tienen el grupo sanguineo que se pasa por argumentos.
     function buscar_donantes($codigo_postal, $grupo_sanguineo) {
         try{
             $conexion = get_conexion();
@@ -296,4 +297,29 @@
         $conexion = null;
     }
     
+
+    function alta_administrador($nombre_admin, $pass) {
+        try{
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
+
+            $stmt = $conexion->prepare("INSERT INTO administradores (nombre_usuario, pass)
+                                        VALUES (':nombre_usuario', ':pass')");
+            $stmt->bindParam(':nombre_usuario', $nombre_admin);
+            $stmt->bindParam(':pass', $pass);
+            $stmt->execute();
+
+            echo "Nuevo administrador dado de alta.";
+
+
+        } catch(PDOException $e) {
+            echo "No se pudo realizar el alta del administrador.";
+            registrar_log("No se pudo realizar el alta del administrador en la tabla administradores. Error: " . $e->getMessage());
+            
+        }
+        $stmt = null;
+        $conexion = null;
+    }
+
+
 ?>
