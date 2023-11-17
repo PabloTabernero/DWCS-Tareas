@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <?php
+    <div class="container">
+        <?php
         include ("lib/base_datos.php");
 
         crear_bd_donacion();
@@ -18,20 +19,23 @@
         crear_tabla_historico();
         crear_tabla_administradores();
 
-    ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-    </script>
-    <br>
-    <h1>Gestión donacion de Sangre</h1>
-    <div>
-        <a class="btn btn-primary" href="dar_alta_donante.php" role="button">Alta donantes</a>
-        <a class="btn btn-primary" href="buscar_donantes.php" role="button">Buscar donantes</a>
-        <a class="btn btn-primary" href="listar_donantes.php" role="button">Listar donantes</a>
-        <a class="btn btn-primary" href="dar_alta_administrador.php" role="button">Nuevos administradores</a>
-    </div>
+        ?>
 
-    <footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+        </script>
+
+        <h1 class="display-4 mt-4 mb-4">Gestión donacion de Sangre</h1>
+
+        <div class="mb-4">
+            <a class="btn btn-primary me-2" href="dar_alta_donante.php" role="button">Alta donantes</a>
+            <a class="btn btn-primary me-2" href="buscar_donantes.php" role="button">Buscar donantes</a>
+            <a class="btn btn-primary me-2" href="listar_donantes.php" role="button">Listar donantes</a>
+            <a class="btn btn-primary" href="dar_alta_administrador.php" role="button">Nuevos administradores</a>
+        </div>
+
+    </div>
+    <footer class="fixed-bottom">
         <p><a href='index.php'>Página de inicio</a></p>
     </footer>
 

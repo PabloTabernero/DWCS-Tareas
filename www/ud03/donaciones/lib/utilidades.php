@@ -31,7 +31,8 @@ function recoger_datos_post($campos) {
 //Función para imprimir en html el listado de donantes con los botones para
 //registrar y listar donaciones, y borrar donante.
 function imprimir_listado_donantes($matriz) {
-    echo "<table>
+    echo "<table class='table table-striped'>
+            <thead class='table-primary'>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
@@ -40,48 +41,55 @@ function imprimir_listado_donantes($matriz) {
                 <th>Grupo Sanguineo</th>
                 <th>Codigo Postal</th>
                 <th>Teléfono Movil</th>
-            </tr>";
+                <th class='text-center' colspan='3'>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>";
     
     foreach($matriz->fetchAll() as $linea) {
         echo "<tr>
-                <td>".$linea["id"]."</td>
-                <td>".$linea["nombre"]."</td>
-                <td>".$linea["apellidos"]."</td>
-                <td>".$linea["edad"]."</td>
-                <td>".$linea["grupo_sanguineo"]."</td>
-                <td>".$linea["codigo_postal"]."</td>
-                <td>".$linea["telefono_movil"]."</td>
-                <td><a class=\"btn btn-primary\" href=\"donar.php?id=".$linea["id"]."\" role=\"button\"> Registrar Donación</a></td>
-                <td><a class=\"btn btn-primary\" href=\"borrar_donante.php?id=".$linea["id"]."\" role=\"button\"> Eliminar</a></td>
-                <td><a class=\"btn btn-primary\" href=\"listar_donaciones.php?id=".$linea["id"]."\" role=\"button\"> Listar Donaciones</a></td>
+                <td class='align-middle text-center'>".$linea["id"]."</td>
+                <td class='align-middle text-center'>".$linea["nombre"]."</td>
+                <td class='align-middle text-center'>".$linea["apellidos"]."</td>
+                <td class='align-middle text-center'>".$linea["edad"]."</td>
+                <td class='align-middle text-center'>".$linea["grupo_sanguineo"]."</td>
+                <td class='align-middle text-center'>".$linea["codigo_postal"]."</td>
+                <td class='align-middle text-center'>".$linea["telefono_movil"]."</td>
+                <td class='align-middle text-center'><a class='btn btn-primary' href='donar.php?id=".$linea["id"]."' role='button'> Registrar Donación</a></td>
+                <td class='align-middle text-center'><a class='btn btn-primary' href='listar_donaciones.php?id=".$linea["id"]."' role='button'> Listar Donaciones</a></td>
+                <td class='align-middle text-center'><a class='btn btn-danger' href='borrar_donante.php?id=".$linea["id"]."' role='button'> Eliminar</a></td>      
             </tr>";
     }
 
-    echo "</table>";
+    echo "</tbody></table>";
 }
 
 //Función para imprimir en html las fechas de las donaciones de cada donante.
 function imprimir_donaciones($matriz) {
-    echo "<table>
+    echo "<table class='table table-striped'>
+            <thead class='table-primary'>
             <tr>
                 <th>Fecha Donación</th>
                 <th>Fecha Próxima Donación</th>
-            </tr>";
+            </tr>
+            </thead>
+            <tbody>";
 
     foreach($matriz->fetchAll() as $linea) {
         echo "<tr>
-                <td>".$linea["fecha_donacion"]."</td>
-                <td>".$linea["fecha_proxima_donacion"]."</td>
+                <td class='align-middle text-center'>".$linea["fecha_donacion"]."</td>
+                <td class='align-middle text-center'>".$linea["fecha_proxima_donacion"]."</td>
               </tr>";
     }
 
-    echo "</table>";
+    echo "</tbody></table>";
 
 }
 
 //Funcion para imprimir en html el listado de donantes sin botones.
 function imprimir_busqueda_donantes($matriz) {
-    echo "<table>
+    echo "<table class='table table-striped'>
+            <thead class='table-primary'>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
@@ -90,21 +98,23 @@ function imprimir_busqueda_donantes($matriz) {
                 <th>Grupo Sanguineo</th>
                 <th>Codigo Postal</th>
                 <th>Teléfono Movil</th>
-            </tr>";
+            </tr>
+            </thead>
+            <tbody>";
     
     foreach($matriz->fetchAll() as $linea) {
         echo "<tr>
-                <td>".$linea["id"]."</td>
-                <td>".$linea["nombre"]."</td>
-                <td>".$linea["apellidos"]."</td>
-                <td>".$linea["edad"]."</td>
-                <td>".$linea["grupo_sanguineo"]."</td>
-                <td>".$linea["codigo_postal"]."</td>
-                <td>".$linea["telefono_movil"]."</td>
+                <td class='align-middle text-center'>".$linea["id"]."</td>
+                <td class='align-middle text-center'>".$linea["nombre"]."</td>
+                <td class='align-middle text-center'>".$linea["apellidos"]."</td>
+                <td class='align-middle text-center'>".$linea["edad"]."</td>
+                <td class='align-middle text-center'>".$linea["grupo_sanguineo"]."</td>
+                <td class='align-middle text-center'>".$linea["codigo_postal"]."</td>
+                <td class='align-middle text-center'>".$linea["telefono_movil"]."</td>
             </tr>";
     }
 
-    echo "</table>";
+    echo "</tbody></table>";
 }
 
 ?>

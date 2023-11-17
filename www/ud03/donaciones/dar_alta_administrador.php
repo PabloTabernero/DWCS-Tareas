@@ -10,28 +10,33 @@
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-    </script>
-    <br>
-    <h1>Alta de administrador</h1>
-    <div>
-        <p>Formulario para dar de alta un administrador</p>
+    <div class="container">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+        </script>
 
-        <form method="post" action="altaadmin.php">
+        <h1 class="display-4 mt-4 mb-4">Alta de administrador</h1>
 
-            <label for="nombre_usuario">Nombre de Usuario:</label>
-            <input type="text" name="nombre_usuario" id="nombre_usuario" required /> 
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required />
-  
+        <div class="mb-4">
+            <p class="fs-4">Formulario para dar de alta un administrador</p>
 
-            <input class="btn btn-primary" type="submit" name="submit" value="Alta Administrador" />
+            <form method="post" action="altaadmin.php">
 
-        </form>
+                <div class="col-md-4 mb-3">
+                    <label for="nombre_usuario" class="form-label">Nombre de Usuario:</label>
+                    <input type="text" class="form-control" name="nombre_usuario" id="nombre_usuario" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" class="form-control" id="password" name="password" required />
+                </div>
+
+                <input class="btn btn-primary" type="submit" name="submit" value="Alta Administrador" />
+
+            </form>
+        </div>
     </div>
-
-    <footer>
+    <footer class="fixed-bottom">
         <p><a href='index.php'>Página de inicio</a></p>
     </footer>
 

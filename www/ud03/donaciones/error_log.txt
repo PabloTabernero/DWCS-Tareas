@@ -5,3 +5,5 @@
 [2023-11-16 22:10:25] No se pudo crear el registro en la tabla donantes. Error: SQLSTATE[HY000]: General error: 3819 Check constraint 'donantes_chk_1' is violated.
 [2023-11-16 23:30:11] No se pudo realizar el borrado en la tabla donantes. Error: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`donacion`.`historico`, CONSTRAINT `historico_ibfk_1` FOREIGN KEY (`id_donante`) REFERENCES `donantes` (`id`))
 [2023-11-17 20:18:40] No se pudo realizar el alta del administrador en la tabla administradores. Error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ':nombre_usuario' for key 'administradores.PRIMARY'
+[2023-11-17 22:20:48] No se pudo realizar el alta del administrador en la tabla administradores. Error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ':nombre_usuario' for key 'administradores.PRIMARY'
+[2023-11-17 22:22:14] No se pudo realizar el alta del administrador en la tabla administradores. Error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ':nombre_usuario' for key 'administradores.PRIMARY'

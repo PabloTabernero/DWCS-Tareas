@@ -10,12 +10,14 @@
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-    </script>
-    <br>
-    <h1>Alta de donante</h1>
-    <?php
+    <div class="container">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+        </script>
+
+        <h1 class="display-4 mt-4 mb-4">Alta de donante</h1>
+        
+        <?php
         include ("lib/base_datos.php");
         include ("lib/utilidades.php");
 
@@ -28,39 +30,53 @@
             //Se pasan los datos a la función alta donante para darlos de alta en la bd.
             dar_alta_donante($datos_formulario);
         }
-    ?>
-    <div>
-        <p>Formulario para dar de alta un donante</p>
+        ?>
 
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" required/>
-            <label for="apellidos">Apellidos:</label>
-            <input type="text" name="apellidos" id="apellidos" required/>
-            <label for="edad">Edad:</label>
-            <input type="number" name="edad" id="edad" min="18" max="60" required/>
-            <label for="grupo_sanguineo">Grupo Sanguineo:</label>
-            <select id="grupo_sanguineo" name="grupo_sanguineo" required>
-                <option value="O-">O-</option>
-                <option value="O+">O+</option>
-                <option value="A-">A-</option>
-                <option value="A+">A+</option>
-                <option value="B-">B-</option>
-                <option value="B+">B+</option>
-                <option value="AB-">AB-</option>
-                <option value="AB+">AB+</option>
-            </select>
-            <label for="codigo_postal">Codigo Postal:</label>
-            <input type="number" name="codigo_postal" id="codigo_postal" min="01000" max="52999" pattern="[0-9]{5}" title="Ingrese un código postal válido de 5 dígitos" required/>
-            <label for="telefono_movil">Telefono Movil:</label>
-            <input type="number" name="telefono_movil" id="telefono_movil" pattern="[6-7][0-9]{8}" title="Ingrese un número de teléfono móvil válido de 9 dígitos" required/><br /><br />
+        <div class="mb-4">
+            <p class="fs-4">Formulario para dar de alta un donante</p>
 
-            <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" />
-        </form>
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+
+                <div class="col-md-4 mb-3">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" name="nombre" id="nombre" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="apellidos" class="form-label">Apellidos:</label>
+                    <input type="text" class="form-control" name="apellidos" id="apellidos" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="edad" class="form-label">Edad:</label>
+                    <input type="number" class="form-control" name="edad" id="edad" min="18" max="60" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="grupo_sanguineo" class="form-label">Grupo Sanguineo:</label>
+                    <select class="form-select" id="grupo_sanguineo" name="grupo_sanguineo" required>
+                        <option value="O-">O-</option>
+                        <option value="O+">O+</option>
+                        <option value="A-">A-</option>
+                        <option value="A+">A+</option>
+                        <option value="B-">B-</option>
+                        <option value="B+">B+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="AB+">AB+</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="codigo_postal" class="form-label">Codigo Postal:</label>
+                    <input type="number" class="form-control" name="codigo_postal" id="codigo_postal" min="01000"
+                        max="52999" pattern="[0-9]{5}" title="Ingrese un código postal válido de 5 dígitos" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="telefono_movil" class="form-label">Telefono Movil:</label>
+                    <input type="tel" class="form-control" name="telefono_movil" id="telefono_movil" required />
+                </div>
+                <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" />
+                <input class="btn btn-primary" type="reset" name="reset" value="Borrar Formulario" />
+            </form>
+        </div>
     </div>
-
-    <footer>
+    <footer class="fixed-bottom">
         <p><a href='index.php'>Página de inicio</a></p>
     </footer>
 

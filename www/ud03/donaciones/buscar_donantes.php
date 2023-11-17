@@ -7,16 +7,11 @@
     <title>Donación Sangre</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <style>
-        td,th {
-            padding: 5px;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
-    <?php
+    <div class="container">
+        <?php
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
             $codigo_postal = $grupo_sanguineo = $listado_donantes = "";
@@ -28,43 +23,47 @@
                 $listado_donantes = buscar_donantes($codigo_postal, $grupo_sanguineo);
             }
     ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-    </script>
-    <br>
-    <h1>Buscar donantes</h1>
-    <div>
-        <p>Formulario para buscar donantes</p>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+        </script>
 
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <h1 class="display-4 mt-4 mb-4">Buscar donantes</h1>
 
-            <label for="codigo_postal">Codigo Postal:</label>
-            <input type="search" name="codigo_postal" id="codigo_postal" required /> 
-            <label for="grupo_sanguineo">Grupo Sanguineo:</label>
-            <select id="grupo_sanguineo" name="grupo_sanguineo" required >
-                <option value="O-">O-</option>
-                <option value="O+">O+</option>
-                <option value="A-">A-</option>
-                <option value="A+">A+</option>
-                <option value="B-">B-</option>
-                <option value="B+">B+</option>
-                <option value="AB-">AB-</option>
-                <option value="AB+">AB+</option>
-            </select>
+        <div class="mb-4">
+            <p class="fs-4">Formulario para buscar donantes</p>
 
-            <input class="btn btn-primary" type="submit" name="submit" value="Buscar" />
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
-        </form>
+                <div class="col-md-4 mb-3 form-outline">
+                    <label for="codigo_postal" class="form-label">Codigo Postal:</label>
+                    <input type="search" class="form-control" name="codigo_postal" id="codigo_postal" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="grupo_sanguineo" class="form-label">Grupo Sanguineo:</label>
+                    <select class="form-select" id="grupo_sanguineo" name="grupo_sanguineo" required>
+                        <option value="O-">O-</option>
+                        <option value="O+">O+</option>
+                        <option value="A-">A-</option>
+                        <option value="A+">A+</option>
+                        <option value="B-">B-</option>
+                        <option value="B+">B+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="AB+">AB+</option>
+                    </select>
+                </div>
+                <input class="btn btn-primary" type="submit" name="submit" value="Buscar" />
+                <input class="btn btn-primary" type="reset" name="reset" value="Borrar Formulario" />
+            </form>
 
-        <?php 
+            <?php 
             if($listado_donantes != "") {
                 imprimir_busqueda_donantes($listado_donantes);
             }
         ?>
-
-    <footer>
-        <p><a href='index.php'>Página de inicio</a></p>
-    </footer>
+        </div>
+        <footer class="fixed-bottom">
+            <p><a href='index.php'>Página de inicio</a></p>
+        </footer>
 
 </body>
 
