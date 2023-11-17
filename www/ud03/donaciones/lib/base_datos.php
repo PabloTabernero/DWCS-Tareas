@@ -244,7 +244,7 @@
         $conexion = null;
     }
 
-
+    //Función que borra un donante de la base de datos.
     function borrar_donante($id) {
         try{
             $conexion = get_conexion();
@@ -266,5 +266,34 @@
         $conexion = null;
     }
 
+
+    function buscar_donantes($codigo_postal, $grupo_sanguineo) {
+        try{
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
+
+            $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil
+                                        FROM donantes WHERE (codigo_postal = :codigo_postal AND grupo_sanguineo = :grupo_sanguineo)");
+            $stmt->bindParam(':codigo_postal', $codigo_postal);
+            $stmt->bindParam(':grupo_sanguineo', $grupo_sanguineo);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+            if ($stmt->rowCount() > 0) {
+                return($stmt);
+            }else{
+                echo "No hay donantes compatibles con los criterios de busqueda.";
+            }
+    
+
+        } catch(PDOException $e) {
+            echo "No se pudo realizar la busqueda.";
+            registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
+            
+        }
+        $stmt = null;
+        $conexion = null;
+    }
     
 ?>
