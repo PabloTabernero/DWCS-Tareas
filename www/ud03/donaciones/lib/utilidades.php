@@ -34,13 +34,13 @@ function imprimir_listado_donantes($matriz) {
     echo "<table class='table table-striped'>
             <thead class='table-primary'>
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Edad</th>
-                <th>Grupo Sanguineo</th>
-                <th>Codigo Postal</th>
-                <th>Teléfono Movil</th>
+                <th class='text-center'>ID</th>
+                <th class='text-center'>Nombre</th>
+                <th class='text-center'>Apellidos</th>
+                <th class='text-center'>Edad</th>
+                <th class='text-center'>Grupo Sanguineo</th>
+                <th class='text-center'>Codigo Postal</th>
+                <th class='text-center'>Teléfono</th>
                 <th class='text-center' colspan='3'>Acciones</th>
             </tr>
             </thead>
@@ -91,13 +91,13 @@ function imprimir_busqueda_donantes($matriz) {
     echo "<table class='table table-striped'>
             <thead class='table-primary'>
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Edad</th>
-                <th>Grupo Sanguineo</th>
-                <th>Codigo Postal</th>
-                <th>Teléfono Movil</th>
+                <th class='text-center'>ID</th>
+                <th class='text-center'>Nombre</th>
+                <th class='text-center'>Apellidos</th>
+                <th class='text-center'>Edad</th>
+                <th class='text-center'>Grupo Sanguineo</th>
+                <th class='text-center'>Codigo Postal</th>
+                <th class='text-center'>Teléfono</th>
             </tr>
             </thead>
             <tbody>";

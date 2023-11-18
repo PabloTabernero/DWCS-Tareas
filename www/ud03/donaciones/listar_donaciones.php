@@ -10,8 +10,11 @@
 </head>
 
 <body>
-    <div class="container">
-        <?php
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
+
+    <?php
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
         $id = "";
@@ -20,38 +23,74 @@
         
             $id = test_input($_GET["id"]);
 
-            //Se recuperan los datos del donante para poder mostrarlos en el encabezado.
+            //Se recuperan los datos del donante.
             $datos_donante = recuperar_datos_donante($id);
+            //Se recorre el array con los datos del donante recuperados y se crean las variables con el 
+            //nombre de la clave del array.
+            foreach($datos_donante as $clave => $valor) {
+                $$clave = $valor;
+            }
         }
-
     ?>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-        </script>
+    <div class="container">
 
-        <h1 class="display-4 mt-4 mb-4">Gestión donacion de Sangre</h1>
+        <!-- Título principal y navbar-->
+        <header class="mb-4">
+            <h1 class="display-4">Gestión Donación de Sangre</h1>
 
-        <div class="mb-4">
-            <p class="fs-4">Datos del donante</p>
-            <div class="col-md-4 mb-3">
-                <p>Nombre: <?php echo $datos_donante["nombre"]; ?></p>
-                <p>Apellidos: <?php echo $datos_donante["apellidos"]; ?></p>
-                <p>Edad: <?php echo $datos_donante["edad"]; ?></p>
-                <p>Grupo Sanguineo: <?php echo $datos_donante["grupo_sanguineo"]; ?></p>
+            <nav class="navbar navbar-light bg-light">
+                <ul class="nav nav-pills justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="index.php">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="dar_alta_donante.php">Alta donantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="buscar_donantes.php">Buscar donantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active me-2" href="listar_donantes.php">Listar donantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dar_alta_administrador.php">Nuevos administradores</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Titulo secundario, tarjeta con datos donante y tabla con fecha de donaciones-->
+        <article>
+            <div class="mb-4">
+                <h2 class="fs-4">Listado de donaciones</h2>
             </div>
-
-            <div class="col-md-4 mb-3">
-                <p class="fs-4">Listado de donaciones</p>
-
+            <div class="mb-4">
+                <div class="card col-5 mb-4">
+                    <div class="card-header">
+                        Datos donante
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Nombre: <?php echo $nombre ?></p>
+                        <p class="card-text">Apellidos: <?php echo $apellidos ?></p>
+                        <p class="card-text">Edad: <?php echo $edad ?></p>
+                        <p class="card-text">Grupo sanguineo: <?php echo $grupo_sanguineo ?></p>
+                        <p class="card-text">Código postal: <?php echo $codigo_postal ?></p>
+                        <p class="card-text">Teléfono móvil: <?php echo $telefono_movil ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
                 <?php listar_donaciones($id) ?>
             </div>
-        </div>
     </div>
+    </article>
     <footer class="fixed-bottom">
-        <p><a href='index.php'>Página de inicio</a></p>
-    </footer>
-
+            <div class="container">
+                <p class="fs-8">&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
 </body>
 
 </html>
