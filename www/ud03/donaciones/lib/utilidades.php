@@ -31,8 +31,8 @@ function recoger_datos_post($campos) {
 //Función para imprimir en html el listado de donantes con los botones para
 //registrar y listar donaciones, y borrar donante.
 function imprimir_listado_donantes($matriz) {
-    echo "<table class='table table-striped'>
-            <thead class='table-primary'>
+    echo "<table class='table table-striped table-hover'>
+            <thead>
             <tr>
                 <th class='text-center'>ID</th>
                 <th class='text-center'>Nombre</th>
@@ -55,9 +55,9 @@ function imprimir_listado_donantes($matriz) {
                 <td class='align-middle text-center'>".$linea["grupo_sanguineo"]."</td>
                 <td class='align-middle text-center'>".$linea["codigo_postal"]."</td>
                 <td class='align-middle text-center'>".$linea["telefono_movil"]."</td>
-                <td class='align-middle text-center'><a class='btn btn-primary' href='donar.php?id=".$linea["id"]."' role='button'> Registrar Donación</a></td>
-                <td class='align-middle text-center'><a class='btn btn-primary' href='listar_donaciones.php?id=".$linea["id"]."' role='button'> Listar Donaciones</a></td>
-                <td class='align-middle text-center'><a class='btn btn-danger' href='borrar_donante.php?id=".$linea["id"]."' role='button'> Eliminar</a></td>      
+                <td class='align-middle text-center'><a class='btn btn btn-outline-primary' href='donar.php?id=".$linea["id"]."' role='button'> Registrar Donación</a></td>
+                <td class='align-middle text-center'><a class='btn btn btn-outline-primary' href='listar_donaciones.php?id=".$linea["id"]."' role='button'> Listar Donaciones</a></td>
+                <td class='align-middle text-center'><a class='btn btn-outline-danger' href='borrar_donante.php?id=".$linea["id"]."' role='button'> Eliminar</a></td>      
             </tr>";
     }
 
@@ -86,7 +86,8 @@ function imprimir_donaciones($matriz) {
 
 }
 
-//Funcion para imprimir en html el listado de donantes sin botones.
+//Funcion para imprimir en html el listado de donantes que pueden realizar una donación.
+//Cuya fecha de proxima donacion es menor que la fecha actual, incluye a los que no han donado nunca.
 function imprimir_busqueda_donantes($matriz) {
     echo "<table class='table table-striped'>
             <thead class='table-primary'>
@@ -103,17 +104,21 @@ function imprimir_busqueda_donantes($matriz) {
             <tbody>";
     
     foreach($matriz->fetchAll() as $linea) {
-        echo "<tr>
-                <td class='align-middle text-center'>".$linea["id"]."</td>
-                <td class='align-middle text-center'>".$linea["nombre"]."</td>
-                <td class='align-middle text-center'>".$linea["apellidos"]."</td>
-                <td class='align-middle text-center'>".$linea["edad"]."</td>
-                <td class='align-middle text-center'>".$linea["grupo_sanguineo"]."</td>
-                <td class='align-middle text-center'>".$linea["codigo_postal"]."</td>
-                <td class='align-middle text-center'>".$linea["telefono_movil"]."</td>
-            </tr>";
-    }
 
+        $fecha_actual = date("Y-m-d", strtotime(date('Y-m-d')));
+
+        if ($linea["fecha_proxima_donacion"] < $fecha_actual) {
+            echo "<tr>
+            <td class='align-middle text-center'>".$linea["id"]."</td>
+            <td class='align-middle text-center'>".$linea["nombre"]."</td>
+            <td class='align-middle text-center'>".$linea["apellidos"]."</td>
+            <td class='align-middle text-center'>".$linea["edad"]."</td>
+            <td class='align-middle text-center'>".$linea["grupo_sanguineo"]."</td>
+            <td class='align-middle text-center'>".$linea["codigo_postal"]."</td>
+            <td class='align-middle text-center'>".$linea["telefono_movil"]."</td>
+        </tr>";
+        }
+    }
     echo "</tbody></table>";
 }
 

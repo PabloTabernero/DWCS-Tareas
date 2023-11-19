@@ -206,8 +206,14 @@
             $stmt->bindParam(':fecha_donacion', $fecha_donacion);
             $stmt->bindParam(':fecha_proxima_donacion', $fecha_proxima_donacion);
 
-            $stmt->execute();
-            echo "Donación insertada en el sistema con exito.";
+            $donacion = obtener_fecha_proxima_donacion($id);
+ 
+            if($donacion < $fecha_donacion) {
+                $stmt->execute();
+                echo "Donación insertada en el sistema con exito.";
+            }else{
+                echo "No se puede realizar la donación hasta el $fecha_proxima_donacion.";
+            }
 
         } catch(PDOException $e) {
             echo "No se pudo registrar la donación.";
@@ -273,8 +279,11 @@
             $conexion = get_conexion();
             seleccionar_bd_donacion($conexion);
 
-            $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil
-                                        FROM donantes WHERE (codigo_postal = :codigo_postal AND grupo_sanguineo = :grupo_sanguineo)");
+            //Consulta para obtener la una tabla con todos los clientes y su fecha a partir de la cual podrían donar(fecha_proxima_donacion).
+            $stmt = $conexion->prepare("SELECT d.id, d.nombre, d.apellidos, d.edad, d.grupo_sanguineo, d.codigo_postal, d.telefono_movil, max(h.fecha_proxima_donacion) AS fecha_proxima_donacion
+                                        FROM donantes d LEFT JOIN historico h ON d.id = h.id_donante 
+                                        WHERE (codigo_postal = :codigo_postal AND grupo_sanguineo = :grupo_sanguineo)
+                                        GROUP BY d.id");
             $stmt->bindParam(':codigo_postal', $codigo_postal);
             $stmt->bindParam(':grupo_sanguineo', $grupo_sanguineo);
             $stmt->execute();
@@ -284,9 +293,8 @@
             if ($stmt->rowCount() > 0) {
                 return($stmt);
             }else{
-                echo "No hay donantes compatibles con los criterios de busqueda.";
+                return "";
             }
-    
 
         } catch(PDOException $e) {
             echo "No se pudo realizar la busqueda.";
@@ -297,7 +305,7 @@
         $conexion = null;
     }
     
-
+    //Funcion que da de alta un administrador en la tabla de administradores.
     function alta_administrador($nombre_admin, $pass) {
         try{
             $conexion = get_conexion();
@@ -321,5 +329,25 @@
         $conexion = null;
     }
 
+    //Función que devuelve la fecha a partir de la cual un donante puede volver a donar.
+    function obtener_fecha_proxima_donacion($id) {
+        try {
+            $conexion = get_conexion();
+            seleccionar_bd_donacion($conexion);
+
+            $stmt = $conexion->prepare("SELECT max(fecha_proxima_donacion) FROM historico WHERE id_donante = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $resultado = $stmt->fetchColumn();
+
+            return $resultado;
+
+        } catch(PDOException $e) {
+            registrar_log("Error obteniendo la fecha de la proxima donación. Error: " . $e.getMessage());
+        }
+        $stmt = null;
+        $conexion = null;
+    }
 
 ?>

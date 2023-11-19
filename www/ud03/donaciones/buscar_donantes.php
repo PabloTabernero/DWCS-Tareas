@@ -22,6 +22,8 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $codigo_postal = test_input($_POST["codigo_postal"]);
                 $grupo_sanguineo = test_input($_POST["grupo_sanguineo"]);
+                $listado_donantes = buscar_donantes($codigo_postal, $grupo_sanguineo);
+                
             }
     ?>
 
@@ -60,7 +62,9 @@
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="col-md-4 mb-3 form-outline">
                         <label for="codigo_postal" class="form-label">Codigo Postal:</label>
-                        <input type="search" class="form-control" name="codigo_postal" id="codigo_postal" required />
+                        <input type="number" class="form-control" name="codigo_postal" id="codigo_postal"
+                            pattern="/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/"
+                            title="Ingrese un código postal español válido de 5 dígitos" required />
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="grupo_sanguineo" class="form-label">Grupo Sanguineo:</label>
@@ -83,10 +87,10 @@
                 <?php 
                     //Se recupera el listado de donantes compatibles con la busqueda.
                     //Si no hay ninguno se imprime un mensaje.
-                    $listado_donantes = buscar_donantes($codigo_postal, $grupo_sanguineo);
-                    
-                    if($listado_donantes != "") {
+                    if($listado_donantes != "") {  
                         imprimir_busqueda_donantes($listado_donantes);
+                    }elseif ($codigo_postal != "") {
+                        echo "No hay donantes compatibles con los criterios de busqueda.";
                     }
                 ?>
             </div>
@@ -94,7 +98,8 @@
 
         <footer class="fixed-bottom">
             <div class="container">
-                <p class="fs-8">&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>
+                <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>
     </div>

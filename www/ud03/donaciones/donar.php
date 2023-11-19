@@ -110,7 +110,8 @@
 
         <footer class="fixed-bottom">
             <div class="container">
-                <p class="fs-8">&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>
+                <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>
     </div>

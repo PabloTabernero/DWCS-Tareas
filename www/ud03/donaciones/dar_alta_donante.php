@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -58,7 +58,8 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="edad" class="form-label">Edad:</label>
-                        <input type="number" class="form-control" name="edad" id="edad" min="18" max="60" required />
+                        <input type="number" class="form-control" name="edad" id="edad" min="18" max="65"
+                            title="Por favor, introduzca una edad válida (entre 18 y 65)." required />
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="grupo_sanguineo" class="form-label">Grupo Sanguineo:</label>
@@ -75,13 +76,15 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="codigo_postal" class="form-label">Codigo Postal:</label>
-                        <input type="number" class="form-control" name="codigo_postal" id="codigo_postal" min="01000"
-                            max="52999" pattern="[0-9]{5}" title="Ingrese un código postal válido de 5 dígitos"
-                            required />
+                        <input type="number" class="form-control" name="codigo_postal" id="codigo_postal"
+                            pattern="/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/"
+                            title="Ingrese un código postal español válido de 5 dígitos" required />
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="telefono_movil" class="form-label">Telefono Movil:</label>
-                        <input type="tel" class="form-control" name="telefono_movil" id="telefono_movil" required />
+                        <input type="tel" class="form-control" name="telefono_movil" id="telefono_movil" maxlength="9" pattern="^[6-9]\d{8}$" 
+                            title="Introduce un número de teléfono móvil español válido. Debe comenzar con un dígito del 6 al 9, seguido por 8 dígitos numéricos."
+                            required />
                     </div>
                     <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" />
                     <input class="btn btn-primary" type="reset" name="reset" value="Borrar Formulario" />
@@ -108,7 +111,9 @@
 
         <footer>
             <div class="container">
-                <p class="fs-8">&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small>
+                </p>
+                <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>
     </div>
