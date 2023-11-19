@@ -10,48 +10,104 @@
 </head>
 
 <body>
-    <h1>Alta de usuario </h1>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
+
     <?php
         include ("lib/base_datos.php");
         include ("lib/utilidades.php");
+        $nombre = $apellidos = $edad = $provincia = $resultado_alta = "";
 
         //Comprobarmos si vienen datos por el POST.
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $nombre = $apellidos = $edad = $provincia = "";
-            
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {    
             //Validamos los datos.
             $nombre = test_input($_POST["nombre"]);
             $apellidos = test_input($_POST["apellidos"]);
             $edad = test_input($_POST["edad"]);
             $provincia = test_input($_POST["provincia"]);
-        
-            alta_usuario($nombre, $apellidos, $edad, $provincia);
+
+            $resultado_alta = alta_usuario($nombre, $apellidos, $edad, $provincia);
         }
-        
+
     ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-    </script>
 
-        <p>Formulario de alta</p>
+    <div class="container">
 
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" required/>
-            <label for="apellidos">Apellidos:</label>
-            <input type="text" name="apellidos" id="apellidos" required/>
-            <label for="edad">Edad:</label>
-            <input type="number" name="edad" id="edad" min="0" max="200" required/>
-            <label for="provincia">Provincia:</label>
-            <input type="text" name="provincia" id="provincia" required/>
-            <input class="btn btn-primary" type="submit" name="submit" value="Alta Usuario" />
-        </form>
+        <header class="mb-4 bg-light">
+            <h1 class="display-4 text-center">Tienda IES San Clemente</h1>
 
-    <footer>
-        <p>
-            <a href='index.php'>Página de inicio</a>
-        </p>
-    </footer>
+            <nav class="navbar navbar-light bg-light">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dar_de_alta.php">Alta usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="listar.php">Listar usuarios</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <article>
+            <div class="container-fluid bg-white min-vh-100">
+                <h2 class="text-center mt-4">Alta de usuario</h2>
+                <p class="text-center">Formulario de alta</p>
+
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="mx-auto"
+                    style="max-width: 400px;">
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" name="nombre" id="nombre" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="apellidos" class="form-label">Apellidos:</label>
+                        <input type="text" class="form-control" name="apellidos" id="apellidos" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edad" class="form-label">Edad:</label>
+                        <input type="number" class="form-control" name="edad" id="edad" min="0" max="200" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="provincia" class="form-label">Provincia:</label>
+                        <input type="text" class="form-control" name="provincia" id="provincia" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Alta Usuario" />
+                    </div>
+                </form>
+
+                <?php
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                        if($resultado_alta == true) {
+                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Se ha creado un nuevo registro en la tabla usuarios.</div>";
+                        }else{
+                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>No se ha podido crear el nuevo registro en la tabla usuarios.</div>"; 
+                        }
+                    }
+                ?>
+
+            </div>
+        </article>
+
+        <footer class="fixed-bottom">
+            <div class="container bg-light">
+                <a href='index.php'>Página de inicio</a>
+                <p class="mb-0"><small>&copy; 2023 2023 Gestión Tienda IES San Clemente. Todos los derechos
+                        reservados.</small>
+                </p>
+                <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
+            </div>
+        </footer>
+    </div>
 </body>
 
 </html>

@@ -51,9 +51,9 @@ function alta_usuario($nombre, $apellidos, $edad, $provincia) {
     $stmt = $conexion->prepare("INSERT INTO usuarios (nombre, apellidos, edad, provincia) VALUES (?,?,?,?)");
     $stmt->bind_param("ssis", $nombre, $apellidos, $edad, $provincia);
     if ($stmt->execute()) {
-        echo "Se ha creado un nuevo registro en la tabla usuarios.";
+        return true;
     } else {
-        echo "No se ha podido crear el nuevo registro en la tabla usuarios.";
+        return false; 
         registrar_log("No se pudo crear el registro. Error: " . $stmt->error);
     }
 
@@ -76,14 +76,7 @@ function listar_usuarios() {
     //Si la consulta devuelve alguna linea, se crea un tabla para imprimir los resultados.
     //Se crean en cada linea los botones editar y borrar utilizando el id de la BD para formar la url.
     if ($resultados->num_rows > 0) {
-        echo "<table class=\"m-4\"><tr><th>ID</th><th>Nombre</th><th>Apellidos</th><th>Edad</th><th>Provincia</th></tr>";
-        while($row = $resultados->fetch_assoc()){
-            echo "<tr><td>".$row["id"]."</td><td>".$row["nombre"]."</td><td>".$row["apellidos"]."</td><td>".$row["edad"]."</td><td>".$row["provincia"]."</td>
-            <td><a class=\"btn btn-primary\" href=\"editar.php?id=".$row["id"]."\" role=\"button\"> Editar</a></td>
-            <td><a class=\"btn btn-primary\" href=\"borrar.php?id=".$row["id"]."\" role=\"button\"> Borrar</a></td>
-            </tr>";
-        }
-        echo "</table>";
+        imprimir_listado_usuarios($resultados);
     }else{
         echo "No hay resultados para mostrar.";
     }
