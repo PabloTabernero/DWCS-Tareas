@@ -54,8 +54,8 @@
 
         <article>
             <div class="container-fluid bg-white min-vh-100">
-                <h2 class="text-center mt-4">Alta de usuario</h2>
-                <p class="text-center">Formulario de alta</p>
+                <h2 class="text-center mt-4 mb-4">Alta de usuario</h2>
+                <p class="text-center mb-0">Formulario de alta</p>
 
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="mx-auto"
                     style="max-width: 400px;">
@@ -80,7 +80,7 @@
                         <input type="text" class="form-control" name="provincia" id="provincia" required />
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 text-center">
                         <input type="submit" class="btn btn-primary" name="submit" value="Alta Usuario" />
                     </div>
                 </form>

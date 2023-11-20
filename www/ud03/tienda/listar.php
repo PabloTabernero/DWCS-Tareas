@@ -38,13 +38,20 @@
         <article>
             <div class="container-fluid bg-white min-vh-100">
                 
-                <h2 class="text-center mt-4">Lista de usuarios</h2>
-                
+                <h2 class="text-center mt-4 mb-4">Lista de usuarios</h2>
                 <!--Lista de usuarios con enlaces para borrar y editar-->
                 <?php
-                include ("lib/base_datos.php");
-                include ("lib/utilidades.php");
-                listar_usuarios();
+                    include ("lib/base_datos.php");
+                    include ("lib/utilidades.php");
+            
+                    $lista_usuarios = listar_usuarios();
+
+                    if($lista_usuarios->num_rows > 0) {
+                        imprimir_listado_usuarios($lista_usuarios);
+                    }else{
+                        echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 500px'>No hay resultados para mostrar.</div>";
+                    }
+
                 ?>
             </div>
         </article>

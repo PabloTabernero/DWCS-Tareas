@@ -44,21 +44,26 @@ function crear_tabla_usuarios() {
     
 //Función que da de alta a un usuario en la BD con la información del formulario.
 function alta_usuario($nombre, $apellidos, $edad, $provincia) {
-
     $conexion = get_conexion();
     seleccionar_bd_tienda($conexion);
     
     $stmt = $conexion->prepare("INSERT INTO usuarios (nombre, apellidos, edad, provincia) VALUES (?,?,?,?)");
     $stmt->bind_param("ssis", $nombre, $apellidos, $edad, $provincia);
-    if ($stmt->execute()) {
+    
+    $resultado = $stmt->execute();
+    
+    if ($resultado) {
+        $stmt->close();
+        $conexion->close(); 
         return true;
     } else {
-        return false; 
+        $stmt->close();
+        $conexion->close(); 
         registrar_log("No se pudo crear el registro. Error: " . $stmt->error);
+        return false; 
     }
 
-    $stmt->close();
-    $conexion->close();     
+        
 }
 
 //Funcion que lista los usuario de la base de datos.
@@ -71,18 +76,15 @@ function listar_usuarios() {
     
     if(!$resultados = $conexion->query($sql)){
         registrar_log("Fallo al realizar la consulta a la base de datos. Error: ". $conexion->error);
-    }
-    
-    //Si la consulta devuelve alguna linea, se crea un tabla para imprimir los resultados.
-    //Se crean en cada linea los botones editar y borrar utilizando el id de la BD para formar la url.
-    if ($resultados->num_rows > 0) {
-        imprimir_listado_usuarios($resultados);
+        $conexion->close();
     }else{
-        echo "No hay resultados para mostrar.";
-    }
+        $conexion->close();
+        return $resultados;
+    } 
 }
 
-//Función que recupera los datos del usuario por id de la base de datos y devuelve un array con todos los datos del usuario.
+//Función que recupera los datos del usuario por id de la base de datos.
+//Devuelve un array con todos los datos del usuario.
 function recuperar_datos_usuario($id) {
     $conexion = get_conexion();
     seleccionar_bd_tienda($conexion);
@@ -91,58 +93,57 @@ function recuperar_datos_usuario($id) {
     $stmt->bind_param("i", $id);
 
     if($stmt->execute()) {
-        echo "Datos de usuario recuperados correctamente.";
-
         $resultado = $stmt->get_result();
         $datos_usuario = $resultado->fetch_assoc();
-
         $stmt->close();
         $conexion->close();
 
         return $datos_usuario;
-
     }else{
-        echo "No se han podido recuperar los datos del usuario.";
         registrar_log("No se han podido recuperar los datos del usuario de la base de datos. Error: ". $stmt->error);
-
         $stmt->close();
         $conexion->close();
     }
 }
 
 //Función que actualiza en la base de datos los datos de un usuario.
+//Devuelve true si se han podido actualizar los datos.
 function actualizar_datos_usuario($id, $nombre, $apellidos, $edad, $provincia) {
     $conexion = get_conexion();
     seleccionar_bd_tienda($conexion);
 
     $stmt = $conexion->prepare("UPDATE usuarios SET nombre=?, apellidos=?, edad=?, provincia=? WHERE id=?");
     $stmt->bind_param("ssisi", $nombre, $apellidos, $edad, $provincia, $id);
+    $resutlado = $stmt->execute();
 
-    if ($stmt->execute()) {
-        echo "Se ha actualizado el registro en la tabla usuarios.";
+    if ($resutlado) {
+        $stmt->close();
+        $conexion->close();  
+        return true;
     }else{
-        echo "No se ha podido crear el nuevo registro en la tabla usuarios.";
         registrar_log("No se pudo actualizar el registro. Error: " . $stmt->error);
+        $stmt->close();
+        $conexion->close();  
+        return false;
     }
-
-    $stmt->close();
-    $conexion->close();  
 }
 
 //Funcion que borra a un usuario de la base de datos.
+//Devuelve true si la acción se ha podido realizar.
 function borrar_usuario($id) {
     $conexion = get_conexion();
     seleccionar_bd_tienda($conexion);
 
     $stmt = $conexion->prepare("DELETE FROM usuarios WHERE id=?");
     $stmt->bind_param("i", $id);
+    $resutlado = $stmt->execute();
 
-    if($stmt->execute()) {
-        echo "Usuario eliminado correctamente.";
+    if($resutlado) {
+        $conexion->close();  
+        return true;
     }else{
-        echo "Error eliminando usuario.";
         registrar_log("No se puede eliminar registro de la base de datos. Error: " . $conexion->error);
-    }
-
-    $conexion->close();
+        $conexion->close();
+        return false;
+    }  
 }

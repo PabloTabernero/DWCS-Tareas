@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
     <?php
         include("lib/base_datos.php");
         include("lib/utilidades.php");
@@ -18,15 +21,55 @@
         $id = test_input($_GET["id"]);
 
         //Se borran los datos del usuario.
-        borrar_usuario($id);
+        $resultado = borrar_usuario($id);
 
     ?>
+    <div class="container">
 
-    <footer>
-        <p>
-            <a href='index.php'>Página de inicio</a>
-        </p>
-    </footer>
+        <header class="mb-4 bg-light">
+            <h1 class="display-4 text-center">Tienda IES San Clemente</h1>
+
+            <nav class="navbar navbar-light bg-light">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dar_de_alta.php">Alta usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="listar.php">Listar usuarios</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <article>
+            <div class="container">
+                <div class="d-flex align-items-center" style="min-height: 100vh;">
+                    <div class="col-md-4 mx-auto">
+                        <?php
+                            if($resultado == true) {
+                                echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Usuario eliminado.</div>";
+                            }else{
+                                echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se han podido eliminar al usuario.</div>"; 
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <footer class="fixed-bottom">
+            <div class="container bg-light">
+                <a href='index.php'>Página de inicio</a>
+                <p class="mb-0"><small>&copy; 2023 2023 Gestión Tienda IES San Clemente. Todos los derechos
+                        reservados.</small>
+                </p>
+                <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
+            </div>
+        </footer>
+    </div>
 </body>
 
 </html>
