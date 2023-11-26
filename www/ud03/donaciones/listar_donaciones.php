@@ -34,13 +34,12 @@
     ?>
 
     <div class="container">
-
         <!-- Título principal y navbar-->
-        <header class="mb-4">
+        <header class="mb-4 text-center">
             <h1 class="display-4">Gestión Donación de Sangre</h1>
 
             <nav class="navbar navbar-light bg-light">
-                <ul class="nav nav-pills justify-content-center">
+                <ul class="nav nav-pills mx-auto">
                     <li class="nav-item">
                         <a class="nav-link me-2" href="index.php">Inicio</a>
                     </li>
@@ -59,32 +58,35 @@
                 </ul>
             </nav>
         </header>
-
-        <!-- Titulo secundario, tarjeta con datos donante y tabla con fecha de donaciones-->
-        <article>
-            <div class="mb-4">
-                <h2 class="fs-4">Listado de donaciones</h2>
-            </div>
-            <div class="mb-4">
-                <div class="card col-5 mb-4">
+        <main>
+            <!-- Titulo secundario, tarjeta con datos donante y tabla con fecha de donaciones-->
+            <article>
+                <div class="card mx-auto mb-4" style="max-width: 600px">
                     <div class="card-header">
-                        Datos donante
+                        <h2 class="fs-4 text-center">Listado de donaciones</h2>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Nombre: <?php echo $nombre ?></p>
-                        <p class="card-text">Apellidos: <?php echo $apellidos ?></p>
-                        <p class="card-text">Edad: <?php echo $edad ?></p>
-                        <p class="card-text">Grupo sanguineo: <?php echo $grupo_sanguineo ?></p>
-                        <p class="card-text">Código postal: <?php echo $codigo_postal ?></p>
-                        <p class="card-text">Teléfono móvil: <?php echo $telefono_movil ?></p>
+                        <div class="card mx-auto">
+                            <div class="card-header">
+                                Datos donante
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Nombre: <?php echo $nombre ?></p>
+                                <p class="card-text">Apellidos: <?php echo $apellidos ?></p>
+                                <p class="card-text">Edad: <?php echo $edad ?></p>
+                                <p class="card-text">Grupo sanguineo: <?php echo $grupo_sanguineo ?></p>
+                                <p class="card-text">Código postal: <?php echo $codigo_postal ?></p>
+                                <p class="card-text">Teléfono móvil: <?php echo $telefono_movil ?></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <?php listar_donaciones($id) ?>
-            </div>
+                <div class="mx-auto mb-4" style="max-width: 600px">
+                    <?php listar_donaciones($id) ?>
+                </div>
     </div>
     </article>
+    </main>
     <footer class="fixed-bottom">
         <div class="container">
             <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>

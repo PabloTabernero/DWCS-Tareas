@@ -46,7 +46,7 @@ function imprimir_listado_donantes($matriz) {
             </thead>
             <tbody>";
     
-    foreach($matriz->fetchAll() as $linea) {
+    foreach($matriz as $linea) {
         echo "<tr>
                 <td class='align-middle text-center'>".$linea["id"]."</td>
                 <td class='align-middle text-center'>".$linea["nombre"]."</td>
@@ -67,7 +67,7 @@ function imprimir_listado_donantes($matriz) {
 //Función para imprimir en html las fechas de las donaciones de cada donante.
 function imprimir_donaciones($matriz) {
     echo "<table class='table table-striped'>
-            <thead class='table-primary'>
+            <thead class='table-primary text-center'>
             <tr>
                 <th>Fecha Donación</th>
                 <th>Fecha Próxima Donación</th>
@@ -75,7 +75,7 @@ function imprimir_donaciones($matriz) {
             </thead>
             <tbody>";
 
-    foreach($matriz->fetchAll() as $linea) {
+    foreach($matriz as $linea) {
         echo "<tr>
                 <td class='align-middle text-center'>".$linea["fecha_donacion"]."</td>
                 <td class='align-middle text-center'>".$linea["fecha_proxima_donacion"]."</td>
@@ -103,11 +103,11 @@ function imprimir_busqueda_donantes($matriz) {
             </thead>
             <tbody>";
     
-    foreach($matriz->fetchAll() as $linea) {
+    foreach($matriz as $linea) {
 
         $fecha_actual = date("Y-m-d", strtotime(date('Y-m-d')));
 
-        if ($linea["fecha_proxima_donacion"] < $fecha_actual) {
+     //   if ($linea["fecha_proxima_donacion"] < $fecha_actual) {
             echo "<tr>
             <td class='align-middle text-center'>".$linea["id"]."</td>
             <td class='align-middle text-center'>".$linea["nombre"]."</td>
@@ -117,7 +117,7 @@ function imprimir_busqueda_donantes($matriz) {
             <td class='align-middle text-center'>".$linea["codigo_postal"]."</td>
             <td class='align-middle text-center'>".$linea["telefono_movil"]."</td>
         </tr>";
-        }
+      //  }
     }
     echo "</tbody></table>";
 }

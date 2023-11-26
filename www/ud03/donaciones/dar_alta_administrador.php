@@ -16,11 +16,11 @@
 
     <div class="container">
         <!-- Título principal y navbar-->
-        <header class="mb-4">
+        <header class="mb-4 text-center">
             <h1 class="display-4">Gestión Donación de Sangre</h1>
 
             <nav class="navbar navbar-light bg-light">
-                <ul class="nav nav-pills justify-content-center">
+                <ul class="nav nav-pills mx-auto">
                     <li class="nav-item">
                         <a class="nav-link me-2" href="index.php">Inicio</a>
                     </li>
@@ -39,32 +39,38 @@
                 </ul>
             </nav>
         </header>
-
-        <!-- Titulo secundario y formulario de alta de administrador-->
-        <article>
-            <div class="mb-4">
-                <h2 class="fs-4">Formulario para dar de alta un administrador</h2>
-            </div>
-            <div class="mb-4">
-                <form method="post" action="altaadmin.php">
-                    <div class="col-md-4 mb-3">
-                        <label for="nombre_usuario" class="form-label">Nombre de Usuario:</label>
-                        <input type="text" class="form-control" name="nombre_usuario" id="nombre_usuario" required />
+        <main>
+            <!-- Titulo secundario y formulario de alta de administrador-->
+            <article>
+                <div class="card mx-auto mb-4" style="max-width: 600px">
+                    <div class="card-header">
+                        <h2 class="fs-4 text-center">Formulario para dar de alta un administrador</h2>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="password" class="form-label">Contraseña:</label>
-                        <input type="password" class="form-control" id="password" name="password" required />
+                    <div class="card-body">
+                        <form method="post" action="altaadmin.php">
+                            <div class="mb-3">
+                                <label for="nombre_usuario" class="form-label">Nombre de Usuario:</label>
+                                <input type="text" class="form-control" name="nombre_usuario" id="nombre_usuario"
+                                    required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña:</label>
+                                <input type="password" class="form-control" id="password" name="password" required />
+                            </div>
+                            <div class="text-center">
+                                <input class="btn btn-primary me-4" type="submit" name="submit"
+                                    value="Alta Administrador" />
+                                <input class="btn btn-primary" type="reset" name="reset" value="Borrar Formulario" />
+                            </div>
+                        </form>
                     </div>
-
-                    <input class="btn btn-primary" type="submit" name="submit" value="Alta Administrador" />
-                    <input class="btn btn-primary" type="reset" name="reset" value="Borrar Formulario" />
-                </form>
-            </div>
-        </article>
-
+                </div>
+            </article>
+        </main>
         <footer class="fixed-bottom">
             <div class="container">
-                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small>
+                </p>
                 <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>

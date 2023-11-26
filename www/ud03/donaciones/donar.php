@@ -17,7 +17,7 @@
     <?php
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
-        $id = "";
+        $id = $fecha_donacion = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
@@ -36,15 +36,17 @@
         foreach($datos_donante as $clave => $valor) {
             $$clave = $valor;
         }
+
+        $resultado = registrar_donacion($id, $fecha_donacion);
     ?>
 
     <div class="container">
-        <!-- Header con el título principal -->
-        <header class="mb-4">
+        <!-- Título principal y navbar-->
+        <header class="mb-4 text-center">
             <h1 class="display-4">Gestión Donación de Sangre</h1>
 
             <nav class="navbar navbar-light bg-light">
-                <ul class="nav nav-pills justify-content-center">
+                <ul class="nav nav-pills mx-auto">
                     <li class="nav-item">
                         <a class="nav-link me-2" href="index.php">Inicio</a>
                     </li>
@@ -63,54 +65,66 @@
                 </ul>
             </nav>
         </header>
+        <main>
+            <!-- Titulo secundario y tabla con la lista de donantes-->
+            <article>
+                <div class="card mx-auto mb-2" style="max-width: 600px">
 
-        <!-- Titulo secundario y tabla con la lista de donantes-->
-        <article>
-            <div class="mb-4">
-                <h2 class="fs-4">Formulario para dar de alta una donación</h2>
-            </div>
-            <div class="mb-4">
-                <div class="card col-5 mb-4">
                     <div class="card-header">
-                        Datos donante
+                        <h2 class="fs-4 text-center">Formulario para dar de alta una donación</h2>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Nombre: <?php echo $nombre ?></p>
-                        <p class="card-text">Apellidos: <?php echo $apellidos ?></p>
-                        <p class="card-text">Edad: <?php echo $edad ?></p>
-                        <p class="card-text">Grupo sanguineo: <?php echo $grupo_sanguineo ?></p>
-                        <p class="card-text">Código postal: <?php echo $codigo_postal ?></p>
-                        <p class="card-text">Teléfono móvil: <?php echo $telefono_movil ?></p>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Datos donante
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Nombre: <?php echo $nombre ?></p>
+                                <p class="card-text">Apellidos: <?php echo $apellidos ?></p>
+                                <p class="card-text">Edad: <?php echo $edad ?></p>
+                                <p class="card-text">Grupo sanguineo: <?php echo $grupo_sanguineo ?></p>
+                                <p class="card-text">Código postal: <?php echo $codigo_postal ?></p>
+                                <p class="card-text">Teléfono móvil: <?php echo $telefono_movil ?></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                                <!--Se envía el id recuperado por GET oculto en el formulario-->
+                                <input type="text" id="id" name="id" value="<?php echo $id ?>" hidden />
+                                <div class="mb-4">
+                                    <label for="fecha_donacion" class="form-label">Fecha Donación:</label>
+                                    <input type="date" class="form-control" name="fecha_donacion" id="fecha_donacion"
+                                        value="<?php echo date("Y-m-d") ?>" max="<?php echo date("Y-m-d") ?>"
+                                        required />
+                                </div>
+                                <div class="text-center">
+                                    <input class="btn btn-primary" type="submit" name="submit"
+                                        value="Registrar Donacion" />
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-4">
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                    <!--Se envía el id recuperado por GET oculto en el formulario-->
-                    <input type="text" id="id" name="id" value="<?php echo $id ?>" hidden />
-                    <div class="col-md-4 mb-3">
-                        <label for="fecha_donacion" class="form-label">Fecha Donación:</label>
-                        <input type="date" class="form-control" name="fecha_donacion" id="fecha_donacion"
-                            value="<?php echo date("Y-m-d") ?>" max="<?php echo date("Y-m-d") ?>" required />
-                    </div>
-
-                    <input class="btn btn-primary" type="submit" name="submit" value="Registrar Donacion" />
-                </form>
-            </div>
-            <div class="mb-4">
-                <?php
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                        //Si los datos llegan por POST se registra la donación en la base de datos.
-                        //Imprime mensaje de exito.
-                        registrar_donacion($id, $fecha_donacion);
-                    }
-                ?>
-            </div>
-        </article>
-
+                <div class="mb-4">
+                    <?php
+                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                            //Si los datos llegan por POST se registra la donación en la base de datos.
+                            //Imprime mensaje de exito.
+                            if($resultado) {  
+                                echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>Donación realizada con éxito.</div>";
+                            }elseif ($codigo_postal != "") {
+                                echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se puede realizar la donación hasta ".obtener_fecha_proxima_donacion($datos_donante["id"])."</div>";
+                            }
+                        }
+                    ?>
+                </div>
+            </article>
+        </main>
         <footer class="fixed-bottom">
             <div class="container">
-                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small>
+                </p>
                 <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>

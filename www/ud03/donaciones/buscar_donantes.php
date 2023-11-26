@@ -23,17 +23,16 @@
                 $codigo_postal = test_input($_POST["codigo_postal"]);
                 $grupo_sanguineo = test_input($_POST["grupo_sanguineo"]);
                 $listado_donantes = buscar_donantes($codigo_postal, $grupo_sanguineo);
-                
             }
     ?>
 
     <div class="container">
         <!-- Título principal y navbar-->
-        <header class="mb-4">
+        <header class="mb-4 text-center">
             <h1 class="display-4">Gestión Donación de Sangre</h1>
 
             <nav class="navbar navbar-light bg-light">
-                <ul class="nav nav-pills justify-content-center">
+                <ul class="nav nav-pills mx-auto">
                     <li class="nav-item">
                         <a class="nav-link me-2" href="index.php">Inicio</a>
                     </li>
@@ -52,53 +51,61 @@
                 </ul>
             </nav>
         </header>
-
-        <!-- Titulo secundario, formulario de busqueda y tabla en caso de encontrar donantes-->
-        <article>
-            <div class="mb-4">
-                <h2 class="fs-4">Formulario para buscar donantes</h2>
-            </div>
-            <div class="mb-4">
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                    <div class="col-md-4 mb-3 form-outline">
-                        <label for="codigo_postal" class="form-label">Codigo Postal:</label>
-                        <input type="number" class="form-control" name="codigo_postal" id="codigo_postal"
-                            pattern="/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/"
-                            title="Ingrese un código postal español válido de 5 dígitos" required />
+        <main>
+            <!-- Titulo secundario, formulario de busqueda y tabla en caso de encontrar donantes-->
+            <article>
+                <div class="card mx-auto mb-4" style="max-width: 600px">
+                    <div class="card-header">
+                        <h2 class="fs-4 text-center">Formulario para buscar donantes</h2>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="grupo_sanguineo" class="form-label">Grupo Sanguineo:</label>
-                        <select class="form-select" id="grupo_sanguineo" name="grupo_sanguineo" required>
-                            <option value="O-">O-</option>
-                            <option value="O+">O+</option>
-                            <option value="A-">A-</option>
-                            <option value="A+">A+</option>
-                            <option value="B-">B-</option>
-                            <option value="B+">B+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="AB+">AB+</option>
-                        </select>
+                    <div class="card-body">
+                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                            <div class="mb-3">
+                                <label for="codigo_postal" class="form-label">Codigo Postal:</label>
+                                <input type="number" class="form-control" name="codigo_postal" id="codigo_postal"
+                                    pattern="/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/"
+                                    title="Ingrese un código postal español válido de 5 dígitos" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="grupo_sanguineo" class="form-label">Grupo Sanguineo:</label>
+                                <select class="form-select" id="grupo_sanguineo" name="grupo_sanguineo" required>
+                                    <option value="O-">O-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="A+">A+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="AB+">AB+</option>
+                                </select>
+                            </div>
+                            <div class="text-center">
+                                <input class="btn btn-primary me-4" type="submit" name="submit" value="Buscar" />
+                                <input class="btn btn-primary" type="reset" name="reset" value="Borrar Formulario" />
+                            </div>
+                        </form>
                     </div>
-                    <input class="btn btn-primary" type="submit" name="submit" value="Buscar" />
-                    <input class="btn btn-primary" type="reset" name="reset" value="Borrar Formulario" />
-                </form>
-            </div>
-            <div class="mb-4">
-                <?php 
-                    //Se recupera el listado de donantes compatibles con la busqueda.
-                    //Si no hay ninguno se imprime un mensaje.
-                    if($listado_donantes != "") {  
-                        imprimir_busqueda_donantes($listado_donantes);
-                    }elseif ($codigo_postal != "") {
-                        echo "No hay donantes compatibles con los criterios de busqueda.";
-                    }
-                ?>
-            </div>
-        </article>
-
+                </div>
+                <div class="mb-4">
+                    <?php 
+                        // Se recupera el listado de donantes compatibles con la búsqueda.
+                        // Si no hay ninguno se imprime un mensaje.
+                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                            if (count($listado_donantes) > 0) {  
+                                    imprimir_busqueda_donantes($listado_donantes);
+                                }else {
+                                    echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 600px'>No hay donantes compatibles con los criterios de búsqueda.</div>";  
+                                }
+                            }
+                    
+                    ?>
+                </div>
+            </article>
+        </main>
         <footer class="fixed-bottom">
             <div class="container">
-                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small>
+                </p>
                 <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>

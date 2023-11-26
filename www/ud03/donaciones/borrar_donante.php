@@ -14,13 +14,25 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
+    <?php
+        include_once("lib/base_datos.php");
+        include_once("lib/utilidades.php");
+        $id="";
+
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+            $id = test_input($_GET["id"]);
+            $resultado = borrar_donante($id);
+        }
+    ?>
+
     <div class="container">
         <!-- Título principal y navbar-->
-        <header class="mb-4">
+        <header class="mb-4 text-center">
             <h1 class="display-4">Gestión Donación de Sangre</h1>
 
             <nav class="navbar navbar-light bg-light">
-                <ul class="nav nav-pills justify-content-center">
+                <ul class="nav nav-pills mx-auto">
                     <li class="nav-item">
                         <a class="nav-link me-2" href="index.php">Inicio</a>
                     </li>
@@ -39,30 +51,25 @@
                 </ul>
             </nav>
         </header>
+        <main>
 
-        <!-- Titulo secundario y borrado del donante-->
-        <article>
-            <div class="mb-4">
-                <h2 class="fs-4">Borrado de donante</h2>
-            </div>
-            <div class="mb-4">
-                <?php
-                    include_once("lib/base_datos.php");
-                    include_once("lib/utilidades.php");
-                    $id="";
-
-                    if ($_SERVER["REQUEST_METHOD"] == "GET") {
-
-                            $id = test_input($_GET["id"]);
-                            borrar_donante($id);
-                    }
-                ?>
-            </div>
-        </article>
-
+            <!-- Titulo secundario y borrado del donante-->
+            <article>
+                <div class="mb-4">
+                    <?php
+                        if($resultado) {  
+                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>Donante borrado con éxito.</div>";
+                        }elseif ($codigo_postal != "") {
+                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se pudo borrar al donante.</div>";
+                        }
+                    ?>
+                </div>
+            </article>
+        </main>
         <footer class="fixed-bottom">
             <div class="container">
-                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small>
+                </p>
                 <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>

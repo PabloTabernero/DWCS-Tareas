@@ -117,16 +117,17 @@
             $stmt = $conexion->prepare("INSERT INTO donantes (nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil)
                                         VALUES (:nombre, :apellidos, :edad, :grupo_sanguineo, :codigo_postal, :telefono_movil)");
 
-            $stmt->execute($datos_formulario);
-            echo "Se ha creado un nuevo registro en la tabla donantes.";
+            $restultado = $stmt->execute($datos_formulario);
+            $stmt = null;
+            $conexion = null;
+            
+            return $restultado;
 
         } catch(PDOException $e) {
-            echo "No se ha podido crear el nuevo registro en la tabla donantes.";
             registrar_log("No se pudo crear el registro en la tabla donantes. Error: " . $e->getMessage());
-        
+            $stmt = null;
+            $conexion = null;
         }
-        $stmt = null;
-        $conexion = null;
     }
 
     //Función para listar los donantes de la base de datos.
@@ -139,19 +140,19 @@
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $resultado = $stmt->fetchAll();
             if ($stmt->rowCount() > 0) {
-                imprimir_listado_donantes($stmt);
+                return $resultado;
             }else{
-                echo "No hay resultados para mostrar.";
+                $stmt = null;
+                $conexion = null;
+                return false;
             }
 
         } catch(PDOException $e) {
-            echo "No se pudo realizar la busqueda.";
             registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
         
         }
-        $stmt = null;
-        $conexion = null;
     }
 
     //Funcion que devuelve los datos de un donante en un array asociativo.
@@ -210,17 +211,20 @@
  
             if($donacion < $fecha_donacion) {
                 $stmt->execute();
-                echo "Donación insertada en el sistema con exito.";
+                $stmt = null;
+                $conexion = null;
+                return true;
             }else{
-                echo "No se puede realizar la donación hasta el $fecha_proxima_donacion.";
+                $stmt = null;
+                $conexion = null;
+                return false;
             }
 
         } catch(PDOException $e) {
             echo "No se pudo registrar la donación.";
             registrar_log("No se pudo registrar la donación en la tabla historico. Error: " . $e->getMessage());
         }
-        $stmt = null;
-        $conexion = null;
+        
     }
 
     //Función para listar los donantes de la base de datos.
@@ -260,16 +264,16 @@
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
-            echo "Registro borrado de la tablas donantes.";
-
+            $stmt = null;
+            $conexion = null;
+            return true;
 
         } catch(PDOException $e) {
-            echo "No se pudo borrar al donante.";
             registrar_log("No se pudo realizar el borrado en la tabla donantes. Error: " . $e->getMessage());
-            
+            $stmt = null;
+            $conexion = null;
+            return false;
         }
-        $stmt = null;
-        $conexion = null;
     }
 
     //Funcion que busca todos los donantes de la tabla donantes que pertenecen al codigo postal y 
@@ -280,29 +284,35 @@
             seleccionar_bd_donacion($conexion);
 
             //Consulta para obtener la una tabla con todos los clientes y su fecha a partir de la cual podrían donar(fecha_proxima_donacion).
-            $stmt = $conexion->prepare("SELECT d.id, d.nombre, d.apellidos, d.edad, d.grupo_sanguineo, d.codigo_postal, d.telefono_movil, max(h.fecha_proxima_donacion) AS fecha_proxima_donacion
+            $stmt = $conexion->prepare("SELECT d.id, d.nombre, d.apellidos, d.edad, d.grupo_sanguineo, d.codigo_postal, d.telefono_movil, MAX(h.fecha_proxima_donacion) AS fecha_proxima_donacion
                                         FROM donantes d LEFT JOIN historico h ON d.id = h.id_donante 
-                                        WHERE (codigo_postal = :codigo_postal AND grupo_sanguineo = :grupo_sanguineo)
-                                        GROUP BY d.id");
+                                        WHERE (codigo_postal = :codigo_postal 
+                                        AND grupo_sanguineo = :grupo_sanguineo)
+                                        GROUP BY d.id
+                                        HAVING fecha_proxima_donacion IS NULL OR fecha_proxima_donacion < :fecha_actual");
+
             $stmt->bindParam(':codigo_postal', $codigo_postal);
             $stmt->bindParam(':grupo_sanguineo', $grupo_sanguineo);
+            $fecha_actual = date("Y-m-d", strtotime(date('Y-m-d')));
+            $stmt->bindParam(':fecha_actual', $fecha_actual);
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $resultado = $stmt->fetchAll();
 
-            if ($stmt->rowCount() > 0) {
-                return($stmt);
-            }else{
-                return "";
-            }
+
+            return $resultado;
+
 
         } catch(PDOException $e) {
             echo "No se pudo realizar la busqueda.";
             registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
             
+        }finally{
+            $stmt = null;
+            $conexion = null;
         }
-        $stmt = null;
-        $conexion = null;
+        
     }
     
     //Funcion que da de alta un administrador en la tabla de administradores.
@@ -317,16 +327,17 @@
             $stmt->bindParam(':pass', $pass);
             $stmt->execute();
 
-            echo "Nuevo administrador dado de alta.";
+            $stmt = null;
+            $conexion = null;
+            return true;
 
         } catch(PDOException $e) {
-
-            echo "No se pudo realizar el alta del administrador.";
             registrar_log("No se pudo realizar el alta del administrador en la tabla administradores. Error: " . $e->getMessage());
-            
+            $stmt = null;
+            $conexion = null;
+            return false;
         }
-        $stmt = null;
-        $conexion = null;
+        
     }
 
     //Función que devuelve la fecha a partir de la cual un donante puede volver a donar.

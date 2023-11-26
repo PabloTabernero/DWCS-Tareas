@@ -25,11 +25,11 @@
 
     <div class="container">
         <!-- Header con el título principal -->
-        <header class="mb-4">
+        <header class="mb-4 text-center">
             <h1 class="display-4">Gestión Donación de Sangre</h1>
 
             <nav class="navbar navbar-light bg-light">
-                <ul class="nav nav-pills justify-content-center">
+                <ul class="nav nav-pills mx-auto">
                     <li class="nav-item">
                         <a class="nav-link active me-2" href="index.php">Inicio</a>
                     </li>
@@ -48,24 +48,26 @@
                 </ul>
             </nav>
         </header>
-
-        <!-- Titulo secundario y presentación de la aplicación-->
-        <article>
-            <div class="mb-4">
-                <h2 class="fs-4">Bienvenido al portal de Gestión de Donación de Sangre</h2>
-            </div>
-            <div class="mb-4">
-                <p>
-                    Esta plataforma está diseñada para facilitar la gestión de donantes de sangre y proporcionar
-                    información esencial para los administradores. Utiliza las opciones del menú superior para acceder
-                    a las distintas funcionalidades del sistema.
-                </p>
-            </div>
-        </article>
-
+        <main>
+            <!-- Titulo secundario y presentación de la aplicación-->
+            <article>
+                <div class="mb-4">
+                    <h2 class="fs-4 text-center">Bienvenido al portal de Gestión de Donación de Sangre</h2>
+                </div>
+                <div class="mb-4">
+                    <p>
+                        Esta plataforma está diseñada para facilitar la gestión de donantes de sangre y proporcionar
+                        información esencial para los administradores. Utiliza las opciones del menú superior para
+                        acceder
+                        a las distintas funcionalidades del sistema.
+                    </p>
+                </div>
+            </article>
+        </main>
         <footer class="fixed-bottom">
             <div class="container">
-                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small>
+                </p>
                 <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>

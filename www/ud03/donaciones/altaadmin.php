@@ -14,13 +14,25 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
+    <?php
+        include_once("lib/base_datos.php");
+        include_once("lib/utilidades.php");
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            $nombre_admin = test_input($_POST["nombre_usuario"]);
+            $pass = test_input($_POST["password"]);
+            $resultado = alta_administrador($nombre_admin, $pass);
+        }
+    ?>
+
     <div class="container">
         <!-- Título principal y navbar-->
-        <header class="mb-4">
+        <header class="mb-4 text-center">
             <h1 class="display-4">Gestión Donación de Sangre</h1>
 
             <nav class="navbar navbar-light bg-light">
-                <ul class="nav nav-pills justify-content-center">
+                <ul class="nav nav-pills mx-auto">
                     <li class="nav-item">
                         <a class="nav-link me-2" href="index.php">Inicio</a>
                     </li>
@@ -39,44 +51,26 @@
                 </ul>
             </nav>
         </header>
+        <main>
 
-        <!-- Titulo secundario y formulario de alta de administrador-->
-        <article>
-            <div class="mb-4">
-                <h2 class="fs-4">Formulario para dar de alta un administrador</h2>
-            </div>
-            <div class="mb-4">
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                    <div class="col-md-4 mb-3">
-                        <label for="nombre_usuario" class="form-label">Nombre de Usuario:</label>
-                        <input type="text" class="form-control" name="nombre_usuario" id="nombre_usuario" required />
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="password" class="form-label">Contraseña:</label>
-                        <input type="password" class="form-control" id="password" name="password" required />
-                    </div>
-                    <input class="btn btn-primary" type="submit" name="submit" value="Alta Administrador" />
-                    <input class="btn btn-primary" type="reset" name="reset" value="Borrar Formulario" />
-                </form>
-            </div>
-            <div class="mb-4">
-                <?php
-                        include_once("lib/base_datos.php");
-                        include_once("lib/utilidades.php");
+            <!-- Titulo secundario y formulario de alta de administrador-->
+            <article>
 
-                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-                            $nombre_admin = test_input($_POST["nombre_usuario"]);
-                            $pass = test_input($_POST["password"]);
-                            alta_administrador($nombre_admin, $pass);
+                <div class="mb-4">
+                    <?php
+                        if($resultado) {  
+                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>Administrador dado de alta.</div>";
+                        }else{
+                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se pudo dar de alta al administrador.</div>";
                         }
                     ?>
-            </div>
-        </article>
-
+                </div>
+            </article>
+        </main>
         <footer class="fixed-bottom">
             <div class="container">
-                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small></p>
+                <p class="mb-0"><small>&copy; 2023 Gestión Donación de Sangre. Todos los derechos reservados.</small>
+                </p>
                 <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>
         </footer>
