@@ -66,7 +66,8 @@ function alta_usuario($nombre, $apellidos, $edad, $provincia) {
         
 }
 
-//Funcion que lista los usuario de la base de datos.
+//Funcion que obtiene los datos de los usuarios.
+//Devuelve false en caso de error en la consulta
 function listar_usuarios() {
     $conexion = get_conexion();
     seleccionar_bd_tienda($conexion);
@@ -76,11 +77,9 @@ function listar_usuarios() {
     
     if(!$resultados = $conexion->query($sql)){
         registrar_log("Fallo al realizar la consulta a la base de datos. Error: ". $conexion->error);
-        $conexion->close();
-    }else{
-        $conexion->close();
-        return $resultados;
-    } 
+    }
+    $conexion->close();
+    return $resultados;
 }
 
 //Función que recupera los datos del usuario por id de la base de datos.
@@ -92,18 +91,18 @@ function recuperar_datos_usuario($id) {
     $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, provincia FROM usuarios WHERE id=?");
     $stmt->bind_param("i", $id);
 
-    if($stmt->execute()) {
-        $resultado = $stmt->get_result();
-        $datos_usuario = $resultado->fetch_assoc();
-        $stmt->close();
-        $conexion->close();
+    $resultado = $stmt->execute();
 
-        return $datos_usuario;
-    }else{
+    if(!$resultado) {
         registrar_log("No se han podido recuperar los datos del usuario de la base de datos. Error: ". $stmt->error);
-        $stmt->close();
-        $conexion->close();
+    }else{
+        $resultado = $stmt->get_result();
+        $resultado = $resultado->fetch_assoc();
     }
+
+    $stmt->close();
+    $conexion->close();
+    return $resultado;
 }
 
 //Función que actualiza en la base de datos los datos de un usuario.
@@ -114,18 +113,16 @@ function actualizar_datos_usuario($id, $nombre, $apellidos, $edad, $provincia) {
 
     $stmt = $conexion->prepare("UPDATE usuarios SET nombre=?, apellidos=?, edad=?, provincia=? WHERE id=?");
     $stmt->bind_param("ssisi", $nombre, $apellidos, $edad, $provincia, $id);
-    $resutlado = $stmt->execute();
+    $resultado = $stmt->execute();
 
-    if ($resutlado) {
-        $stmt->close();
-        $conexion->close();  
-        return true;
-    }else{
+    $stmt->close();
+    $conexion->close();  
+
+    if(!$resultado) {
         registrar_log("No se pudo actualizar el registro. Error: " . $stmt->error);
-        $stmt->close();
-        $conexion->close();  
-        return false;
     }
+    
+    return $resultado;
 }
 
 //Funcion que borra a un usuario de la base de datos.
@@ -136,14 +133,16 @@ function borrar_usuario($id) {
 
     $stmt = $conexion->prepare("DELETE FROM usuarios WHERE id=?");
     $stmt->bind_param("i", $id);
-    $resutlado = $stmt->execute();
-
-    if($resutlado) {
-        $conexion->close();  
-        return true;
-    }else{
+    $resultado = $stmt->execute();
+    $filas_afectadas = $stmt->affected_rows;
+    
+    if($filas_afectadas == 0 || !$resultado) {
         registrar_log("No se puede eliminar registro de la base de datos. Error: " . $conexion->error);
-        $conexion->close();
-        return false;
-    }  
+        $resultado = false;
+    }
+
+    $stmt->close();
+    $conexion->close(); 
+
+    return $resultado;
 }

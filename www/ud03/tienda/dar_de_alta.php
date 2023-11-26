@@ -15,18 +15,20 @@
     </script>
 
     <?php
+        //Bloque php para comprobar si llegan datos POST y dar de alta a un usuario con ellos.
         include ("lib/base_datos.php");
         include ("lib/utilidades.php");
-        $nombre = $apellidos = $edad = $provincia = $resultado_alta = "";
+        //Inicializamos las variables del formulario.
+        $nombre = $apellidos = $edad = $provincia = "";
 
-        //Comprobarmos si vienen datos por el POST.
+        //Comprobamos si llegan datos por POST.
         if ($_SERVER["REQUEST_METHOD"] == "POST") {    
             //Validamos los datos.
             $nombre = test_input($_POST["nombre"]);
             $apellidos = test_input($_POST["apellidos"]);
             $edad = test_input($_POST["edad"]);
             $provincia = test_input($_POST["provincia"]);
-
+            //Actualizamos datos en la BD y obtenemos el resultado de la operación.
             $resultado_alta = alta_usuario($nombre, $apellidos, $edad, $provincia);
         }
 
@@ -86,8 +88,9 @@
                 </form>
 
                 <?php
+                    //Bloque php para imprimir el resultado del alta de usuario.
                     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-                        if($resultado_alta == true) {
+                        if($resultado_alta) {
                             echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Se ha creado un nuevo registro en la tabla usuarios.</div>";
                         }else{
                             echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>No se ha podido crear el nuevo registro en la tabla usuarios.</div>"; 

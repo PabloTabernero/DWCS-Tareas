@@ -15,24 +15,27 @@
     </script>
 
     <?php
+        //Bloque php que comprueba el metodo por el que llegan los datos. 
         include("lib/base_datos.php");
         include("lib/utilidades.php");
+        //Se inicializan las variables del formulario.
         $nombre = $apellidos = $edad = $provincia = $resultado_cambios = $datos = "";
 
         //Si llegan datos por GET
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             //Se valida el id que llega por GET.
             $id = test_input($_GET["id"]);
-            //Se recuperan los datos por id en un array.
+            //Se recuperan los datos por id en un array asociativo.
             $datos = recuperar_datos_usuario($id);
-            
-            //Se asignan datos del array a varibles para cubrir en el formulario.
-            $id = $datos["id"];
-            $nombre = $datos["nombre"];
-            $apellidos = $datos["apellidos"];
-            $edad = $datos["edad"];
-            $provincia = $datos["provincia"];
-
+        
+            if($datos) {
+                //Se asignan datos del array a varibles para cubrir en el formulario.
+                $id = $datos["id"];
+                $nombre = $datos["nombre"];
+                $apellidos = $datos["apellidos"];
+                $edad = $datos["edad"];
+                $provincia = $datos["provincia"];
+            }
         //Si llegan datos por POST
         }elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
             //Se validan los datos que llegan por POST.
@@ -105,15 +108,16 @@
                 </form>
 
                 <?php
+                    //Bloque php para imprimir mensajes.
                     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-                        if($resultado_cambios == true) {
+                        if($resultado_cambios) {
                             echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Se han actualizado los datos del cliente.</div>";
                         }else{
                             echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se han podido actualizar los datos del cliente.</div>"; 
                         }
                     }elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-                        if($datos != "") {
-                            echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 500px'>Se han recuperado los datos del cliente.</div>";
+                        if($datos) {
+                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Se han recuperado los datos del cliente.</div>";
                         }else{
                             echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se han podido actualizar los datos del cliente.</div>"; 
                         }

@@ -14,6 +14,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
     <?php
+        //Bloque php que recupera el id de usuario y realiza en borrado en la BD.
         include("lib/base_datos.php");
         include("lib/utilidades.php");
         
@@ -49,7 +50,8 @@
                 <div class="d-flex align-items-center" style="min-height: 100vh;">
                     <div class="col-md-4 mx-auto">
                         <?php
-                            if($resultado == true) {
+                            //Bloque php para imprimir el resultado de la operación.
+                            if($resultado) {
                                 echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Usuario eliminado.</div>";
                             }else{
                                 echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se han podido eliminar al usuario.</div>"; 

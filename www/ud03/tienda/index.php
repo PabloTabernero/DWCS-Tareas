@@ -15,6 +15,7 @@
     </script>
 
     <?php
+        //Bloque php para realizar la configuración inicial de la base de datos.
         include("lib/base_datos.php");
         crear_bd_tienda();
         crear_tabla_usuarios();
@@ -54,7 +55,8 @@
         <footer class="fixed-bottom">
             <div class="container bg-light">
                 <a href='index.php'>Página de inicio</a>
-                <p class="mb-0"><small>&copy; 2023 Gestión Tienda IES San Clemente. Todos los derechos reservados.</small>
+                <p class="mb-0"><small>&copy; 2023 Gestión Tienda IES San Clemente. Todos los derechos
+                        reservados.</small>
                 </p>
                 <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
             </div>

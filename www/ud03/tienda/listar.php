@@ -39,19 +39,21 @@
             <div class="container-fluid bg-white min-vh-100">
                 
                 <h2 class="text-center mt-4 mb-4">Lista de usuarios</h2>
-                <!--Lista de usuarios con enlaces para borrar y editar-->
                 <?php
+                    //Bloque php para obtener e imprimir el listado de usuarios.
                     include ("lib/base_datos.php");
                     include ("lib/utilidades.php");
-            
+                    //Se obtiene el listado de usuarios.
                     $lista_usuarios = listar_usuarios();
-
-                    if($lista_usuarios->num_rows > 0) {
+                    //Se verifica si listar devuelve false para imprimir un mensaje de error.
+                    if(!$lista_usuarios) {
+                        echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 500px'>Error al obtener el listado de usuarios.</div>";
+                    //Se verifica si hay resultados para imprimir el listado o indicar no que no hay usuarios.
+                    }elseif($lista_usuarios->num_rows > 0) {
                         imprimir_listado_usuarios($lista_usuarios);
                     }else{
                         echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 500px'>No hay resultados para mostrar.</div>";
                     }
-
                 ?>
             </div>
         </article>
