@@ -16,9 +16,11 @@ function registrar_log($mensaje){
 }
 
 // Función para recoger datos del formulario POST
+// Devuelve un array asociativo.
 function recoger_datos_post($campos) {
     $datos_formulario = [];
-
+    //Se recorre el array con los nombres de los campos a procesar y se van almacenando
+    //en el array asociativo de salida.
     foreach ($campos as $campo) {
         if (isset($_POST[$campo])) {
             $datos_formulario[$campo] = test_input($_POST[$campo]);

@@ -15,14 +15,15 @@
     </script>
 
     <?php
+        //Bloque php que obtiene los datos que llegan por POST y da de alta a un donante.
         include ("lib/base_datos.php");
         include ("lib/utilidades.php");
 
         //Comprobarmos si vienen datos por el POST.
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //Array con los campos a recoger de $_POST.
+            //Creamos un array con los nombres de los campos a recoger de $_POST.
             $campos_formulario = ["nombre", "apellidos", "edad", "grupo_sanguineo", "codigo_postal", "telefono_movil"];
-            //Se obtiene un array con los datos del formulario.
+            //Se obtiene un array asociativo con los datos del formulario.
             $datos_formulario = recoger_datos_post($campos_formulario);
             //Se pasan los datos a la función alta donante para darlos de alta en la bd.
             $resultado = dar_alta_donante($datos_formulario);
@@ -114,11 +115,12 @@
 
                 <div class="mb-4">
                     <?php
+                        //Bloque php para imprimir el resultado de la operación.
                         if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             if($resultado){
                                 echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Se ha creado un nuevo registro en la tabla usuarios.</div>";
                             }else{
-                                echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>No se ha podido crear el nuevo registro en la tabla usuarios.</div>"; 
+                                echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 600px'>No se ha podido crear el nuevo registro en la tabla usuarios.</div>"; 
                             }
                         }
                     ?>

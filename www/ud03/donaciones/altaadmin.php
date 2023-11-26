@@ -15,13 +15,15 @@
     </script>
 
     <?php
+        //Bloque php para recuperar los datos del formulario y lanzar el alta del administrador.
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+            //Se validan los datos del formulario.
             $nombre_admin = test_input($_POST["nombre_usuario"]);
             $pass = test_input($_POST["password"]);
+
             $resultado = alta_administrador($nombre_admin, $pass);
         }
     ?>
@@ -58,6 +60,7 @@
 
                 <div class="mb-4">
                     <?php
+                        //Bloque php para imprimir el resultado del alta del administrador.
                         if($resultado) {  
                             echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>Administrador dado de alta.</div>";
                         }else{

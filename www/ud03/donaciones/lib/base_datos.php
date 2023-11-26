@@ -117,20 +117,23 @@
             $stmt = $conexion->prepare("INSERT INTO donantes (nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil)
                                         VALUES (:nombre, :apellidos, :edad, :grupo_sanguineo, :codigo_postal, :telefono_movil)");
 
-            $restultado = $stmt->execute($datos_formulario);
-            $stmt = null;
-            $conexion = null;
+            $resultado = $stmt->execute($datos_formulario);
             
-            return $restultado;
-
         } catch(PDOException $e) {
             registrar_log("No se pudo crear el registro en la tabla donantes. Error: " . $e->getMessage());
-            $stmt = null;
-            $conexion = null;
+            //En caso de excepción, se establece explicitamente el valor de $resultado a false.
+            $resultado = false;
         }
+        
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
+        $stmt = null;
+        $conexion = null;
+        return $resultado;
     }
 
     //Función para listar los donantes de la base de datos.
+    //Devuelve un array con los datos de los donantes, en caso de que no haya donantes para listar devuelve
+    //un array vacio.
     function listar_donantes() {
         try{
             $conexion = get_conexion();
@@ -138,21 +141,19 @@
 
             $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil FROM donantes");
             $stmt->execute();
-
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $resultado = $stmt->fetchAll();
-            if ($stmt->rowCount() > 0) {
-                return $resultado;
-            }else{
-                $stmt = null;
-                $conexion = null;
-                return false;
-            }
+            //Se almacena en un array asociativo el resultado de la consulta.
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch(PDOException $e) {
+            //En caso de saltar excepción la función devuelve false.
             registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
-        
+            $resultado = false;
         }
+
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
+        $stmt = null;
+        $conexion = null;
+        return $resultado;
     }
 
     //Funcion que devuelve los datos de un donante en un array asociativo.
@@ -163,36 +164,24 @@
 
             $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, grupo_sanguineo, codigo_postal, telefono_movil 
                                         FROM donantes WHERE id = :id");
-            $stmt->bindParam(':id', $id_donante);
-            $id_donante = $id;
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
 
-            if($stmt->execute()) {
-                $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                $datos_donante = $stmt->fetch();
-                
-                $stmt = null;
-                $conexion = null;
-
-                return $datos_donante;
-
-            }else{
-                echo "No se han podido recuperar los datos del usuario.";
-                registrar_log("No se han podido recuperar los datos del usuario de la base de datos. Error: ". $stmt->error);
-        
-                $stmt = null;
-                $conexion = null;
-            }
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
         } catch(PDOException $e) {
-            echo "No se pudo realizar la busqueda.";
             registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
         
         }
+
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
         $stmt = null;
         $conexion = null;
+        return $resultado;
     }
 
-
+    //Función que registra una donación en la tabla de historico siempre y cuando se pueda realizar.
+    //La función devuelve true en caso de realizar la inserción.
     function registrar_donacion($id, $fecha_donacion) {
         try{
             //Calculamos la fecha de la proxima donación permitida.
@@ -210,51 +199,51 @@
             $donacion = obtener_fecha_proxima_donacion($id);
  
             if($donacion < $fecha_donacion) {
-                $stmt->execute();
-                $stmt = null;
-                $conexion = null;
-                return true;
+                $resultado = $stmt->execute();
             }else{
-                $stmt = null;
-                $conexion = null;
-                return false;
+                $resultado = false;
             }
 
         } catch(PDOException $e) {
-            echo "No se pudo registrar la donación.";
             registrar_log("No se pudo registrar la donación en la tabla historico. Error: " . $e->getMessage());
+            $resultado = false;
         }
         
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
+        $stmt = null;
+        $conexion = null;
+        return $resultado;
     }
 
-    //Función para listar los donantes de la base de datos.
-    function listar_donaciones($id_donante) {
+    //Función que recupera el historico de donacione del donante.
+    //Devuele un array asociativo con las donaciones o un array vacio si no hay.
+    //En caso de error devuelve false.
+    function recuperar_donaciones($id) {
         try{
             $conexion = get_conexion();
             seleccionar_bd_donacion($conexion);
     
             $stmt = $conexion->prepare("SELECT fecha_donacion, fecha_proxima_donacion FROM historico WHERE id_donante= :id_donante ORDER BY fecha_donacion DESC");
-            $stmt->bindParam(':id_donante', $id_donante);
+            $stmt->bindParam(':id_donante', $id);
             $stmt->execute();
     
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-            if ($stmt->rowCount() > 0) {
-                imprimir_donaciones($stmt);
-            }else{
-                echo "No hay resultados para mostrar.";
-            }
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
         } catch(PDOException $e) {
-            echo "No se pudo realizar la busqueda.";
             registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
+            $resultado = false;
             
         }
+
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
         $stmt = null;
         $conexion = null;
+        return $resultado;
     }
 
     //Función que borra un donante de la base de datos.
+    //Devuelve un bool en función de si se ha podido realizar la operación.
     function borrar_donante($id) {
         try{
             $conexion = get_conexion();
@@ -264,20 +253,26 @@
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
-            $stmt = null;
-            $conexion = null;
-            return true;
+            //Se comprueba si la consulta ha afectado a alguna linea de la tabla para
+            //establecer si se ha borrado a algún usuario.
+            $filas_afectadas = $stmt->rowCount();
+            $resultado = ($filas_afectadas > 0);
 
         } catch(PDOException $e) {
             registrar_log("No se pudo realizar el borrado en la tabla donantes. Error: " . $e->getMessage());
-            $stmt = null;
-            $conexion = null;
-            return false;
+            $resultado = false;
         }
+
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
+        $stmt = null;
+        $conexion = null;
+        return $resultado;
     }
 
     //Funcion que busca todos los donantes de la tabla donantes que pertenecen al codigo postal y 
-    //tienen el grupo sanguineo que se pasa por argumentos.
+    //tienen el grupo sanguineo que se pasan por argumentos.
+    //Devuelve un array asociativo con el listado de donantes que cumplen las condiciones, si no los hay
+    //Devuelve un array vacio, y si la consulta da error devuelve false.
     function buscar_donantes($codigo_postal, $grupo_sanguineo) {
         try{
             $conexion = get_conexion();
@@ -293,29 +288,26 @@
 
             $stmt->bindParam(':codigo_postal', $codigo_postal);
             $stmt->bindParam(':grupo_sanguineo', $grupo_sanguineo);
+            //Se obtiene la fecha actual para poder saber que donantes pueden donar hoy.
             $fecha_actual = date("Y-m-d", strtotime(date('Y-m-d')));
             $stmt->bindParam(':fecha_actual', $fecha_actual);
             $stmt->execute();
 
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $resultado = $stmt->fetchAll();
-
-
-            return $resultado;
-
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch(PDOException $e) {
-            echo "No se pudo realizar la busqueda.";
             registrar_log("No se pudo realizar la busqueda en la tabla donantes. Error: " . $e->getMessage());
-            
-        }finally{
-            $stmt = null;
-            $conexion = null;
+            $resultado = false;
         }
         
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
+        $stmt = null;
+        $conexion = null;
+        return $resultado;
     }
     
     //Funcion que da de alta un administrador en la tabla de administradores.
+    //Devuelve un bool con el resultado de la operación.
     function alta_administrador($nombre_admin, $pass) {
         try{
             $conexion = get_conexion();
@@ -325,19 +317,17 @@
                                         VALUES (:nombre_usuario, :pass)");
             $stmt->bindParam(':nombre_usuario', $nombre_admin);
             $stmt->bindParam(':pass', $pass);
-            $stmt->execute();
-
-            $stmt = null;
-            $conexion = null;
-            return true;
+            $resultado =$stmt->execute();
 
         } catch(PDOException $e) {
             registrar_log("No se pudo realizar el alta del administrador en la tabla administradores. Error: " . $e->getMessage());
-            $stmt = null;
-            $conexion = null;
-            return false;
+            $resultado = false;
         }
-        
+
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
+        $stmt = null;
+        $conexion = null;
+        return $resultado;
     }
 
     //Función que devuelve la fecha a partir de la cual un donante puede volver a donar.
@@ -351,14 +341,15 @@
             $stmt->execute();
 
             $resultado = $stmt->fetchColumn();
-
-            return $resultado;
-
+   
         } catch(PDOException $e) {
             registrar_log("Error obteniendo la fecha de la proxima donación. Error: " . $e.getMessage());
         }
+
+        //Codigo se ejecutará siempre despues del try/catch, cerrando conexiones y devolviendo resultado.
         $stmt = null;
         $conexion = null;
+        return $resultado;
     }
 
 ?>

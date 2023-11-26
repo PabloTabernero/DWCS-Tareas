@@ -15,15 +15,18 @@
     </script>
 
     <?php
+        //Bloque php que recupera los datos de $_POST y lanza la busqueda de donantes.
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
-        $codigo_postal = $grupo_sanguineo = $listado_donantes = "";
+        $codigo_postal = $grupo_sanguineo = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $codigo_postal = test_input($_POST["codigo_postal"]);
-                $grupo_sanguineo = test_input($_POST["grupo_sanguineo"]);
-                $listado_donantes = buscar_donantes($codigo_postal, $grupo_sanguineo);
-            }
+            //Se validan los datos de POST.
+            $codigo_postal = test_input($_POST["codigo_postal"]);
+            $grupo_sanguineo = test_input($_POST["grupo_sanguineo"]);
+            
+            $listado_donantes = buscar_donantes($codigo_postal, $grupo_sanguineo);
+        }
     ?>
 
     <div class="container">
@@ -88,16 +91,17 @@
                 </div>
                 <div class="mb-4">
                     <?php 
-                        // Se recupera el listado de donantes compatibles con la búsqueda.
-                        // Si no hay ninguno se imprime un mensaje.
+                        //Bloque php que imprime los datos de los donantes compatibles y los mensajes de error.
                         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                            if (count($listado_donantes) > 0) {  
-                                    imprimir_busqueda_donantes($listado_donantes);
-                                }else {
-                                    echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 600px'>No hay donantes compatibles con los criterios de búsqueda.</div>";  
-                                }
+                            if ($listado_donantes) {  
+                                imprimir_busqueda_donantes($listado_donantes);
+                            //Se comprueba si $listado_donantes es un array para saber si la consulta no tiene resultados o se trata de un error.
+                            }elseif(is_array($listado_donantes)) {
+                                echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 600px'>No hay donantes compatibles con los criterios de búsqueda.</div>";  
+                            }else{
+                                echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>Error al realizar la consulta en la base de datos.</div>"; 
                             }
-                    
+                        }
                     ?>
                 </div>
             </article>

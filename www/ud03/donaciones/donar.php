@@ -15,6 +15,7 @@
     </script>
 
     <?php
+        //Bloque php para recoger los datos del formulario, recuperar los datos del donante y lanzar la donación.
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
         $id = $fecha_donacion = "";
@@ -30,14 +31,20 @@
         }
 
         //Independientemente de por donde llegue el id, se recuperan los datos del donante
-        //Para poder rellenar el formulario.
+        //Para poder mostrar los datos del donante en el formulario.
         $datos_donante = recuperar_datos_donante($id);
-
-        foreach($datos_donante as $clave => $valor) {
-            $$clave = $valor;
+        //Si no se pueden recuperar datos del donante se pone resultado a false para imprimir 
+        //el mensaje de error en el siguiente bloque php.
+        if(!$datos_donante) {
+            $resultado = false;
+        }else{
+            //Se crean variables independientes con los datos obtenidos del donante.
+            foreach($datos_donante as $clave => $valor) {
+                $$clave = $valor;
+            }
+            //Se llama a la función para registrar la donación.
+            $resultado = registrar_donacion($id, $fecha_donacion);
         }
-
-        $resultado = registrar_donacion($id, $fecha_donacion);
     ?>
 
     <div class="container">
@@ -112,7 +119,7 @@
                             //Si los datos llegan por POST se registra la donación en la base de datos.
                             //Imprime mensaje de exito.
                             if($resultado) {  
-                                echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>Donación realizada con éxito.</div>";
+                                echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Donación realizada con éxito.</div>";
                             }elseif ($codigo_postal != "") {
                                 echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se puede realizar la donación hasta ".obtener_fecha_proxima_donacion($datos_donante["id"])."</div>";
                             }

@@ -15,6 +15,7 @@
     </script>
 
     <?php
+        //Bloque php que recupera los datos de $_GET y llama a la función para borrar a un donante.
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
         $id="";
@@ -22,6 +23,7 @@
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
             $id = test_input($_GET["id"]);
+
             $resultado = borrar_donante($id);
         }
     ?>
@@ -57,9 +59,10 @@
             <article>
                 <div class="mb-4">
                     <?php
+                        //Bloque php para imprimir los resultados del borrado del donante.
                         if($resultado) {  
                             echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 600px'>Donante borrado con éxito.</div>";
-                        }elseif ($codigo_postal != "") {
+                        }else{
                             echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se pudo borrar al donante.</div>";
                         }
                     ?>

@@ -47,6 +47,7 @@
                         <h2 class="fs-4 text-center">Formulario para dar de alta un administrador</h2>
                     </div>
                     <div class="card-body">
+                        <!-- Los datos del formulario se envian al archivo altaadmin.php -->
                         <form method="post" action="altaadmin.php">
                             <div class="mb-3">
                                 <label for="nombre_usuario" class="form-label">Nombre de Usuario:</label>

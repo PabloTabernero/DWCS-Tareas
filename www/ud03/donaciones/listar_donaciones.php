@@ -15,6 +15,7 @@
     </script>
 
     <?php
+        //Bloque php que recupera los datos del donante y su historico de donanciones.
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
         $id = "";
@@ -22,7 +23,6 @@
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
         
             $id = test_input($_GET["id"]);
-
             //Se recuperan los datos del donante.
             $datos_donante = recuperar_datos_donante($id);
             //Se recorre el array con los datos del donante recuperados y se crean las variables con el 
@@ -30,6 +30,8 @@
             foreach($datos_donante as $clave => $valor) {
                 $$clave = $valor;
             }
+            //Se obtiene el historico de donaciones.
+            $lista_donaciones = recuperar_donaciones($id);
         }
     ?>
 
@@ -82,7 +84,17 @@
                     </div>
                 </div>
                 <div class="mx-auto mb-4" style="max-width: 600px">
-                    <?php listar_donaciones($id) ?>
+                    <?php 
+                        //Bloque php para imprimir el listado de donaciones o mensajes de error.
+                        if ($lista_donaciones) {
+                            imprimir_donaciones($lista_donaciones);    
+                        //Se utiliza is_array para diferenciar cuando se trata de una consulta vacia o un error.
+                        }elseif(is_array($lista_donaciones)){
+                            echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 600px'>No hay donaciones para mostrar.</div>";
+                        }else{
+                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>Error realizando la consulta a la base de datos.</div>";
+                        }
+                    ?>
                 </div>
     </div>
     </article>

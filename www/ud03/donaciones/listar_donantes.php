@@ -15,10 +15,10 @@
     </script>
 
     <?php
+        //Bloque php para listar los donantes registrado en la bd.
         include_once("lib/base_datos.php");
         include_once("lib/utilidades.php");
-        //Llama a la función que recupera los datos de los donantes y llama a la función
-        //engadada de imprimir el resultado.
+        //Llama a la función que recupera los datos de los donantes.
         $resultado = listar_donantes();
     ?>
 
@@ -56,10 +56,14 @@
                 </div>
                 <div class="mb-4">
                     <?php
-                        if(!$resultado) {
-                            echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 600px'>No hay donantes resgistrados.</div>";
-                        }else{
+                        //Bloque php para imprimir el listado de los donantes o los errores.
+                        if ($resultado) {
                             imprimir_listado_donantes($resultado);
+                        //Se utiliza is_array para diferenciar cuando se trata de una consulta vacia o un error.
+                        }elseif(is_array($resultado)){
+                            echo "<div class='alert alert-warning text-center mx-auto' role='alert' style='max-width: 600px'>No hay donantes para mostrar.</div>";
+                        }else{
+                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>Error realizando la consulta a la base de datos.</div>";
                         }
                     ?>
                 </div>

@@ -15,8 +15,9 @@
     </script>
 
     <?php
+        //Bloque php para crear la base de datos y las tablas si no están creadas.
         include ("lib/base_datos.php");
-        //Se crea la base de datos y las tablas si no están creadas.
+
         crear_bd_donacion();
         crear_tabla_donantes();
         crear_tabla_historico();
