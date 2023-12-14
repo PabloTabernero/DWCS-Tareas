@@ -11,6 +11,18 @@
   </head>
   <body>
     <div class="container">
+      <?php
+          include("e3.php");
+
+          $coches = array (
+            array("Volvo", 22, 18),
+            array ("BMW", 15, 13),
+            array("Saab", 5, 2),
+            array("Land Rover", 17, 15)
+            );
+
+            imprimirCoches($coches);
+      ?>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
