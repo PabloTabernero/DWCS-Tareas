@@ -159,3 +159,11 @@ function cerrar_conexion($conexion)
 {
     $conexion = null;
 }
+
+
+function get_administradores($conexion)
+{
+    $consulta = $conexion->prepare("SELECT * FROM administradores");
+    $consulta->execute();
+    return $consulta;
+}
