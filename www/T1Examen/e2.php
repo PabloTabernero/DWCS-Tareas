@@ -11,6 +11,16 @@
   </head>
   <body>
     <div class="container">
+      <?php
+        $numeroAes = rand(1, 30);
+        $a = "a";
+        echo "<ul>";
+        for($i = 0; $i < $numeroAes; $i++){
+          echo "<li style=\"list-style-type: none;\">".$a."</li>";
+          $a .= "a";
+        }
+        echo "</ul>";
+      ?>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
