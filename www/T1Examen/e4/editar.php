@@ -25,7 +25,7 @@ if (isset($_POST["submit"])) {
     if (isset($_GET["id"])) {
         $id_user = $_GET["id"];
         
-        $user = get_usuario($conexion);
+        $user = get_usuario($conexion, $id_user);  //PTV Faltaba pasar el id_user como argumento de la función.
 
         if ($user->num_rows > 0) {
             $row = $user->fetch_assoc();

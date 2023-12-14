@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
         $conexion = get_conexion();
         seleccionar_bd_tienda($conexion);
-        dar_alta_usuario($nombre, $apellidos, $edad, $provincia);
+        dar_alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia); //PTV Faltaba pasar la conexión como primer parametro.
         $mensajes = "Usuario dado de alta correctamente";
         cerrar_conexion($conexion);
     }

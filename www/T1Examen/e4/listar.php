@@ -44,7 +44,7 @@ seleccionar_bd_tienda($conexion);
 $resultados = listar_usuarios($conexion);
 
 if (!is_bool($resultados) && $resultados->num_rows > 0) {
-    while ($row = $resultados->fetch_asoc()) {
+    while ($row = $resultados->fetch_assoc()) {           //PTV Faltaba en una 's' en el fetch_assoc.
         echo "<tr>";
         echo "<td>" . $row['nombre'] . "</td> ";
         echo "<td>" . $row['apellidos'] . "</td> ";

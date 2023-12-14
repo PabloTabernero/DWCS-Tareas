@@ -22,7 +22,7 @@ include "lib/utilidades.php";
     </script>
 
 <?php
-
+$conexion = get_conexion();                        //PTV Faltaba establecer la conexión a la base de datos.
 $seleccion_bd = seleccionar_bd_tienda($conexion);
 
 $id = $_GET["id"];

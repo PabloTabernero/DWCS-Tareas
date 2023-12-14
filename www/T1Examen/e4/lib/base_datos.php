@@ -7,11 +7,13 @@ function get_conexion()
     if ($conexion->connect_errno != null) {
         die("Fallo en la conexión: " . $conexion->connect_error . "Con numero" . $conexion->connect_errno);
     }
+
+    return $conexion; //PTV La función no estaba devolviendo nada.
 }
 
 function seleccionar_bd_tienda($conexion)
 {
-    return $conexion->select_db("tinda");
+    return $conexion->select_db("tienda"); //PTV estaba mal escrito el nombre de la BD.
 }
 
 function ejecutar_consulta($conexion, $sql)
