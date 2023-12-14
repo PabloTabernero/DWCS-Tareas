@@ -33,7 +33,7 @@ $resultado_consulta = get_administradores($conexion);
 while ($fila = $resultado_consulta->fetch()) {
     echo "<tr>";
     echo "<td>" . $fila['nombre'] . "</td>";
-    echo "<td> <a class='btn btn-primary' href=borrar_donante.php?id=" . $fila['nombre'] . ">Borrar</a> </td>";
+    echo "<td> <a class='btn btn-primary' href=borrar_administrador.php?nombre=" . $fila['nombre'] .">Borrar</a> </td>";
     echo "</tr>";
 }
 ?>

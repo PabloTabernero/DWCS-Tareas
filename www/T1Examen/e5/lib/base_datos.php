@@ -167,3 +167,9 @@ function get_administradores($conexion)
     $consulta->execute();
     return $consulta;
 }
+
+function eliminar_administrador($conexion, $nombreAdmin)
+{
+    $consulta = $conexion->prepare("DELETE FROM administradores WHERE nombre ='$nombreAdmin'");
+    return $consulta->execute();
+}
