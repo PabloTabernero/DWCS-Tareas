@@ -16,6 +16,7 @@
         $conexion = get_conexion();
         seleccionar_bd_tienda($conexion);
         $resultado = comprobar_usuario($conexion, $usuario);
+        cerrar_conexion($conexion);
         
         if(!$resultado){
             $error = true;
