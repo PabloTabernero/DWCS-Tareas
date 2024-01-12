@@ -1,8 +1,14 @@
 <?php
+    session_start();
+  
+    require "lib/base_datos.php";
 
-  require "lib/base_datos.php";
+	if(!isset($_SESSION['usuario'])){	
+		header("Location: login.php?redirigido=true");
+	}
 
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -30,6 +36,7 @@
     <p>
         <a class="btn btn-primary" href="dar_de_alta.php" role="button"> Alta usuarios</a>
         <a class="btn btn-primary" href="listar.php" role="button"> Listar usuarios</a>
+        <a class="btn btn-primary" href="cerrar_sesion.php" role="button"> Cerrar sesión</a>
     </p>
     <footer>
         <p>

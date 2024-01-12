@@ -18,22 +18,24 @@
 <body>
     <h1>Alta de usuario </h1>
 
-<?php
+    <?php
 
 $mensajes = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-    if (empty($_POST["name"]) || empty($_POST["apellidos"]) || empty($_POST["edad"])) {
+    if (empty($_POST["nombre"]) || empty($_POST["apellidos"]) || empty($_POST["edad"] || empty($_POST["contraseña"]))) {
         $mensajes =  "Falta algún dato obligatorio del formulario </br>";
     } else {
-        $nombre = test_input($_POST["name"]);
+        $nombre = test_input($_POST["nombre"]);
         $apellidos = test_input($_POST["apellidos"]);
         $edad = test_input($_POST["edad"]);
         $provincia = test_input($_POST["provincia"]);
+        $pass = test_input($_POST["contraseña"]);
+        $pass_hasheado = password_hash($pass, PASSWORD_DEFAULT);
 
         $conexion = get_conexion();
         seleccionar_bd_tienda($conexion);
-        dar_alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia);
+        dar_alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia, $pass_hasheado);
         $mensajes = "Usuario dado de alta correctamente";
         cerrar_conexion($conexion);
     }
@@ -47,22 +49,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
     <p>Formulario de alta</p>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-      Nombre: <input type="text" name="name">
-      <br><br>
-      Apellidos: <input type="text" name="apellidos">
-      <br><br>
-      Edad: <input type="text" name="edad">
-      <br><br>
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Provincia: </label>
-      <select name="provincia" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-        <option value="corunha">A Coruña</option>
-        <option value="lugo">Lugo</option>
-        <option value="ourense">Ourense</option>
-        <option value="pontevedra">Pontevedra</option>
-      </select>
-      <input type="submit" name="submit" value="Submit">
+        Nombre: <input type="text" name="nombre">
+        <br><br>
+        Apellidos: <input type="text" name="apellidos">
+        <br><br>
+        Edad: <input type="text" name="edad">
+        <br><br>
+        <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Provincia: </label>
+        <select name="provincia" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+            <option value="corunha">A Coruña</option>
+            <option value="lugo">Lugo</option>
+            <option value="ourense">Ourense</option>
+            <option value="pontevedra">Pontevedra</option>
+        </select>
+        <br><br>
+        Contraseña: <input type="password" name="contraseña">
+        
+        <input type="submit" name="submit" value="Submit">
     </form>
-    
+
     <footer>
         <p>
             <a href='index.php'>Página de inicio</a>
