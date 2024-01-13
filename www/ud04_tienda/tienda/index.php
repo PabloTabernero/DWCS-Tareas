@@ -1,10 +1,54 @@
 <?php
     session_start();
+
+    include("lib/base_datos.php");
+
+    //Realizar la configuración inicial de la base de datos.
+    crear_bd_tienda();
+    crear_tabla_usuarios();
+    crear_tabla_productos();
   
-	if(!isset($_SESSION['usuario'])){	
+    //Reenviar a la pagina de loguin si no hay session.
+	if(!isset($_SESSION["usuario"])){	
 		header("Location: login.php?redirigido=true");
 	}
 
+    //Selecionar idioma por defecto el gallego si la cookie no está definida
+    if (!isset($_COOKIE["idioma"])) {
+        setcookie("idioma", "Gallego", time() + (86400 * 30));
+    }
+
+    //Actualizar la cookie con el valor que llegue por POST
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idioma"])) {
+        $idioma = $_POST["idioma"];
+        setcookie("idioma", $idioma, time() + (86400 * 30));
+        header("Location: " . $_SERVER['PHP_SELF']);
+    } 
+
+    //Modificar el titulo, mensaje y campos del formulario de la web en función del idioma seleccionado.
+    switch ($_COOKIE["idioma"]) {
+        case "Gallego":
+            $opcion = ["Gallego", "Español", "Ingles"];
+            $titulo = "Benvido á Tenda do IES San Clemente.";
+            $mensaje = "Descobre a nosa ampla selección de produtos de alta calidade. Na tenda do IES San Clemente, 
+                        sentímonos orgullosos de ofrecer unha variedade de produtos que se axustan ás túas necesidades. 
+                        Desde dispositivos electrónicos ata moda e accesorios, atoparás todo o que estás buscando.";          
+            break;
+        case "Español":
+            $opcion = ["Español", "Gallego", "Ingles"];
+            $titulo = "Bienvenido a la Tienda IES San Clemente";
+            $mensaje = "Descubre nuestra amplia selección de productos de alta calidad. En la Tienda IES San Clemente,
+                        nos enorgullece ofrecer una variedad de productos que se adaptan a tus necesidades. Desde
+                        dispositivos electrónicos hasta moda y accesorios, encontrarás todo lo que estás buscando.";
+            break;
+        case "Ingles":
+            $opcion = ["Ingles", "Gallego", "Español"];
+            $titulo = "Welcome to IES San Clemente Store.";
+            $mensaje = "Discover our wide selection of high-quality products. At IES San Clemente Store, 
+                        we take pride in offering a variety of products that cater to your needs. 
+                        From electronic devices to fashion and accessories, you'll find everything you're looking for.";
+            break;
+    }
 ?>
 
 <!doctype html>
@@ -24,11 +68,7 @@
     </script>
 
     <?php
-        //Bloque php para realizar la configuración inicial de la base de datos.
-        include("lib/base_datos.php");
-        crear_bd_tienda();
-        crear_tabla_usuarios();
-        crear_tabla_productos();
+        
     ?>
 
     <div class="container">
@@ -53,17 +93,26 @@
                         <a class="nav-link" href="logout.php">Cerrar sesión</a>
                     </li>
                 </ul>
+
+                <!-- Se utiliza el array $opcion para tener siempre visible el idioma seleccionado -->
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" class="form-inline">
+                    <select class="form-select form-select-sm mb-2 mx-auto" id="idioma" name="idioma">
+                        <option value="<?php echo $opcion[0] ?>"> <?php echo $opcion[0] ?> </option>
+                        <option value="<?php echo $opcion[1] ?>"> <?php echo $opcion[1] ?> </option>
+                        <option value="<?php echo $opcion[2] ?>"> <?php echo $opcion[2] ?> </option>
+                    </select>
+                    <button type="submit" class="btn btn-secondary btn-sm">Enviar</button>
+                </form>
+
             </nav>
         </header>
 
         <article>
             <div class="container-fluid bg-white min-vh-100">
-                <h2 class="text-center">Bienvenido a la Tienda IES San Clemente</h2>
+                <h2 class="text-center"> <?php echo $titulo ?> </h2>
 
                 <p>
-                    Descubre nuestra amplia selección de productos de alta calidad. En la Tienda IES San Clemente,
-                    nos enorgullece ofrecer una variedad de productos que se adaptan a tus necesidades. Desde
-                    dispositivos electrónicos hasta moda y accesorios, encontrarás todo lo que estás buscando.
+                    <?php echo $mensaje ?>
                 </p>
             </div>
         </article>

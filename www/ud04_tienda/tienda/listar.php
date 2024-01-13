@@ -1,3 +1,8 @@
+<?php                   
+    include ("lib/base_datos.php");
+    include ("lib/utilidades.php");
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -45,10 +50,9 @@
             <div class="container-fluid bg-white min-vh-100">
                 
                 <h2 class="text-center mt-4 mb-4">Lista de usuarios</h2>
+
+                <!-- Bloque php para obtener e imprimir el listado de usuarios. -->
                 <?php
-                    //Bloque php para obtener e imprimir el listado de usuarios.
-                    include ("lib/base_datos.php");
-                    include ("lib/utilidades.php");
                     //Se obtiene el listado de usuarios.
                     $lista_usuarios = listar_usuarios();
                     //Se verifica si listar devuelve false para imprimir un mensaje de error.
