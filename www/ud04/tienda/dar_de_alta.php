@@ -103,33 +103,11 @@
                     </div>
                 </form>
 
-                <?php
-                    //Bloque php para imprimir el resultado del alta de usuario.
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-                        if (!isset($resultado)){
-                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
-                        }
-                        if($resultado) {
-                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
-                        }else{
-                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>$mensajes</div>"; 
-                        }
-                    }
-                ?>
-
-            </div>
-        </article>
-
-        <footer class="fixed-bottom">
-            <div class="container bg-light">
-                <a href='index.php'>Página de inicio</a>
-                <p class="mb-0"><small>&copy; 2023 2023 Gestión Tienda IES San Clemente. Todos los derechos
-                        reservados.</small>
-                </p>
-                <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
-            </div>
-        </footer>
-    </div>
+    <footer>
+        <p>
+            <a href='index.php'>Página de inicio</a>
+        </p>
+    </footer>
 </body>
 
 </html>

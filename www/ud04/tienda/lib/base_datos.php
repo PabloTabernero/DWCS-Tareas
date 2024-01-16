@@ -54,7 +54,7 @@ function crear_tabla_productos() {
         descripcion VARCHAR(100) NOT NULL,
         precio FLOAT NOT NULL ,
         unidades FLOAT NOT NULL,
-        foto BLOB
+        foto LONGBLOB 
     )";
 
     $conexion->query($sql);
@@ -182,4 +182,23 @@ function comprobar_usuario($usuario) {
     $conexion->close(); 
 
     return ($datos->num_rows > 0) ? $datos : false;
+}
+
+function alta_producto($nombre, $descripcion, $precio, $unidades, $foto) {
+    $conexion = get_conexion();
+    seleccionar_bd_tienda($conexion);
+
+    $stmt = $conexion->prepare("INSERT INTO productos (nombre, descripcion, precio, unidades, foto) VALUES (?,?,?,?,?)");
+    $stmt->bind_param("ssiis", $nombre, $descripcion, $precio, $unidades, $foto);
+    
+    $resultado = $stmt->execute();
+
+    if (!$resultado) {
+        registrar_log("No se pudo crear el registro. Error: " . $stmt->error);
+    }
+
+    $stmt->close();
+    $conexion->close(); 
+
+    return $resultado;        
 }
