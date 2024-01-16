@@ -13,16 +13,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
+    
+    <!-- Bloque php que recupera el id de usuario y realiza en borrado en la BD. -->
     <?php
-        //Bloque php que recupera el id de usuario y realiza en borrado en la BD.
         include("lib/base_datos.php");
         include("lib/utilidades.php");
-        
+ 
         //Se valida el id que llega por GET.
         $id = test_input($_GET["id"]);
 
         //Se borran los datos del usuario.
         $resultado = borrar_usuario($id);
+        $mensajes = $resultado ? "Usuario eliminado." : "No se han podido eliminar al usuario.";
 
     ?>
     <div class="container">
@@ -41,6 +43,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="listar.php">Listar usuarios</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dar_de_alta_productos.php">Alta productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Cerrar sesión</a>
+                    </li>
                 </ul>
             </nav>
         </header>
@@ -49,12 +57,13 @@
             <div class="container">
                 <div class="d-flex align-items-center" style="min-height: 100vh;">
                     <div class="col-md-4 mx-auto">
+                        <!-- Bloque php para imprimir el resultado de la operación. -->
                         <?php
-                            //Bloque php para imprimir el resultado de la operación.
+                            //
                             if($resultado) {
-                                echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Usuario eliminado.</div>";
+                                echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
                             }else{
-                                echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se han podido eliminar al usuario.</div>"; 
+                                echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>$mensajes</div>"; 
                             }
                         ?>
                     </div>

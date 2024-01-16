@@ -14,29 +14,33 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
+    <!-- Bloque php que comprueba el metodo por el que llegan los datos. -->
     <?php
-        //Bloque php que comprueba el metodo por el que llegan los datos. 
         include("lib/base_datos.php");
         include("lib/utilidades.php");
-        //Se inicializan las variables del formulario.
-        $nombre = $apellidos = $edad = $provincia = $resultado_cambios = $datos = "";
+        //Inicializar las variables del formulario.
+        $nombre = $apellidos = $edad = $provincia = $resultado = $datos = "";
 
-        //Si llegan datos por GET
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             //Se valida el id que llega por GET.
             $id = test_input($_GET["id"]);
             //Se recuperan los datos por id en un array asociativo.
-            $datos = recuperar_datos_usuario($id);
+            //Si no se pueden recuperar los datos la funcion devuelve false.
+            $resultado = recuperar_datos_usuario($id);
         
-            if($datos) {
+            if($resultado) {
                 //Se asignan datos del array a varibles para cubrir en el formulario.
-                $id = $datos["id"];
-                $nombre = $datos["nombre"];
-                $apellidos = $datos["apellidos"];
-                $edad = $datos["edad"];
-                $provincia = $datos["provincia"];
+                $id = $resultado["id"];
+                $nombre = $resultado["nombre"];
+                $apellidos = $resultado["apellidos"];
+                $edad = $resultado["edad"];
+                $provincia = $resultado["provincia"];
+                //Se configura el mensaje de salida de la operación
+                $mensajes = "Se han recuperado los datos del cliente.";
+            } else {
+                $mensajes = "No se han podido actualizar los datos del cliente.";
             }
-        //Si llegan datos por POST
+
         }elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
             //Se validan los datos que llegan por POST.
             $id = test_input($_POST["id"]);
@@ -45,8 +49,9 @@
             $edad = test_input($_POST["edad"]);
             $provincia = test_input($_POST["provincia"]);
             
-            //Se actualizan datos en la tabla de usuarios.
-            $resultado_cambios = actualizar_datos_usuario($id, $nombre, $apellidos, $edad, $provincia);
+            //Se actualizan datos en la tabla de usuarios y se configura el mensaje con el resultado de la operación.
+            $resultado = actualizar_datos_usuario($id, $nombre, $apellidos, $edad, $provincia);
+            $mensajes = $resultado ? "Se han actualizado los datos del cliente." : "No se han podido actualizar los datos del cliente.";
         }
     ?>
 
@@ -113,23 +118,14 @@
                     </div>
                 </form>
 
+                <!-- Bloque php para imprimir mensajes. -->
                 <?php
-                    //Bloque php para imprimir mensajes.
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-                        if($resultado_cambios) {
-                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Se han actualizado los datos del cliente.</div>";
-                        }else{
-                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se han podido actualizar los datos del cliente.</div>"; 
-                        }
-                    }elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-                        if($datos) {
-                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>Se han recuperado los datos del cliente.</div>";
-                        }else{
-                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>No se han podido actualizar los datos del cliente.</div>"; 
-                        }
+                    if ($resultado) {
+                        echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
+                    } else {
+                        echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>$mensajes</div>"; 
                     }
                 ?>
-
             </div>
         </article>
 

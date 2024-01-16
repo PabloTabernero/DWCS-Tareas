@@ -30,21 +30,21 @@
         case "Gallego":
             $opcion = ["Gallego", "Español", "Ingles"];
             $titulo = "Benvido á Tenda do IES San Clemente.";
-            $mensaje = "Descobre a nosa ampla selección de produtos de alta calidade. Na tenda do IES San Clemente, 
+            $texto = "Descobre a nosa ampla selección de produtos de alta calidade. Na tenda do IES San Clemente, 
                         sentímonos orgullosos de ofrecer unha variedade de produtos que se axustan ás túas necesidades. 
                         Desde dispositivos electrónicos ata moda e accesorios, atoparás todo o que estás buscando.";          
             break;
         case "Español":
             $opcion = ["Español", "Gallego", "Ingles"];
             $titulo = "Bienvenido a la Tienda IES San Clemente";
-            $mensaje = "Descubre nuestra amplia selección de productos de alta calidad. En la Tienda IES San Clemente,
+            $texto = "Descubre nuestra amplia selección de productos de alta calidad. En la Tienda IES San Clemente,
                         nos enorgullece ofrecer una variedad de productos que se adaptan a tus necesidades. Desde
                         dispositivos electrónicos hasta moda y accesorios, encontrarás todo lo que estás buscando.";
             break;
         case "Ingles":
             $opcion = ["Ingles", "Gallego", "Español"];
             $titulo = "Welcome to IES San Clemente Store.";
-            $mensaje = "Discover our wide selection of high-quality products. At IES San Clemente Store, 
+            $texto = "Discover our wide selection of high-quality products. At IES San Clemente Store, 
                         we take pride in offering a variety of products that cater to your needs. 
                         From electronic devices to fashion and accessories, you'll find everything you're looking for.";
             break;
@@ -112,7 +112,7 @@
                 <h2 class="text-center"> <?php echo $titulo ?> </h2>
 
                 <p>
-                    <?php echo $mensaje ?>
+                    <?php echo $texto ?>
                 </p>
             </div>
         </article>
