@@ -3,10 +3,9 @@
 
     require "lib/base_datos.php";
     require "lib/utilidades.php";
+
+    $mensajes = "";
     
-    //Inicializar variable error.
-    $error = false;
-  
     //Comprobar si se reciben los datos por POST
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         $usuario = $_POST["nombre"];
@@ -16,11 +15,10 @@
         $resultado = comprobar_usuario($usuario);
         
         if(!$resultado){
-            $error = true;
+            $mensajes = "Nombre de usuario o contraseña incorrecta.";
         }else{
             $usuario = $resultado->fetch_assoc();
             $pass_bd = $usuario['password'];
-
 
             if (!password_verify($pass, $pass_bd)) {
                 $error = true;
@@ -79,8 +77,8 @@
                 </form>
 
                 <?php
-                    if ($error) {
-                        echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>Nombre de usuario o contraseña incorrecta.</div>";
+                    if ($mensajes != "") {
+                        echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>$mensajes</div>";
                     }
                 ?>
 

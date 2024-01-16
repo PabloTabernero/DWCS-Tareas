@@ -14,26 +14,29 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
+    <!-- Bloque php para comprobar si llegan datos POST y dar de alta a un usuario con ellos. -->
     <?php
-        //Bloque php para comprobar si llegan datos POST y dar de alta a un usuario con ellos.
         include ("lib/base_datos.php");
         include ("lib/utilidades.php");
-        //Inicializamos las variables del formulario.
+
         $mensajes = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+            //Comprobar que ningún campo del formulario está vacio.
             if (empty($_POST["nombre"]) || empty($_POST["apellidos"]) || empty($_POST["edad"] || empty($_POST["contraseña"]))) {
                 $mensajes =  "Falta algún dato obligatorio del formulario";
             } else {
+                //Almacenar en variables los datos del formulario.
                 $nombre = test_input($_POST["nombre"]);
                 $apellidos = test_input($_POST["apellidos"]);
                 $edad = test_input($_POST["edad"]);
                 $provincia = test_input($_POST["provincia"]);
                 $pass = test_input($_POST["contraseña"]);
+                //Generar el hash del password para almacenarlo en la BD.
                 $pass_hasheado = password_hash($pass, PASSWORD_DEFAULT);
 
+                //Realizar el alta del usuario y configurar el mensaje de error en función del resultado.
                 $resultado = alta_usuario($nombre, $apellidos, $edad, $provincia, $pass_hasheado);
-
                 $mensajes = $resultado ? "Usuario dado de alta correctamente" : "Error en el alta del usuario en la base de datos";
             }
         }
@@ -103,15 +106,13 @@
                     </div>
                 </form>
 
+                <!-- Bloque php para imprimir el resultado del alta de usuario. -->
                 <?php
-                    //Bloque php para imprimir el resultado del alta de usuario.
                     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-                        if (!isset($resultado)){
+                        if (!isset($resultado) || !$resultado){
                             echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
-                        }else if($resultado) {
+                        } else {
                             echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
-                        }else{
-                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>$mensajes</div>"; 
                         }
                     }
                 ?>

@@ -162,7 +162,8 @@ function borrar_usuario($id) {
     return $resultado;
 }
 
-
+//Función que obtiene el nombre de usuario y password de la base de datos.
+//Devuelve false si no exite el usuario.
 function comprobar_usuario($usuario) {
     $conexion = get_conexion();
     seleccionar_bd_tienda($conexion);
@@ -184,6 +185,9 @@ function comprobar_usuario($usuario) {
     return ($datos->num_rows > 0) ? $datos : false;
 }
 
+//Función para dar de alta un nuevo producto en la base de datos.
+//La entrada de $foto debe ser el contenido del fichero a subir a la base de datos.
+//Devuelve true en caso de que se halla podido subir el producto.
 function alta_producto($nombre, $descripcion, $precio, $unidades, $foto) {
     $conexion = get_conexion();
     seleccionar_bd_tienda($conexion);
