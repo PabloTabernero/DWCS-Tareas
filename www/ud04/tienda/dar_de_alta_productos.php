@@ -21,39 +21,45 @@
         $mensajes = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-            if (empty($_POST["nombre"]) || empty($_POST["descripcion"]) || empty($_POST["precio"]) || empty($_POST["unidades"]) || empty($_FILES["imagen"]["name"])) {
+            if (empty($_POST["nombre"]) || empty($_POST["descripcion"]) || empty($_POST["precio"]) || empty($_POST["unidades"]) || empty($_FILES["imagenes"]["name"])) {
                 $mensajes =  "Falta algún dato obligatorio en el formulario";
             } else {
-                //Almacenar el contenido del array $_FILES.
-                $imagen = $_FILES["imagen"];
-                //Seleccionar el directorio de destino de la imagen.
-                $directorioDestino = "uploads/";
-                //Seleccionar la ruta y nombre del archivo destino.
-                $archivoDestino = $directorioDestino.basename($imagen["name"]);
+                //Bucle para acceder a la clave de cada elemento del array $_FILES.
+                foreach ($_FILES["imagenes"]["name"] as $key => $imagenNombre ) {
+                    //Seleccionar el directorio de destino de la imagen.
+                    $directorioDestino = "uploads/";
+                    //Obtener la ruta completa del archivo destino.
+                    $archivoDestino = $directorioDestino.basename($imagenNombre);
+                    //Obtener el archivo temporal subido.
+                    $archivoTemporal = $_FILES["imagenes"]["tmp_name"][$key];
+                    //Obtener el tamaño del archivo.
+                    $archivoTamanho =  $_FILES["imagenes"]["size"][$key];
                 
-                if (comprobaTamanho($imagen)) {
-                    if (compruebaExtension($archivoDestino)) { 
-                        //Si tiene el tamaño y extensión correcta se mueve a la carpeta destino y se comprueba si la acción se realiza correctamente.  
-                        if(move_uploaded_file($imagen["tmp_name"], $archivoDestino)) {
-                            //Almacenar en variables los datos pasados por el formulario.
-                            $nombre = test_input($_POST["nombre"]);
-                            $descripcion = test_input($_POST["descripcion"]);
-                            $precio = test_input($_POST["precio"]);
-                            $unidades = test_input($_POST["unidades"]);
-                            //Extraer el contenido del fichero imagen.
-                            $contenidoImagen = addslashes(file_get_contents($archivoDestino));
+                    if (comprobaTamanho($archivoTamanho)) {
+                        if (compruebaExtension($archivoDestino)) { 
+                            //Si tiene el tamaño y extensión correcta se mueve a la carpeta destino y se comprueba si la acción se realiza correctamente.  
+                            if(move_uploaded_file($archivoTemporal, $archivoDestino)) {
+                                //Almacenar en variables los datos pasados por el formulario.
+                                $nombre = test_input($_POST["nombre"]);
+                                $descripcion = test_input($_POST["descripcion"]);
+                                $precio = test_input($_POST["precio"]);
+                                $unidades = test_input($_POST["unidades"]);
+                                //Extraer el contenido del fichero imagen.
+                                $archivoContenido = addslashes(file_get_contents($archivoDestino));
 
-                            //Realizar el alta del producto en la BD y configurar el mensaje de salida en función del resultado.
-                            $resultado = alta_producto($nombre, $descripcion, $precio, $unidades, $contenidoImagen);
-                            $mensajes = $resultado ? "Producto dado de alta correctamente" : "Error en el alta del producto en la base de datos";
+                                //Realizar el alta del producto en la BD y configurar el mensaje de salida en función del resultado.
+                                $resultado = alta_producto($nombre, $descripcion, $precio, $unidades, $archivoContenido);
+                                $mensajes = $resultado ? "Producto dado de alta correctamente" : "Error en el alta del producto en la base de datos";
+                            } else {
+                                $mensajes = "Error subiendo el fichero.";
+                            }
                         } else {
-                            $mensajes = "Error subiendo el fichero.";
+                            $mensajes = "El formato del fichero es incorrecto. Solo se admite JPG, JPEG, PNG o GIF";
                         }
                     } else {
-                    $mensajes = "El formato del fichero es incorrecto. Solo se admite JPG, JPEG, PNG o GIF";
+                        $mensajes = "El fichero es demasiado grande.";
                     }
-                } else {
-                    $mensajes = "El fichero es demasiado grande.";
+                
                 }
             }        
         }
@@ -114,8 +120,8 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="imagen" class="form-label">Selecciona una imagen:</label>
-                        <input type="file" class="form-control" name="imagen" id="imagen" required />                        
+                        <label for="imagenes" class="form-label">Selecciona una imagen:</label>
+                        <input type="file" class="form-control" name="imagenes[]" id="imagenes[]" multiple required />                        
                     </div>
 
                     <div class="mb-3 text-center">
