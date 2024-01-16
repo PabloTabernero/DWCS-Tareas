@@ -1,9 +1,3 @@
-<?php
-
-  require "lib/base_datos.php";
-  require "lib/utilidades.php";
-
-?>
 <!doctype html>
 <html lang="en">
 
@@ -16,63 +10,125 @@
 </head>
 
 <body>
-    <h1>Alta de usuario </h1>
-
-    <?php
-
-$mensajes = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-    if (empty($_POST["nombre"]) || empty($_POST["apellidos"]) || empty($_POST["edad"] || empty($_POST["contraseña"]))) {
-        $mensajes =  "Falta algún dato obligatorio del formulario </br>";
-    } else {
-        $nombre = test_input($_POST["nombre"]);
-        $apellidos = test_input($_POST["apellidos"]);
-        $edad = test_input($_POST["edad"]);
-        $provincia = test_input($_POST["provincia"]);
-        $pass = test_input($_POST["contraseña"]);
-        $pass_hasheado = password_hash($pass, PASSWORD_DEFAULT);
-
-        $conexion = get_conexion();
-        seleccionar_bd_tienda($conexion);
-        dar_alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia, $pass_hasheado);
-        $mensajes = "Usuario dado de alta correctamente";
-        cerrar_conexion($conexion);
-    }
-}
-?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
-    <?= $mensajes;?>
+    <?php
+        //Bloque php para comprobar si llegan datos POST y dar de alta a un usuario con ellos.
+        include ("lib/base_datos.php");
+        include ("lib/utilidades.php");
+        //Inicializamos las variables del formulario.
+        $mensajes = "";
 
-    <p>Formulario de alta</p>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        Nombre: <input type="text" name="nombre">
-        <br><br>
-        Apellidos: <input type="text" name="apellidos">
-        <br><br>
-        Edad: <input type="text" name="edad">
-        <br><br>
-        <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Provincia: </label>
-        <select name="provincia" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-            <option value="corunha">A Coruña</option>
-            <option value="lugo">Lugo</option>
-            <option value="ourense">Ourense</option>
-            <option value="pontevedra">Pontevedra</option>
-        </select>
-        <br><br>
-        Contraseña: <input type="password" name="contraseña">
-        
-        <input type="submit" name="submit" value="Submit">
-    </form>
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+            if (empty($_POST["nombre"]) || empty($_POST["apellidos"]) || empty($_POST["edad"] || empty($_POST["contraseña"]))) {
+                $mensajes =  "Falta algún dato obligatorio del formulario";
+            } else {
+                $nombre = test_input($_POST["nombre"]);
+                $apellidos = test_input($_POST["apellidos"]);
+                $edad = test_input($_POST["edad"]);
+                $provincia = test_input($_POST["provincia"]);
+                $pass = test_input($_POST["contraseña"]);
+                $pass_hasheado = password_hash($pass, PASSWORD_DEFAULT);
 
-    <footer>
-        <p>
-            <a href='index.php'>Página de inicio</a>
-        </p>
-    </footer>
+                $resultado = alta_usuario($nombre, $apellidos, $edad, $provincia, $pass_hasheado);
+
+                $mensajes = $resultado ? "Usuario dado de alta correctamente" : "Error en el alta del usuario en la base de datos";
+            }
+        }
+    ?>
+
+    <div class="container">
+
+        <header class="mb-4 bg-light">
+            <h1 class="display-4 text-center">Tienda IES San Clemente</h1>
+
+            <nav class="navbar navbar-light bg-light">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dar_de_alta.php">Alta usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="listar.php">Listar usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dar_de_alta_productos.php">Alta productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Cerrar sesión</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <article>
+            <div class="container-fluid bg-white min-vh-100">
+                <h2 class="text-center mt-4 mb-4">Alta de usuario</h2>
+                <p class="text-center mb-0">Formulario de alta</p>
+
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="mx-auto"
+                    style="max-width: 400px;">
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" name="nombre" id="nombre" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="apellidos" class="form-label">Apellidos:</label>
+                        <input type="text" class="form-control" name="apellidos" id="apellidos" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contraseña" class="form-label">Contraseña:</label>
+                        <input type="password" class="form-control" name="contraseña" id="contraseña" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edad" class="form-label">Edad:</label>
+                        <input type="number" class="form-control" name="edad" id="edad" min="0" max="200" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="provincia" class="form-label">Provincia:</label>
+                        <input type="text" class="form-control" name="provincia" id="provincia" required />
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Alta Usuario" />
+                    </div>
+                </form>
+
+                <?php
+                    //Bloque php para imprimir el resultado del alta de usuario.
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                        if (!isset($resultado)){
+                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
+                        }else if($resultado) {
+                            echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
+                        }else{
+                            echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>$mensajes</div>"; 
+                        }
+                    }
+                ?>
+
+            </div>
+        </article>
+
+        <footer class="fixed-bottom">
+            <div class="container bg-light">
+                <a href='index.php'>Página de inicio</a>
+                <p class="mb-0"><small>&copy; 2023 2023 Gestión Tienda IES San Clemente. Todos los derechos
+                        reservados.</small>
+                </p>
+                <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
+            </div>
+        </footer>
+    </div>
 </body>
 
 </html>

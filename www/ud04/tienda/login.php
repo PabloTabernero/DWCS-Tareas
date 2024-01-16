@@ -9,14 +9,11 @@
   
     //Comprobar si se reciben los datos por POST
     if($_SERVER["REQUEST_METHOD"]=="POST"){
-        $usuario = $_POST["usuario"];
-        $pass = $_POST["pass"];
+        $usuario = $_POST["nombre"];
+        $pass = $_POST["password"];
         
         //Realizar consula de usuario en la BD
-        $conexion = get_conexion();
-        seleccionar_bd_tienda($conexion);
-        $resultado = comprobar_usuario($conexion, $usuario);
-        cerrar_conexion($conexion);
+        $resultado = comprobar_usuario($usuario);
         
         if(!$resultado){
             $error = true;
@@ -42,37 +39,64 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tienda IES San Clemente </title>
+    <title>Tienda IES San Clemente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1>Login de Usuario</h1>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 
-    <p>Login</p>
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        Usuario: <input name="usuario" id="usuario" type="text">
-        Contraseña: <input name="pass" id="pass" type="password">
-        <input type="submit">
-    </form>
+    <div class="container">
+        <header class="mb-4 bg-light">
+            <h1 class="display-4 text-center">Tienda IES San Clemente</h1>
+        </header>
 
-    <?php
-        if ($error) {
-            echo "Nombre de usuario o contraseña incorrecto";
-        }
-    ?>
+        <article>
+            <div class="container-fluid bg-white min-vh-100">
+                <h2 class="text-center mt-4 mb-4">Inicio de sesión</h2>
 
-    <footer>
-        <p>
-            <a href='index.php'>Página de inicio</a>
-        </p>
-    </footer>
+
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="mx-auto"
+                    style="max-width: 400px;">
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" name="nombre" id="nombre" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña:</label>
+                        <input type="password" class="form-control" name="password" id="password" required />
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Iniciar Sesión" />
+                    </div>
+                </form>
+
+                <?php
+                    if ($error) {
+                        echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>Nombre de usuario o contraseña incorrecta.</div>";
+                    }
+                ?>
+
+            </div>
+        </article>
+
+        <footer class="fixed-bottom">
+            <div class="container bg-light">
+                <a href='index.php'>Página de inicio</a>
+                <p class="mb-0"><small>&copy; 2023 Gestión Tienda IES San Clemente. Todos los derechos
+                        reservados.</small>
+                </p>
+                <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>
+            </div>
+        </footer>
+    </div>
 </body>
 
 </html>

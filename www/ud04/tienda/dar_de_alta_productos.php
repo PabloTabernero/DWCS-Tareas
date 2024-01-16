@@ -15,26 +15,40 @@
     </script>
 
     <?php
-        //Bloque php para comprobar si llegan datos POST y dar de alta a un usuario con ellos.
         include ("lib/base_datos.php");
         include ("lib/utilidades.php");
-        //Inicializamos las variables del formulario.
+        require ("lib/funciones.php");
         $mensajes = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-            if (empty($_POST["nombre"]) || empty($_POST["descripcion"]) || empty($_POST["precio"] || empty($_POST["unidades"]) || empty($_POST["foto"]))) {
-                $mensajes =  "Falta algún dato obligatorio del formulario";
+            if (empty($_POST["nombre"]) || empty($_POST["descripcion"]) || empty($_POST["precio"]) || empty($_POST["unidades"]) || empty($_FILES["foto"]["name"])) {
+                $mensajes =  "Falta algún dato obligatorio en el formulario";
             } else {
-                $nombre = test_input($_POST["nombre"]);
-                $descripcion = test_input($_POST["descripcion"]);
-                $precio = test_input($_POST["precio"]);
-                $unidades = test_input($_POST["unidades"]);
-                $foto = test_input($_POST["foto"]);
-           
-                $resultado = alta_producto($nombre, $descripcion, $precio, $unidades, $foto);
+                $foto = $_FILES["foto"];
+                $target_dir = "uploads/";
+                $target_file = $target_dir.basename($foto["name"]);
+                
+                if (comprobaTamanho($foto)) {
+                    if (compruebaExtension($target_file)) {   
+                        if(move_uploaded_file($foto["tmp_name"], $target_file)) { 
+                            $nombre = test_input($_POST["nombre"]);
+                            $descripcion = test_input($_POST["descripcion"]);
+                            $precio = test_input($_POST["precio"]);
+                            $unidades = test_input($_POST["unidades"]);
+                            $contenidoFoto = addslashes(file_get_contents($target_file));
 
-                $mensajes = $resultado ? "Usuario dado de alta correctamente" : "Error en el alta del usuario en la base de datos";
-            }
+                            $resultado = alta_producto($nombre, $descripcion, $precio, $unidades, $contenidoFoto);
+                            $mensajes = $resultado ? "Producto dado de alta correctamente" : "Error en el alta del producto en la base de datos";
+                        } else {
+                            $mensajes = "Error subiendo el fichero.";
+                        }
+                    } else {
+                    $mensajes = "El formato del fichero es incorrecto, solo se admite JPG, JPEG, PNG & GIF";
+                    }
+                } else {
+                    $mensajes = "El fichero es demasiado grande.";
+                }
+            }        
         }
     ?>
 
@@ -69,7 +83,7 @@
                 <h2 class="text-center mt-4 mb-4">Alta de usuario</h2>
                 <p class="text-center mb-0">Formulario de alta</p>
 
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype=“multipart/form-data” 
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data" 
                 class="mx-auto" style="max-width: 400px;">
 
                     <div class="mb-3">
@@ -103,12 +117,11 @@
                 </form>
 
                 <?php
-                    //Bloque php para imprimir el resultado del alta de usuario.
+                    //Bloque php para imprimir el resultado del alta del procducto.
                     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
                         if (!isset($resultado)){
                             echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
-                        }
-                        if($resultado) {
+                        }else if($resultado) {
                             echo "<div class='alert alert-success text-center mx-auto' role='alert' style='max-width: 500px'>$mensajes</div>";
                         }else{
                             echo "<div class='alert alert-danger text-center mx-auto' role='alert' style='max-width: 600px'>$mensajes</div>"; 
