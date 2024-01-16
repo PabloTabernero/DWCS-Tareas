@@ -32,12 +32,17 @@
                 $edad = test_input($_POST["edad"]);
                 $provincia = test_input($_POST["provincia"]);
                 $pass = test_input($_POST["contraseña"]);
-                //Generar el hash del password para almacenarlo en la BD.
-                $pass_hasheado = password_hash($pass, PASSWORD_DEFAULT);
 
-                //Realizar el alta del usuario y configurar el mensaje de error en función del resultado.
-                $resultado = alta_usuario($nombre, $apellidos, $edad, $provincia, $pass_hasheado);
-                $mensajes = $resultado ? "Usuario dado de alta correctamente" : "Error en el alta del usuario en la base de datos";
+                if (!comprobar_usuario($nombre)) {
+                    //Generar el hash del password para almacenarlo en la BD.
+                    $pass_hasheado = password_hash($pass, PASSWORD_DEFAULT);
+
+                    //Realizar el alta del usuario y configurar el mensaje de error en función del resultado.
+                    $resultado = alta_usuario($nombre, $apellidos, $edad, $provincia, $pass_hasheado);
+                    $mensajes = $resultado ? "Usuario dado de alta correctamente" : "Error en el alta del usuario en la base de datos";
+                } else {
+                    $mensajes = "Error: Nombre de usuario ya existe";
+                }
             }
         }
     ?>
