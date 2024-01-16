@@ -12,4 +12,21 @@
         return $tamanho < TAMANHO_MAXIMO;
     }
 
+    //Funcion que devuelve la ruta de subida de los archivos en función de su tipo.
+    function obtenerDestino ($tipo) {
+        switch ($tipo) {
+            case "application/pdf":
+                return "uploads/pdf/";
+                break;
+            case "text/plain":
+                return "uploads/texto/";
+                break;
+            case "image/jpeg" || "image/png" || "image/jpg" || "image/gif":
+                return "uploads/imagen/";
+                break;
+            default:
+                return "uploads/otros/";
+                break;
+        }
+    }
 ?>

@@ -26,8 +26,10 @@
             } else {
                 //Bucle para acceder a la clave de cada elemento del array $_FILES.
                 foreach ($_FILES["imagenes"]["name"] as $key => $imagenNombre ) {
+                    //Obtener el tipo del archivo.
+                    $archivoTipo = $_FILES["imagenes"]["type"][$key];
                     //Seleccionar el directorio de destino de la imagen.
-                    $directorioDestino = "uploads/";
+                    $directorioDestino = obtenerDestino($archivoTipo);
                     //Obtener la ruta completa del archivo destino.
                     $archivoDestino = $directorioDestino.basename($imagenNombre);
                     //Obtener el archivo temporal subido.
@@ -36,30 +38,24 @@
                     $archivoTamanho =  $_FILES["imagenes"]["size"][$key];
                 
                     if (comprobaTamanho($archivoTamanho)) {
-                        if (compruebaExtension($archivoDestino)) { 
-                            //Si tiene el tamaño y extensión correcta se mueve a la carpeta destino y se comprueba si la acción se realiza correctamente.  
-                            if(move_uploaded_file($archivoTemporal, $archivoDestino)) {
-                                //Almacenar en variables los datos pasados por el formulario.
-                                $nombre = test_input($_POST["nombre"]);
-                                $descripcion = test_input($_POST["descripcion"]);
-                                $precio = test_input($_POST["precio"]);
-                                $unidades = test_input($_POST["unidades"]);
-                                //Extraer el contenido del fichero imagen.
-                                $archivoContenido = addslashes(file_get_contents($archivoDestino));
-
-                                //Realizar el alta del producto en la BD y configurar el mensaje de salida en función del resultado.
-                                $resultado = alta_producto($nombre, $descripcion, $precio, $unidades, $archivoContenido);
-                                $mensajes = $resultado ? "Producto dado de alta correctamente" : "Error en el alta del producto en la base de datos";
-                            } else {
-                                $mensajes = "Error subiendo el fichero.";
-                            }
+                        //Si tiene el tamaño y extensión correcta se mueve a la carpeta destino y se comprueba si la acción se realiza correctamente.  
+                        if(move_uploaded_file($archivoTemporal, $archivoDestino)) {
+                            //Almacenar en variables los datos pasados por el formulario.
+                            $nombre = test_input($_POST["nombre"]);
+                            $descripcion = test_input($_POST["descripcion"]);
+                            $precio = test_input($_POST["precio"]);
+                            $unidades = test_input($_POST["unidades"]);
+                            //Extraer el contenido del fichero imagen.
+                            $archivoContenido = addslashes(file_get_contents($archivoDestino));
+                            //Realizar el alta del producto en la BD y configurar el mensaje de salida en función del resultado.
+                            $resultado = alta_producto($nombre, $descripcion, $precio, $unidades, $archivoContenido);
+                            $mensajes = $resultado ? "Producto dado de alta correctamente" : "Error en el alta del producto en la base de datos";
                         } else {
-                            $mensajes = "El formato del fichero es incorrecto. Solo se admite JPG, JPEG, PNG o GIF";
+                            $mensajes = "Error subiendo el fichero.";
                         }
                     } else {
                         $mensajes = "El fichero es demasiado grande.";
                     }
-                
                 }
             }        
         }
