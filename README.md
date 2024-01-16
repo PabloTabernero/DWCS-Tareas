@@ -7,15 +7,15 @@ Este repositorio contiene las tareas realizadas para la asignatura "Desenvolveme
 
 ### Descripción
 
-Todos los puntos de esta tarea se han realizado sobre la tienda desarrollada en la tarea DWES03. A continuación, se detallan varios puntos sobre cada ejercicio. Se deja el **usuario: vagrant pass: vagrant** en la base de datos para poder loguearse y acceder a la página principal.
+Todos los puntos de esta tarea se han realizado sobre la tienda desarrollada en la tarea DWES03. A continuación, se detallan varios puntos sobre cada ejercicio. Se deja el **usuario: vagrant pass: vagrant** en la base de datos para poder loguearse y acceder a la página principal. Se han creado las ramas **ficheros_2** y **ficheros_3** para guardar el resultado de los pasos 2 y 3 del ejercicio de ficheros.
 
-**1. [COOKIES 🍪 Y SESIONES]**
-   - **Ejercicio 1 [Contador de visitas]**
+**1. COOKIES 🍪 Y SESIONES**
+   - **Ejercicio 1. Contador de visitas**
      - Se genera un contador de visitas mediante una cookie 🍪 que almacena los valores durante al menos 1 mes y se muestra en el footer de index.php.
-   - **Ejercicio 2 [Seleccionar idioma 🇵🇹🇪🇸🇬🇧]**
+   - **Ejercicio 2. Seleccionar idioma 🇵🇹🇪🇸🇬🇧**
      - Se genera un selector de idioma que mediante una cookie 🍪 permite modificar el título y texto de index.php.
 
-**2. [FICHEROS]**
+**2. FICHEROS**
    - **Paso 1 [Crear tabla productos]**
      - Se crea la tabla productos en la base de datos según lo indicado en el ejercicio.
    - **Paso 2 [Crear formulario para nuevos productos con una foto 📸]**
@@ -28,7 +28,7 @@ Todos los puntos de esta tarea se han realizado sobre la tienda desarrollada en 
      - Se modifica el código anterior para permitir subir cualquier tipo de archivo y almacenar el resultado en diferentes carpetas en función del tipo de archivo.
      - Dado que ya no hay más modificaciones sobre esta parte de la aplicación, se deja el resultado en la rama: main.
 
-**3. [LOGIN]**
+**3. LOGIN**
    - **Paso 1 []**
      - Descripción breve del paso.
    - **Paso 2 []**
