@@ -7,11 +7,18 @@
     crear_bd_tienda();
     crear_tabla_usuarios();
     crear_tabla_productos();
-  
+    
     //Reenviar a la pagina de loguin si no hay session.
 	if(!isset($_SESSION["usuario"])){	
 		header("Location: login.php?redirigido=true");
 	}
+
+    //Contador de visitas. Guarda el valor durante minimo 1 mes.
+    if (!isset($_COOKIE["visitas"])) {
+        setcookie("visitas", 1, time() + 86400 * 30);
+    } else {
+        setcookie("visitas", $_COOKIE["visitas"] + 1, time()+ 86400 * 30);
+    }
 
     //Selecionar idioma por defecto el gallego si la cookie no está definida
     if (!isset($_COOKIE["idioma"])) {
@@ -120,7 +127,8 @@
         <footer class="fixed-bottom">
             <div class="container bg-light">
                 <a href='index.php'>Página de inicio</a>
-                <p class="mb-0"><small>&copy; 2023 Gestión Tienda IES San Clemente. Todos los derechos
+                <p class="mb-0"><small>Tú número de visitas a la web es: <?php echo $_COOKIE["visitas"] ?></small></p>
+                <p class="mb-0"><small>&copy; 2023 2023 Gestión Tienda IES San Clemente. Todos los derechos
                         reservados.</small>
                 </p>
                 <p><small>Contacto: a22pablotv@iessanclemente.net</small></p>

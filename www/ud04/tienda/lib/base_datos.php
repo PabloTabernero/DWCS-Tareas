@@ -54,7 +54,7 @@ function crear_tabla_productos() {
         descripcion VARCHAR(100) NOT NULL,
         precio FLOAT NOT NULL ,
         unidades FLOAT NOT NULL,
-        foto LONGBLOB 
+        foto BLOB 
     )";
 
     $conexion->query($sql);
