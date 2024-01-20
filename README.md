@@ -25,18 +25,18 @@ Todos los puntos de esta tarea se han realizado sobre la tienda desarrollada en 
 
      Se crea un formulario para introducir nuevos productos en la base de datos con un campo type="file" y se recoge el fichero mediante el array $_FILES. Se aplican las restricciones solicitadas mediante las funciones comprobarTamanho() y compruebaExtension(), y no se verifica si el fichero ya existe en el directorio uploads puesto que en caso de que esto suceda se sobreescribe el fichero. Finalmente se carga el contenido del fichero en la base de datos.
      
-     Dado que los siguientes pasos modificarían este ejercicio, se deja el resultado en la [⚠️rama ficheros_2.⚠️](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_2)
+     Dado que los siguientes pasos modificarían este ejercicio, se deja el resultado en la ⚠️[rama ficheros_2.](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_2)⚠️
    - **Paso 3. Modificar el formulario anterior para permitir múltiples fotos📸📸📸**
 
      Se modifica el código anterior para permitir subir varias fotos. Para ello se utiliza la opción multiple en el formulario y se recogen los ficheros en el array $_FILES. Se recorre el array $_FILES con un foreach donde se obtiene la clave de cada fichero para poder acceder a sus prodiedades (Menudo lío entender la estructura de $_FILES 🙈). Una vez obtenido esto se procede como en el ejercicio anterior y se van cargando las imagenes.
        
-     Dado que los siguientes pasos modificarían este ejercicio, se deja el resultado en la [⚠️rama ficheros_3.⚠️](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_3)
+     Dado que los siguientes pasos modificarían este ejercicio, se deja el resultado en la ⚠️[rama ficheros_3.](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_3)⚠️
    - **Paso 4. Modificar el formulario anterior para permitir cualquier tipo de archivo**
 
      Se modifica el código anterior para permitir subir ficheros de cualquier tipo, ya no se utiliza la función compruebaExtension(). Se crea una nueva función obtenerDestino() que en función del tipo de fichero ($_FILES[]["type"]) sube el fichero a una carpeta diferente. En este caso no se realiza la subida a la
      base de datos.
      
-     Dado que ya no hay más modificaciones sobre esta parte de la aplicación, se deja el resultado en la [⚠️rama main⚠️.](https://github.com/PabloTabernero/DWCS-Tareas/tree/main)
+     Dado que ya no hay más modificaciones sobre esta parte de la aplicación, se deja el resultado en la ⚠️[rama main.](https://github.com/PabloTabernero/DWCS-Tareas/tree/main)⚠️
 
 **3. 🚪 LOGIN**
    - **Paso 1. Actualizar la tabla usuarios**
