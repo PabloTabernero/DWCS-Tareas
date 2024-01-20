@@ -33,9 +33,10 @@ Todos los puntos de esta tarea se han realizado sobre la tienda desarrollada en 
      Dado que los siguientes pasos modificarían este ejercicio, se deja el resultado en la [⚠️rama ficheros_3.⚠️](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_3)
    - **Paso 4. Modificar el formulario anterior para permitir cualquier tipo de archivo**
 
-     Se modifica el código anterior para permitir subir ficheros de cualquier tipo, ya no se utiliza la función compruebaExtension(). Se crea una nueva función obtenerDestino() que en función del tipo de fichero ($_FILES[]["type"]) sube el fichero a una carpeta diferente.
+     Se modifica el código anterior para permitir subir ficheros de cualquier tipo, ya no se utiliza la función compruebaExtension(). Se crea una nueva función obtenerDestino() que en función del tipo de fichero ($_FILES[]["type"]) sube el fichero a una carpeta diferente. En este caso no se realiza la subida a la
+     base de datos.
      
-     - Dado que ya no hay más modificaciones sobre esta parte de la aplicación, se deja el resultado en la [⚠️rama main⚠️.](https://github.com/PabloTabernero/DWCS-Tareas/tree/main)
+     Dado que ya no hay más modificaciones sobre esta parte de la aplicación, se deja el resultado en la [⚠️rama main⚠️.](https://github.com/PabloTabernero/DWCS-Tareas/tree/main)
 
 **3. 🚪 LOGIN**
    - **Paso 1. Actualizar la tabla usuarios**
