@@ -7,7 +7,7 @@ Este repositorio contiene las tareas realizadas para la asignatura "Desenvolveme
 
 ### Descripción
 
-Todos los puntos de esta tarea se han realizado sobre la tienda desarrollada en la tarea DWES03. A continuación, se detallan varios puntos sobre cada ejercicio. Se deja el **usuario: vagrant pass: vagrant** en la base de datos para poder loguearse y acceder a la página principal. Se han creado las ramas **ficheros_2** y **ficheros_3** para guardar el resultado de los pasos 2 y 3 del ejercicio de ficheros.
+Todos los puntos de esta tarea se han realizado sobre la tienda desarrollada en la tarea DWES03. A continuación, se detallan varios puntos sobre cada ejercicio. Se han creado las ramas ⚠️[rama ficheros_2.](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_2)⚠️ y ⚠️[rama ficheros_3.](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_3)⚠️ para guardar el resultado de los pasos 2 y 3 del ejercicio de ficheros.
 
 **1. 🍪 COOKIES Y SESIONES**
    - **Ejercicio 1. Contador de visitas**
