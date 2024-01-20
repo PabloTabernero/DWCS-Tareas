@@ -54,13 +54,28 @@ function crear_tabla_productos() {
         descripcion VARCHAR(100) NOT NULL,
         precio FLOAT NOT NULL ,
         unidades FLOAT NOT NULL,
-        foto BLOB 
     )";
 
     $conexion->query($sql);
     $conexion->close();
 }
-    
+
+//Función que crea la tabla de productos si no existe.
+function crear_tabla_imagenes() { 
+    $conexion = get_conexion();
+    seleccionar_bd_tienda($conexion);
+
+    $sql ="CREATE TABLE IF NOT EXISTS imagenes(
+        id INT AUTO_INCREMENT PRIMARY KEY, 
+        id_producto INT,
+        foto BLOB NOT NULL, 
+        FOREIGN KEY (id_producto) REFERENCES productos(id)
+    )";
+
+    $conexion->query($sql);
+    $conexion->close();
+}
+
 //Función que da de alta a un usuario en la BD con la información del formulario.
 function alta_usuario($nombre, $apellidos, $edad, $provincia, $pass) {
     $conexion = get_conexion();

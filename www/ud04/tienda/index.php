@@ -7,6 +7,7 @@
     crear_bd_tienda();
     crear_tabla_usuarios();
     crear_tabla_productos();
+    crear_tabla_imagenes();
     
     //Reenviar a la pagina de loguin si no hay session.
 	if(!isset($_SESSION["usuario"])){	
