@@ -44,7 +44,7 @@ Todos los puntos de esta tarea se han aplicado a la tienda desarrollada en la ta
       Se actualiza la tabla de usuarios según lo indicado en el enunciado. A mayores se modifica el campo nombre como "UNIQUE" para evitar que haya dos nombres de usuario iguales en la base de datos.
    - **Paso 2. Crear formulario alta usuarios con password cifrado🔐**
 
-      Se crea un nuevo formulario para dar de alta usuarios donde se incluye el password. Se comprueba si el nombre usuario existe y se cifra el password🔐 antes de darlo de alta en la base de datos.
+      Se crea un nuevo formulario para dar de alta usuarios donde se incluye el password. Se comprueba si el nombre usuario existe y se cifra🔐 el password antes de darlo de alta en la base de datos.
    - **Paso 3. Generar formulario de login**
 
-     Desde index.php se redirige al fichero login.php en caso de que no haya una sesión activa. En login.php se crea un formulario para introducir el usuario y contraseña que seran comprobados contra la base de datos teniendo que utilizar password_verify() para poder comprobar la contraseña cifrada. Si los datos son correctos se crea una sesión y se redige a la web principal. Se crea también el fichero logout.php para permitir cerrar la sesión.
+     Desde index.php se redirige al fichero login.php en caso de que no haya una sesión activa. En login.php se crea un formulario para introducir el usuario y contraseña que seran comprobados contra la base de datos teniendo que utilizar password_verify() para poder comprobar la contraseña cifrada🔐. Si los datos son correctos se crea una sesión y se redige a la web principal. Se crea también el fichero logout.php para permitir cerrar la sesión.
