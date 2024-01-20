@@ -38,21 +38,9 @@
                     $archivoTamanho =  $_FILES["imagenes"]["size"][$key];
                 
                     if (comprobaTamanho($archivoTamanho)) {
-                        //Si tiene el tamaño y extensión correcta se mueve a la carpeta destino y se comprueba si la acción se realiza correctamente.  
-                        if(move_uploaded_file($archivoTemporal, $archivoDestino)) {
-                            //Almacenar en variables los datos pasados por el formulario.
-                            $nombre = test_input($_POST["nombre"]);
-                            $descripcion = test_input($_POST["descripcion"]);
-                            $precio = test_input($_POST["precio"]);
-                            $unidades = test_input($_POST["unidades"]);
-                            //Extraer el contenido del fichero imagen.
-                            $archivoContenido = addslashes(file_get_contents($archivoDestino));
-                            //Realizar el alta del producto en la BD y configurar el mensaje de salida en función del resultado.
-                            $resultado = alta_producto($nombre, $descripcion, $precio, $unidades, $archivoContenido);
-                            $mensajes = $resultado ? "Producto dado de alta correctamente" : "Error en el alta del producto en la base de datos";
-                        } else {
-                            $mensajes = "Error subiendo el fichero.";
-                        }
+                        //Si tiene el tamaño correcto se mueve a la carpeta destino en función del tipo de fichero.  
+                        $resultado = move_uploaded_file($archivoTemporal, $archivoDestino);
+                        $mensajes = $resultado ? "Fichero subido correctamente" : "Error subiendo el fichero"; 
                     } else {
                         $mensajes = "El fichero es demasiado grande.";
                     }
@@ -89,7 +77,7 @@
 
         <article>
             <div class="container-fluid bg-white min-vh-100">
-                <h2 class="text-center mt-4 mb-4">Alta de usuario</h2>
+                <h2 class="text-center mt-4 mb-4">Alta de producto</h2>
                 <p class="text-center mb-0">Formulario de alta</p>
 
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data" 
