@@ -7,7 +7,7 @@ Este repositorio contiene las tareas realizadas para la asignatura "Desenvolveme
 
 ### Descripción
 
-Todos los puntos de esta tarea se han aplicado a la tienda desarrollada en la tarea DWES03. A continuación, se destacan los detalles de cada ejercicio. Se han creado las ramas ⚠️ficheros_2⚠️ y ⚠️ficheros_3⚠️ para almacenar los resultados de los pasos 2 y 3 del ejercicio de ficheros.
+Todos los puntos de esta tarea se han aplicado a la tienda desarrollada en la tarea DWES03. A continuación, se destacan los detalles de cada ejercicio. Se han creado las ramas ⚠️[rama ficheros_2.](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_2)⚠️ y ⚠️[rama ficheros_3.](https://github.com/PabloTabernero/DWCS-Tareas/tree/ficheros_3)⚠️ para almacenar los resultados de los pasos 2 y 3 del ejercicio de ficheros.
 
 **1. 🍪 COOKIES Y SESIONES**
    - **Ejercicio 1. Contador de visitas**
