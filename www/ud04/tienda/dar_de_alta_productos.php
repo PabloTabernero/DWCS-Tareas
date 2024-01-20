@@ -93,7 +93,7 @@
 
         <article>
             <div class="container-fluid bg-white min-vh-100">
-                <h2 class="text-center mt-4 mb-4">Alta de usuario</h2>
+                <h2 class="text-center mt-4 mb-4">Alta de producto</h2>
                 <p class="text-center mb-0">Formulario de alta</p>
 
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data" 
