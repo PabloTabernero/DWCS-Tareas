@@ -1,0 +1,6 @@
+[2023-11-15 16:30:13] Error de conexión a la base de datos: Access denied for user 'roo'@'172.18.0.3' (using password: YES)
+[2023-11-20 16:55:17] Fallo al realizar la consulta a la base de datos. Error: No database selected
+[2023-11-20 16:55:24] Fallo al realizar la consulta a la base de datos. Error: No database selected
+[2023-11-26 13:31:52] No se puede eliminar registro de la base de datos. Error: 
+[2024-01-12 22:27:12] No se pudo crear el registro. Error: Duplicate entry 'Pablo' for key 'usuarios.nombre'
+[2024-01-12 22:29:44] No se pudo crear el registro. Error: Duplicate entry 'Pablo' for key 'usuarios.nombre'
