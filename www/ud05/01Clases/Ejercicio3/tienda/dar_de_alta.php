@@ -18,6 +18,7 @@
     <?php
         include ("lib/base_datos.php");
         include ("lib/utilidades.php");
+        require_once('Usuario.php');
 
         $mensajes = "";
 
@@ -38,7 +39,8 @@
                     $pass_hasheado = password_hash($pass, PASSWORD_DEFAULT);
 
                     //Realizar el alta del usuario y configurar el mensaje de error en función del resultado.
-                    $resultado = alta_usuario($nombre, $apellidos, $edad, $provincia, $pass_hasheado);
+                    $usuario = new Usuario ($nombre, $apellidos, $edad, $provincia, $pass_hasheado);
+                    $resultado = alta_usuario($usuario);
                     $mensajes = $resultado ? "Usuario dado de alta correctamente" : "Error en el alta del usuario en la base de datos";
                 } else {
                     $mensajes = "Error: Nombre de usuario ya existe";

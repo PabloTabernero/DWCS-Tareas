@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/../Usuario.php');
+
 //Función que realiza la conexión a la BD y devuelve el objeto conexion.
 function get_conexion(){
     $conexion = new mysqli('db', 'root', 'test');
@@ -62,9 +64,16 @@ function crear_tabla_productos() {
 }
 
 //Función que da de alta a un usuario en la BD con la información del formulario.
-function alta_usuario($nombre, $apellidos, $edad, $provincia, $pass) {
+function alta_usuario($usuario) {
     $conexion = get_conexion();
     seleccionar_bd_tienda($conexion);
+
+    // Obtener los valores de los atributos del objeto Usuario
+    $nombre = $usuario->getNombre();
+    $apellidos = $usuario->getApellidos();
+    $pass = $usuario->getPass();
+    $edad = $usuario->getEdad();
+    $provincia = $usuario->getProvincia();
     
     $stmt = $conexion->prepare("INSERT INTO usuarios (nombre, apellidos, password, edad, provincia) VALUES (?,?,?,?,?)");
     $stmt->bind_param("sssis", $nombre, $apellidos, $pass, $edad, $provincia);
