@@ -3,8 +3,8 @@
 class Empleado {
 
     //PROPIEDADES
-    public $nombre;
-    public $salario;
+    protected $nombre;
+    protected $salario;
     public static $numEmpleados = 0;
 
     //CONSTRUCTOR - Aumenta en 1 $numEmpleados cada vez que se crea un empleado.

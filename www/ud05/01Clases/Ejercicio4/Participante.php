@@ -1,8 +1,8 @@
 <?php
 
 class Participante {
-    private $nombre;
-    private $edad;
+    protected $nombre;
+    protected $edad;
 
     //Construtor
     function __construct($nombre, $edad) {
